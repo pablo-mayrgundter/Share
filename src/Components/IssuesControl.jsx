@@ -10,6 +10,9 @@ import debug from '../utils/debug'
 import {addHashListener, addHashParams, getHashParams} from '../utils/location'
 import PkgJson from '../../package.json'
 import Comment from '../assets/2D_Icons/Comment.svg'
+import CommentOn from '../assets/2D_Icons/CommentOn.svg'
+import Previous from '../assets/2D_Icons/Previous.svg'
+import Next from '../assets/2D_Icons/Next.svg'
 
 
 /**
@@ -26,8 +29,8 @@ export default function IssuesControl({viewer}) {
   // debug().log('IssuesControl: viewer: ', viewer)
   const location = useLocation()
   const [commentsIsOpen, setCommentsIsOpen] = useState(false)
-  const [text, setText] = useState(null)
-  const [next, setNext] = useState(null)
+  const [text, setText] = useState('comment test is here. take a look.comment test is here. take a look.')
+  const [next, setNext] = useState(true)
   const classes = useStyles()
 
 
@@ -51,14 +54,15 @@ export default function IssuesControl({viewer}) {
             }
           }}
           aria-label='Show issues'>
-          <Comment className={classes.icon} />
+          {commentsIsOpen ? <CommentOn className={classes.icon} /> : <Comment className={classes.icon} />}
+
         </IconButton>
       </Tooltip>
       {(commentsIsOpen && text) &&
-       <CommentPanel
-         text={text}
-         next={next}
-         classes={classes}/>
+        <CommentPanel
+          text={text}
+          next={next}
+          classes={classes} />
       }
     </div>)
 }
@@ -71,22 +75,30 @@ export default function IssuesControl({viewer}) {
  * @param {Object} classes styles
  * @return {Object} React component
  */
-function CommentPanel({text, next, classes}) {
+function CommentPanel({title = "Comment Title", text, next, classes}) {
   return (
-    <div className={classes.container}>
-      <Paper
-        elevation={3}
-        className={classes.issue}>
-        <Typography
-          className={classes.issueText}>
-          {text}
-        </Typography>
-        {
-          next &&
-            <a href={next}>Next</a>
-        }
-      </Paper>
-    </div>
+    <Paper
+      elevation={3}
+      className={classes.issue}>
+      <Typography
+        variant={'h1'}
+        className={classes.issueTitle}>
+        {title}
+      </Typography>
+      <Typography
+        variant={'p'}
+        className={classes.issueText}>
+        {text}
+      </Typography>
+      {
+        next &&
+        <div className={classes.navContainer}>
+          <a href={next}><Previous className={classes.navIcon} /></a>
+          <a href={next}><Next className={classes.navIcon} /></a>
+        </div>
+
+      }
+    </Paper >
   )
 }
 
@@ -244,10 +256,10 @@ async function getIssue(issueId) {
  */
 async function getComment(issueId, commentId) {
   const comments = await getGitHub(
-      'issues/{issue_number}/comments',
-      {
-        issue_number: issueId,
-      })
+    'issues/{issue_number}/comments',
+    {
+      issue_number: issueId,
+    })
   debug().log('COMMENTS: ', comments)
   if (comments && comments.data && comments.data.length > 0) {
     if (commentId > comments.data.length) {
@@ -263,27 +275,48 @@ async function getComment(issueId, commentId) {
 
 const useStyles = makeStyles({
   container: {
-    position: 'absolute',
-    top: '0px',
-    right: '0px',
-    width: '1px',
-    height: '1px',
-    display: 'flex',
-    justifyContent: 'center',
+
   },
   icon: {
     width: '30px',
     height: '30px',
   },
   issue: {
-    position: 'absolute',
-    top: '100px',
-    right: '200px',
+    position: 'fixed',
+    padding: '1em',
+    top: '20px',
+    right: '100px',
     width: '200px',
     height: '200px',
-    padding: '1em',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+  issueTitle: {
+    paddingBottom: '12px',
+    cursor: 'text',
+    fontSize: '44px',
   },
   issueText: {
+    border: '1px solid lightGrey',
+    padding: '5px',
+    height: '120px',
+    borderRadius: '10px',
     cursor: 'text',
   },
+  navContainer: {
+    position: 'absolute',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '86%',
+    bottom: '18px',
+  },
+  navIcon: {
+    marginLeft: '10px',
+    marginRight: '10px',
+    width: '20px',
+    height: '20px',
+    cursor: 'pointer'
+  }
 })

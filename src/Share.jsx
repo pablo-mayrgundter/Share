@@ -54,8 +54,8 @@ export default function Share({installPrefix, appPrefix, pathPrefix}) {
       return
     }
     if (modelPath === null ||
-        modelPath.filepath && modelPath.filepath != mp.filepath ||
-        modelPath.gitpath && modelPath.gitpath != mp.gitpath) {
+      modelPath.filepath && modelPath.filepath != mp.filepath ||
+      modelPath.gitpath && modelPath.gitpath != mp.gitpath) {
       setModelPath(mp)
       debug().log('Share#onChangeUrlParams: new model path: ', mp)
     }
@@ -63,11 +63,11 @@ export default function Share({installPrefix, appPrefix, pathPrefix}) {
 
 
   const colorMode = useMemo(
-      () => ({
-        toggleColorMode: () => {
-          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
-        },
-      }), [])
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
+      },
+    }), [])
 
 
   const theme = useMemo(() => {
@@ -83,6 +83,18 @@ export default function Share({installPrefix, appPrefix, pathPrefix}) {
           paper: mode === 'light' ? '#FFFFFF' : '#252525',
         },
         tonalOffset: 1,
+      },
+      typography: {
+        h1: {
+          fontFamily: "Helvetica",
+          fontWeight: 200,
+          fontSize: '16px'
+        },
+        p: {
+          fontFamily: "Helvetica",
+          fontWeight: 200,
+          fontSize: '14px'
+        }
       },
       shape: {
         borderRadius: 10,

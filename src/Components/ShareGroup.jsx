@@ -6,15 +6,12 @@ import ShareDialogControl from './ShareDialog'
 
 
 /**
- * OperationsGroup contains tools for cut plane, deselecting items and
- * toggling shortcut visibility
+ * ShareGoup contains tools for issues and sharing
  *
  * @param {Object} viewer The IFC viewer
- * @param {function} placeCutPlane places cut plances for mobile devices
- * @param {function} unSelectItem deselects currently selected element
  * @return {Object}
  */
-export default function ShareGroup({viewer, placeCutPlane, unSelectItem}) {
+export default function ShareGroup({viewer}) {
   const classes = useStyles()
   return (
     <div>
@@ -43,11 +40,6 @@ const useStyles = makeStyles((theme) => ({
       'flexDirection': 'column',
       'justifyContent': 'space-between',
     },
-  },
-  icon: {
-    width: '30px',
-    height: '30px',
-    cursor: 'pointer',
   },
 }))
 

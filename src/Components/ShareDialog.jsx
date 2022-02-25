@@ -3,15 +3,17 @@ import Paper from '@mui/material/Paper'
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
 import {makeStyles} from '@mui/styles'
 import {CAMERA_PREFIX} from './CameraControl'
 import {addHashParams} from '../utils/location'
 import {roundCoord} from '../utils/math'
 import ShareIcon from '../assets/2D_Icons/Share.svg'
+import ShareOnIcon from '../assets/2D_Icons/ShareOn.svg'
 import ShareClear from '../assets/3D_Icons/ShareClear.svg'
-import CheckOn from '../assets/3D_Icons/CheckOn.svg'
-import CheckOff from '../assets/3D_Icons/CheckOff.svg'
+import CheckOn from '../assets/2D_Icons/CameraCheckOn.svg'
+import CheckOff from '../assets/2D_Icons/CameraCheckOff.svg'
 import Copy from '../assets/3D_Icons/Copy.svg'
 import Copied from '../assets/3D_Icons/Copied.svg'
 
@@ -33,7 +35,8 @@ export default function ShareDialogControl({offsetTop, viewer}) {
             setOpen(!open)
           }}
           aria-label='Share link'>
-          <ShareIcon className={classes.icon} />
+          {open ? <ShareOnIcon className={classes.icon} /> : <ShareIcon className={classes.icon} />}
+
         </IconButton>
       </Tooltip>
       {open &&
@@ -65,13 +68,13 @@ function ShareDialog({togglePanel, offsetTop, viewer}) {
     copy && setCopy(false)
     capture ?
       addHashParams(
-          window.location,
-          CAMERA_PREFIX,
-          roundCoord(...viewer.IFC.context.ifcCamera.cameraControls.getPosition(), 4)) :
+        window.location,
+        CAMERA_PREFIX,
+        roundCoord(...viewer.IFC.context.ifcCamera.cameraControls.getPosition(), 4)) :
       addHashParams(
-          window.location,
-          CAMERA_PREFIX,
-          {},
+        window.location,
+        CAMERA_PREFIX,
+        {},
       )
   }
 
@@ -95,8 +98,8 @@ function ShareDialog({togglePanel, offsetTop, viewer}) {
       onClick={closeDialog}
     >
       <Paper elevation={3} className={classes.panel} onClick={(event) => event.stopPropagation()}>
-        <h1 className={classes.clearIcon}><ShareClear /></h1>
-        <p>Share the model link</p>
+        <div className={classes.clearIcon}><ShareClear /></div>
+        <div className={classes.title}>Share the model link</div>
         <div className={classes.urlContainer}>
           <TextField id="outlined-basic"
             variant="outlined"
@@ -147,6 +150,9 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     paddingTop: '10px',
+    paddingBottom: '20px',
+    fontWeight: 200,
+    fontFamily: "Helvetica",
   },
   panel: {
     'position': 'relative',
@@ -212,7 +218,8 @@ const useStyles = makeStyles({
     cursor: 'pointer',
   },
   clearIcon: {
-    paddingTop: '20px',
+    paddingTop: '10px',
+    paddingBottom: '10px',
   },
   close: {
     width: '20px',
@@ -225,8 +232,8 @@ const useStyles = makeStyles({
     cursor: 'pointer',
   },
   check: {
-    width: '16px',
-    height: '16px',
+    width: '30px',
+    height: '30px',
     cursor: 'pointer',
   },
   closeButton: {
