@@ -5,7 +5,7 @@ import Tooltip from '@mui/material/Tooltip'
 import {makeStyles} from '@mui/styles'
 import About from '../assets/2D_Icons/Wave.svg'
 import Slider from '@mui/material/Slider'
-import Delete from '../assets/2D_Icons/Delete.svg'
+import Close from '../assets/2D_Icons/Close.svg'
 import LogoB from '../assets/LogoB.svg'
 import Shareifc from '../assets/2D_Icons/Shareifc.svg'
 import Openifc from '../assets/2D_Icons/Openifc.svg'
@@ -83,27 +83,20 @@ function AboutPanel({openToggle, offsetTopCssStr}) {
             marks={marks}
             min={0}
             max={20} />
-          <div style={{width: '100%', textAlign: 'left'}}>
-            <ul>
-              <li>Mild - ...</li>
-              <li>Medium - ...</li>
-              <li>High - ...</li>
-            </ul>
-          </div>
           <div className={classes.openSource}>
-            We are open source 🌱 Please visit our repository:&nbsp;
+            We are open source 🌱
             <a href={'https://github.com/buildrs/Share'} target="_new">
               github.com/buildrs/Share
             </a>
           </div>
         </div>
         <div
-          style={{position: 'absolute', right: '20px', bottom: '10px'}}
+          style={{marginTop: '20px', textAlign: 'center'}}
           onClick={openToggle}
           onKeyDown={openToggle}
           role="none"
         >
-          <Delete style={{width: '30px'}} />
+          <Close style={{width: '30px'}} />
         </div>
       </Paper >
     </div >
@@ -132,7 +125,7 @@ const useStyles = makeStyles({
     'position': 'relative',
     'top': (props) => props.offsetTop,
     'width': '320px',
-    'height': '600px',
+    'height': '560px',
     'fontFamily': 'Helvetica',
     'padding': '1em 1em',
     '@media (max-width: 900px)': {
@@ -169,8 +162,7 @@ const useStyles = makeStyles({
 
     },
     '& a': {
-      color: 'lime',
-      backgroundColor: '#848484',
+      color: 'black',
       paddingLeft: '4px',
       paddingRight: '4px',
       paddingBottom: '2px',
@@ -202,6 +194,7 @@ const useStyles = makeStyles({
     },
   },
   openSource: {
+    'marginTop': '30px',
     'fontWeight': 200,
     'lineHeight': '24px',
   },

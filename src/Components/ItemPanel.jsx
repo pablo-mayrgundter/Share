@@ -23,27 +23,27 @@ export default function ItemPanelControl({model, element, topOffset, onClickCb})
   return (
     <>
       {Object.keys(element).length > 0 &&
-       <div className={classes.toggleButton}>
-         <Tooltip title="Properties" placement="left">
-           <IconButton
-             onClick={() => {
-               setShowItemPanel(!showItemPanel)
-               onClickCb()
-             }} >
-             <Hamburger className={classes.icon} />
-           </IconButton>
-         </Tooltip>
-       </div>
+        <div className={classes.toggleButton}>
+          <Tooltip title="Properties" placement="left">
+            <IconButton
+              onClick={() => {
+                setShowItemPanel(!showItemPanel)
+                onClickCb()
+              }} >
+              <Hamburger className={classes.icon} />
+            </IconButton>
+          </Tooltip>
+        </div>
       }
       {showItemPanel &&
-       <ItemPropertiesDrawer
-         content={<ItemProperties model={model} element={element} />}
-         title={'IFC Information'}
-         onClose={() => {
-           setShowItemPanel(false)
-           onClickCb()
-         }}
-       />
+        <ItemPropertiesDrawer
+          content={<ItemProperties model={model} element={element} />}
+          title={'IFC Information'}
+          onClose={() => {
+            setShowItemPanel(false)
+            onClickCb()
+          }}
+        />
       }
     </>
   )
@@ -53,15 +53,16 @@ export default function ItemPanelControl({model, element, topOffset, onClickCb})
 const useStyles = makeStyles({
   toggleButton: {
     'position': 'absolute',
-    'top': (props) => `${props.topOffset}px`,
+    'bottom': '156px',
     'right': '20px',
     '@media (max-width: 900px)': {
-      right: '10px',
+      'right': '20px',
+      'bottom': '196px',
     },
   },
   toggleButtonOpen: {
     'position': 'absolute',
-    'top': (props) => `${props.topOffset}px`,
+    'bottom': '156px',
     'right': '360px',
     '@media (max-width: 900px)': {
       right: '10px',

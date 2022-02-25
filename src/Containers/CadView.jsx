@@ -9,6 +9,7 @@ import NavPanel from '../Components/NavPanel'
 import SearchBar from '../Components/SearchBar'
 import BaseGroup from '../Components/BaseGroup'
 import OperationsGroup from '../Components/OperationsGroup'
+import ShareGroup from '../Components/ShareGroup'
 import SnackBarMessage from '../Components/SnackbarMessage'
 import gtag from '../utils/gtag'
 import debug from '../utils/debug'
@@ -382,6 +383,15 @@ export default function CadView({
             selectedElement={selectedElement}
           />
         </div>
+        <div className={showItemPanel ? classes.shareGroupOpen : classes.shareGroup}>
+          <ShareGroup
+            viewer={viewer}
+            placeCutPlane={() => placeCutPlane()}
+            unSelectItem={() => unSelectItems()}
+            toggleShortCutsPanel={() => setShowShortCuts(!showShortCuts)}
+            selectedElement={selectedElement}
+          />
+        </div>
         <LogoDark className={classes.logo} />
         <div className={showItemPanel ? classes.baseGroupOpen : classes.baseGroup}>
           <BaseGroup fileOpen={loadLocalFile} offsetTop={PANEL_TOP} />
@@ -521,14 +531,38 @@ const useStyles = makeStyles(() => ({
     'border': 'none',
     'zIndex': 0,
     '@media (max-width: 900px)': {
-      'bottom': `0px`,
-      'top': '62px',
-      'right': '28px',
+      'bottom': '70px',
+      // 'top': '62px',
+      'right': '38px',
     },
   },
   operationsGroupOpen: {
     'position': 'absolute',
     'bottom': '70px',
+    'right': '342px',
+    'border': 'none',
+    'zIndex': 0,
+    '@media (max-width: 900px)': {
+      'bottom': '70px',
+      // 'top': '62px',
+      'right': '38px',
+    },
+  },
+  shareGroup: {
+    'position': 'absolute',
+    'top': '20px',
+    'right': '3px',
+    'border': 'none',
+    'zIndex': 0,
+    '@media (max-width: 900px)': {
+      'bottom': `0px`,
+      'top': '62px',
+      'right': '28px',
+    },
+  },
+  shareGroupOpen: {
+    'position': 'absolute',
+    'top': '20px',
     'right': '342px',
     'border': 'none',
     'zIndex': 0,
