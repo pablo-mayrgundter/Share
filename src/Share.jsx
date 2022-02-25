@@ -63,11 +63,11 @@ export default function Share({installPrefix, appPrefix, pathPrefix}) {
 
 
   const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
-      },
-    }), [])
+      () => ({
+        toggleColorMode: () => {
+          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
+        },
+      }), [])
 
 
   const theme = useMemo(() => {
@@ -86,15 +86,15 @@ export default function Share({installPrefix, appPrefix, pathPrefix}) {
       },
       typography: {
         h1: {
-          fontFamily: "Helvetica",
+          fontFamily: 'Helvetica',
           fontWeight: 200,
-          fontSize: '16px'
+          fontSize: '16px',
         },
         p: {
-          fontFamily: "Helvetica",
+          fontFamily: 'Helvetica',
           fontWeight: 200,
-          fontSize: '14px'
-        }
+          fontSize: '14px',
+        },
       },
       shape: {
         borderRadius: 10,

@@ -3,7 +3,6 @@ import Paper from '@mui/material/Paper'
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
 import {makeStyles} from '@mui/styles'
 import {CAMERA_PREFIX} from './CameraControl'
@@ -98,7 +97,7 @@ function ShareDialog({togglePanel, offsetTop, viewer}) {
       onClick={closeDialog}
     >
       <Paper elevation={3} className={classes.panel} onClick={(event) => event.stopPropagation()}>
-        <div className={classes.clearIcon}><ShareClear /></div>
+        <div className={classes.clearIcon}><ShareClear className={classes.iconHeader} /></div>
         <div className={classes.title}>Share the model link</div>
         <div className={classes.urlContainer}>
           <TextField id="outlined-basic"
@@ -152,7 +151,7 @@ const useStyles = makeStyles({
     paddingTop: '10px',
     paddingBottom: '20px',
     fontWeight: 200,
-    fontFamily: "Helvetica",
+    fontFamily: 'Helvetica',
   },
   panel: {
     'position': 'relative',
@@ -215,6 +214,11 @@ const useStyles = makeStyles({
   icon: {
     width: '30px',
     height: '30px',
+    cursor: 'pointer',
+  },
+  iconHeader: {
+    width: '40px',
+    height: '40px',
     cursor: 'pointer',
   },
   clearIcon: {

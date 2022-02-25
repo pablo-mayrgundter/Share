@@ -29,7 +29,7 @@ export default function IssuesControl({viewer}) {
   // debug().log('IssuesControl: viewer: ', viewer)
   const location = useLocation()
   const [commentsIsOpen, setCommentsIsOpen] = useState(false)
-  const [text, setText] = useState('comment test is here. take a look.comment test is here. take a look.')
+  const [text, setText] = useState('')
   const [next, setNext] = useState(true)
   const classes = useStyles()
 
@@ -54,8 +54,9 @@ export default function IssuesControl({viewer}) {
             }
           }}
           aria-label='Show issues'>
-          {commentsIsOpen ? <CommentOn className={classes.icon} /> : <Comment className={classes.icon} />}
-
+          {commentsIsOpen ?
+            <CommentOn className={classes.icon} /> :
+            <Comment className={classes.icon} />}
         </IconButton>
       </Tooltip>
       {(commentsIsOpen && text) &&
@@ -75,7 +76,7 @@ export default function IssuesControl({viewer}) {
  * @param {Object} classes styles
  * @return {Object} React component
  */
-function CommentPanel({title = "Comment Title", text, next, classes}) {
+function CommentPanel({title = 'Comment Title', text, next, classes}) {
   return (
     <Paper
       elevation={3}
@@ -256,10 +257,10 @@ async function getIssue(issueId) {
  */
 async function getComment(issueId, commentId) {
   const comments = await getGitHub(
-    'issues/{issue_number}/comments',
-    {
-      issue_number: issueId,
-    })
+      'issues/{issue_number}/comments',
+      {
+        issue_number: issueId,
+      })
   debug().log('COMMENTS: ', comments)
   if (comments && comments.data && comments.data.length > 0) {
     if (commentId > comments.data.length) {
@@ -317,6 +318,6 @@ const useStyles = makeStyles({
     marginRight: '10px',
     width: '20px',
     height: '20px',
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 })
