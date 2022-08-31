@@ -23,6 +23,10 @@ import {assertDefined} from '../utils/assert'
 import {computeElementPathIds, setupLookupAndParentLinks} from '../utils/TreeUtils'
 
 
+import SubsetPicker from './SubsetPicker'
+import * as THREE from 'three'
+
+
 /**
  * Experimenting with a global. Just calling #indexElement and #clear
  * when new models load.
@@ -400,8 +404,56 @@ export default function CadView({
   }
 
 
+  /* eslint-disable */
   /** Select items in model when they are double-clicked. */
   function setDoubleClickListener() {
+    window.ondblclick = async (event) => {
+      if (event.target && event.target.tagName === 'CANVAS') {
+        console.log('setting up pick:', viewer)
+        const rect = viewer.context.renderer.container.getBoundingClientRect()
+        const raycaster = new THREE.Raycaster()
+        const mouse = {
+          x: ( ( event.clientX - rect.left ) / rect.width ) * 2 - 1,
+          y: - ( ( event.clientY - rect.top ) / rect.height ) * 2 + 1
+        }
+        console.log('raycaster.setFromCamera:', mouse, viewer.context.ifcCamera.activeCamera)
+        raycaster.setFromCamera(mouse, viewer.context.ifcCamera.activeCamera)
+        console.log('raycaster.intersectObjects:', viewer.context.scene.scene.children)
+        const intersected = raycaster.intersectObjects(viewer.context.scene.scene.children, true)
+        if (intersected.length) {
+          const ifcManager = viewer.IFC.loader.ifcManager
+          const found = intersected[0]
+          console.log('PICK WORKED, FOUND: ', found)
+          const faceIndex = found.faceIndex
+          const geometry = found.object.geometry
+          const id = ifcManager.getExpressId(geometry, faceIndex)
+          const modelID = found.object.modelID
+          const highlightMaterial = new THREE.MeshLambertMaterial({
+            transparent: true,
+            color: '#f00',
+            depthTest: true,
+          })
+          const logoRootIfcId = 89
+          ifcManager.createSubset({
+            modelID,
+            ids: [logoRootIfcId],
+            scene: viewer.context.scene,
+            removePrevious: true,
+            material: highlightMaterial,
+          })
+          const props = await ifcManager.getItemProperties(modelID, id, true)
+          new SubsetPicker().pick(props, viewer.IFC, false)
+          // viewer.context.renderer.render(viewer.context.scene, viewer.context.camera)
+        }
+      }
+    }
+  }
+  /* eslint-enable */
+
+
+  /** Select items in model when they are double-clicked. */
+  /*
+  function setDoubleClickListenerSingleItem() {
     window.ondblclick = async (event) => {
       if (event.target && event.target.tagName === 'CANVAS') {
         const item = await viewer.IFC.pickIfcItem(true)
@@ -414,7 +466,7 @@ export default function CadView({
       }
     }
   }
-
+  */
 
   const addThemeListener = () => {
     colorModeContext.addThemeChangeListener((newMode, theme) => {
