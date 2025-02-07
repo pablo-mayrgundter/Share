@@ -7,7 +7,7 @@ import Toggle from '../Toggle'
 
 
 /**
- * The PrivacyControl component contains and "accept analytics" checkbox.
+ * The PrivacyControl component contains and 'accept analytics' checkbox.
  *
  * @return {ReactElement}
  */
@@ -27,19 +27,26 @@ export default function PrivacyControl() {
   return (
     <Stack
       spacing={2}
-      direction="row"
-      justifyContent="space-around"
-      alignItems="center"
+      direction='row'
+      justifyContent='space-around'
+      alignItems='center'
+      flexGrow={1}
+      sx={{width: '100%'}}
     >
       <Stack
         spacing={0}
-        direction="column"
-        justifyContent="flex-start"
-        alignItems="flex-start"
+        direction='column'
+        justifyContent='flex-start'
+        alignItems='flex-start'
       >
-        <Typography>Analytics cookies</Typography>
-        <Link href='https://github.com/bldrs-ai/Share/wiki/Design#privacy' color='inherit' variant='overline'>
-          read more
+        <Typography>Help us study sessions with analytics cookies</Typography>
+        <Link
+          href='https://github.com/bldrs-ai/Share/wiki/Design:-Privacy'
+          color='inherit'
+          variant='overline'
+          target='new'
+        >
+          Read more
         </Link>
       </Stack>
       <Toggle checked={isAnalyticsEnabled} onChange={togglePrivacy}/>

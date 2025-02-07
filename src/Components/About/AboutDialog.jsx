@@ -7,8 +7,7 @@ import Typography from '@mui/material/Typography'
 import Dialog from '../Dialog'
 import {LogoBWithDomain} from '../Logo/Logo'
 import {ABOUT_MISSION, ABOUT_PAGE_TITLE} from './component'
-// TODO(pablo): re-enable after prod freeze bug fixed
-// import PrivacyControl from './PrivacyControl'
+import PrivacyControl from './PrivacyControl'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import EmailIcon from '@mui/icons-material/Email'
 import DiscordIcon from './Discord.svg'
@@ -81,6 +80,7 @@ function AboutContent() {
           <Typography variant='body1'>
             Comments and suggestions welcome!
           </Typography>
+          <PrivacyControl/>
           <Stack direction='row' justifyContent='center' alignItems='center' spacing={1}>
             <Link href='https://discord.gg/9SxguBkFfQ' rel='noopener' sx={{display: 'flex', alignItems: 'center'}}>
               <SvgIcon sx={{marginRight: '0.25em'}}><DiscordIcon className='icon-share'/></SvgIcon>Discord

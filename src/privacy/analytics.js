@@ -6,7 +6,7 @@ import Expires from './Expires'
 
 const COOKIE_NAME = 'isAnalyticsAllowed'
 const DEFAULT_VALUE = true
-const GA_ID = 'G-GRLNVMZRGW'
+const GA_ID = 'G-CSW50EVYGH'
 
 
 /** @return {boolean} */
