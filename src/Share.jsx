@@ -30,6 +30,9 @@ export default function Share({installPrefix, appPrefix, pathPrefix}) {
   const setIsVersionsEnabled = useStore((state) => state.setIsVersionsEnabled)
   const repository = useStore((state) => state.repository)
   const setRepository = useStore((state) => state.setRepository)
+  const clearRepository = useStore((state) => state.clearRepository)
+  const setIsShareEnabled = useStore((state) => state.setIsShareEnabled)
+  const setIsNotesEnabled = useStore((state) => state.setIsNotesEnabled)
 
   useMemo(() => {
     if (isAppsEnabled) {
@@ -64,9 +67,16 @@ export default function Share({installPrefix, appPrefix, pathPrefix}) {
     })
     onChangeUrlParams()
 
+    const isNewModel = pathPrefix.endsWith('/v/new')
+    setIsShareEnabled(!isNewModel)
+    setIsNotesEnabled(!isNewModel)
+
     // TODO(pablo): currently expect these to both be defined.
     const {org, repo} = urlParams
-    if (org && repo) {
+    if (isNewModel) {
+      clearRepository()
+      setIsVersionsEnabled(false)
+    } else if (org && repo) {
       setRepository(org, repo)
       setIsVersionsEnabled(true)
     } else if (pathPrefix.startsWith('/share/v/p')) {
@@ -76,7 +86,8 @@ export default function Share({installPrefix, appPrefix, pathPrefix}) {
       debug().warn('No repository set for project!, ', pathPrefix)
     }
   }, [appPrefix, installPrefix, modelPath, navigate, pathPrefix,
-      setIsVersionsEnabled, setModelPath, setRepository, urlParams])
+      setIsVersionsEnabled, setModelPath, setRepository, urlParams,
+      setIsShareEnabled, setIsNotesEnabled, clearRepository])
 
 
   // https://mui.com/material-ui/customization/how-to-customize/#4-global-css-override

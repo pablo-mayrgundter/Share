@@ -27,5 +27,7 @@ export default function createRepositorySlice(set, get) {
         name: repo,
       },
     })),
+
+    clearRepository: () => set(() => ({repository: null})),
   }
 }
