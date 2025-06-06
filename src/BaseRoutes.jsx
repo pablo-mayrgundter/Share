@@ -96,7 +96,7 @@ export default function BaseRoutes({testElt = null}) {
       getAccessTokenSilently({
         authorizationParams: {
           audience: 'https://api.github.com/',
-          scope: 'openid profile email offline_access',
+          scope: 'openid profile email offline_access repo',
         },
         cacheMode: 'off',
         useRefreshTokens: true,
