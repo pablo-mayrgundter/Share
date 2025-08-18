@@ -25,7 +25,21 @@ beforeAll(() => {
 
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
-afterEach(() => server.resetHandlers())
+afterEach(() => {
+  server.resetHandlers()
+  // Clear any values stored in localStorage between tests
+  if (global.localStorage && typeof global.localStorage.clear === 'function') {
+    global.localStorage.clear()
+  }
+  // Reset window location fields to their defaults
+  if (global.window && global.window.location) {
+    global.window.location.href = 'http://localhost/'
+    global.window.location.hash = ''
+    global.window.location.search = ''
+    global.window.location.pathname = '/'
+  }
+  // If other window properties are mutated, consider recreating the window object
+})
 
 // Clean up after the tests are finished.
 afterAll(() => server.close())
