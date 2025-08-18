@@ -1,4 +1,4 @@
-import {Octokit} from '@octokit/rest'
+import { Octokit } from '@octokit/rest'
 import PkgJson from '../../../package.json'
 
 

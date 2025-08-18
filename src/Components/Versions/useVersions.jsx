@@ -1,14 +1,14 @@
-import {useEffect, useState} from 'react'
-import {useAuth0} from '../../Auth0/Auth0Proxy'
-import {getCommitsForFile} from '../../net/github/Commits'
-import {assertDefined} from '../../utils/assert'
+import { useEffect, useState } from 'react'
+import { useAuth0 } from '../../Auth0/Auth0Proxy'
+import { getCommitsForFile } from '../../net/github/Commits'
+import { assertDefined } from '../../utils/assert'
 
 
 /** @return {object} */
-export default function useVersions({repository, filePath, accessToken}) {
+export default function useVersions({ repository, filePath, accessToken }) {
   assertDefined(accessToken, repository.orgName, repository.name, filePath)
 
-  const {isAuthenticated} = useAuth0()
+  const { isAuthenticated } = useAuth0()
 
   const [commits, setCommits] = useState([])
   const [loading, setLoading] = useState(false)
@@ -46,5 +46,5 @@ export default function useVersions({repository, filePath, accessToken}) {
     fetchCommits()
   }, [accessToken, filePath, isAuthenticated, repository])
 
-  return {commits, loading, error}
+  return { commits, loading, error }
 }

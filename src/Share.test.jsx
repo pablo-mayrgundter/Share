@@ -1,12 +1,13 @@
-import {getModelPath} from './Share'
+import { describe, it, expect, mock } from 'bun:test'
+import { getModelPath } from './Share'
 
-
-jest.mock('three')
+// Mock three.js for bun
+mock.module('three', () => ({}))
 
 
 describe('Share', () => {
   it('getModelPath parses ifc and obj filepaths', () => {
-    expect(getModelPath('/share', '/share/v/p', {'*': 'as_Ifcdf.ifc/1234'})).toStrictEqual({
+    expect(getModelPath('/share', '/share/v/p', { '*': 'as_Ifcdf.ifc/1234' })).toStrictEqual({
       filepath: '/as_Ifcdf.ifc',
       eltPath: '/1234',
     })
@@ -18,7 +19,7 @@ describe('Share', () => {
       'ifc', 'Ifc', 'IFC', 'IfC', 'iFc', 'IFc',
     ]) {
       const inPath = `as_${ext}df.${ext}/1234`
-      expect(getModelPath('/share', '/share/v/p', {'*': inPath})).toStrictEqual({
+      expect(getModelPath('/share', '/share/v/p', { '*': inPath })).toStrictEqual({
         filepath: `/as_${ext}df.${ext}`,
         eltPath: '/1234',
       })

@@ -1,12 +1,12 @@
-import React, {ReactElement} from 'react'
-import {Route, Routes} from 'react-router-dom'
+import React, {} from 'react'
+import { Route, Routes } from 'react-router-dom'
 import MarkdownBlogPost from '../../Components/MarkdownBlogPost'
 import BlogIndex from './BlogIndex'
 import Post20250225 from './Post20250225.md'
 import Post20241205 from './Post20241205.md'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function BlogRoutes() {
   return (
     <Routes>

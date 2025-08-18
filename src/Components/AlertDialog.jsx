@@ -1,19 +1,19 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Link from '@mui/material/Link'
-import {NotFoundError} from '../loader/Loader'
+import { NotFoundError } from '../loader/Loader'
 import useStore from '../store/useStore'
 import Dialog from './Dialog'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
-import {trackAlert} from '../utils/alertTracking'
+import { trackAlert } from '../utils/alertTracking'
 
 
 /**
  * Alert Dialog is presented when a model cannot be loaded
  *
  * @property {Function} onClose trigger close of the dialog
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function AlertDialog({onClose}) {
+export default function AlertDialog({ onClose }) {
   const alert = useStore((state) => state.alert)
   const setAlert = useStore((state) => state.setAlert)
 
@@ -46,7 +46,7 @@ export default function AlertDialog({onClose}) {
 
 /**
  * @param {object} a
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 function createAlertReport(a) {
   if (typeof a === 'string') {
@@ -68,7 +68,7 @@ function createAlertReport(a) {
 
 /**
  * @param {object} alert
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 function displayPathAlert(alert) {
   return (

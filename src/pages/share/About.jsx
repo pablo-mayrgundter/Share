@@ -1,11 +1,11 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import TitledLayout from '../../layouts/TitledLayout'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function About() {
   const prodPrefix = 'https://bldrs.ai/share/v/gh/bldrs-ai'
   return (
@@ -29,7 +29,7 @@ export default function About() {
               marginBottom: '0.5em',
             }}
           />
-          <Box sx={{textAlign: 'center'}}>
+          <Box sx={{ textAlign: 'center' }}>
             Explore the Conway Engine →
           </Box>
         </Link>

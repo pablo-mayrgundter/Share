@@ -1,4 +1,5 @@
 /* eslint-disable no-magic-numbers */
+import { describe, it, expect } from 'bun:test'
 import {
   findUrls,
   floatStrTrim,

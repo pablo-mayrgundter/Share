@@ -1,5 +1,5 @@
 import SearchIndex from '../search/SearchIndex'
-import {isVisibleInitially} from '../Components/Search/hashState'
+import { isVisibleInitially } from '../Components/Search/hashState'
 
 
 /**
@@ -12,12 +12,12 @@ import {isVisibleInitially} from '../Components/Search/hashState'
 export default function createSearchSlice(set, get) {
   return {
     isSearchEnabled: true,
-    setIsSearchEnabled: (is) => set(() => ({isSearchEnabled: is})),
+    setIsSearchEnabled: (is) => set(() => ({ isSearchEnabled: is })),
 
     isSearchBarVisible: isVisibleInitially(),
-    setIsSearchBarVisible: (is) => set(() => ({isSearchBarVisible: is})),
+    setIsSearchBarVisible: (is) => set(() => ({ isSearchBarVisible: is })),
 
     searchIndex: new SearchIndex(),
-    setSearchIndex: (index) => set(() => ({searchIndex: index})),
+    setSearchIndex: (index) => set(() => ({ searchIndex: index })),
   }
 }

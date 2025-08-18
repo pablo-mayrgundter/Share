@@ -1,4 +1,5 @@
-import {isValidUrl, processGoogleDriveUrl, processExternalUrl, processProjectFile, processGitHubFile} from './urlHelpers'
+import { describe, it, expect, beforeEach, afterEach } from 'bun:test'
+import { isValidUrl, processGoogleDriveUrl, processExternalUrl, processProjectFile, processGitHubFile } from './urlHelpers'
 
 
 describe('urlHelpers', () => {
@@ -28,8 +29,8 @@ describe('urlHelpers', () => {
     const originalEnv = process.env
 
     beforeEach(() => {
-      jest.resetModules()
-      process.env = {...originalEnv}
+      // Module reset not needed in bun
+      process.env = { ...originalEnv }
       // Clear the specific environment variables we're testing
       delete process.env.CORS_PROXY_HOST
       delete process.env.CORS_PROXY_PATH
@@ -79,8 +80,8 @@ describe('urlHelpers', () => {
     const originalEnv = process.env
 
     beforeEach(() => {
-      jest.resetModules()
-      process.env = {...originalEnv}
+      // Module reset not needed in bun
+      process.env = { ...originalEnv }
       // Clear the specific environment variables we're testing
       delete process.env.CORS_PROXY_HOST
       delete process.env.CORS_PROXY_PATH

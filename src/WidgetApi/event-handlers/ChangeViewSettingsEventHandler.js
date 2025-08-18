@@ -35,7 +35,7 @@ class ChangeViewSettingsEventHandler extends ApiEventHandler {
         customViewSettings.expressIdsToColorMap,
         customViewSettings.globalIdsToColorMap,
     )
-    useStore.setState({customViewSettings: customViewSettingsObject})
+    useStore.setState({ customViewSettings: customViewSettingsObject })
     return this.apiConnection.successfulResponse({})
   }
 }

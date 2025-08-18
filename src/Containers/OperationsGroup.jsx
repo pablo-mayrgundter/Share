@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import AppsControl from '../Components/Apps/AppsControl'
@@ -16,7 +16,7 @@ import useStore from '../store/useStore'
  * OperationsGroup contains tools for profile, sharing, notes, properties and
  * imagine
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function OperationsGroup() {
   const isAppsEnabled = useStore((state) => state.isAppsEnabled)
@@ -40,12 +40,12 @@ export default function OperationsGroup() {
         alignItems: 'flex-end',
       }}
     >
-      <Stack direction='row' sx={{pointerEvents: 'auto'}}>
+      <Stack direction='row' sx={{ pointerEvents: 'auto' }}>
         {isLoginEnabled && <ProfileControl/>}
         {isAppsEnabled && <AppsControl/>}
         {isShareEnabled && <ShareControl/>}
       </Stack>
-      <Stack sx={{pointerEvents: 'auto', height: '100%'}}>
+      <Stack sx={{ pointerEvents: 'auto', height: '100%' }}>
         <Divider/>
         {isNotesEnabled && <NotesControl/>}
         {isPropertiesEnabled && isAnElementSelected && <PropertiesControl/>}

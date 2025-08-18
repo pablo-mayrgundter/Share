@@ -1,5 +1,5 @@
-import {getPathContents} from '../net/github/Files'
-import {parseGitHubRepositoryUrl} from '../net/github/utils'
+import { getPathContents } from '../net/github/Files'
+import { parseGitHubRepositoryUrl } from '../net/github/utils'
 import matcher from './matcher.js'
 
 
@@ -42,7 +42,7 @@ export function parseUrl(url) {
     /https?:\/\/github.com\/(?<org>[\w%.-]+)\/(?<repo>[\w%.-]+)\/blob\/(?<ref>[\w%.-]+)\/(?<path>[\w/%.-]+)/,
   )
     .then((match) => {
-      const {org, repo, ref, path} = match.groups
+      const { org, repo, ref, path } = match.groups
       parsed.type = SOURCE_TYPE.VCS
       parsed.target = {
         organization: org,
@@ -53,7 +53,7 @@ export function parseUrl(url) {
     })
     .or(/\/share\/v\/gh\/(?<org>[\w.-]+)\/(?<repo>[\w.-]+)\/(?<ref>[\w.-]+)\/(?<path>[\w/%.-]+)/)
     .then((match) => {
-      const {org, repo, ref, path} = match.groups
+      const { org, repo, ref, path } = match.groups
       parsed.type = SOURCE_TYPE.VCS
       parsed.target = {
         organization: org,
@@ -157,7 +157,7 @@ export async function dereferenceAndProxyDownloadContents(urlStr, accessToken, i
  */
 async function getGitHubPathContents(urlStr, accessToken, useCache) {
   const repo = parseGitHubRepositoryUrl(urlStr)
-  const {content, sha, isCacheHit, isBase64} = await getPathContents(
+  const { content, sha, isCacheHit, isBase64 } = await getPathContents(
     {
       orgName: repo.owner,
       name: repo.repository,

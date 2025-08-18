@@ -42,7 +42,7 @@ export default function pdbToThree(pdb, viewer) {
     const materialKey = `${color.r}${color.g}${color.b}`
     let atomMaterial = atomMaterials[materialKey]
     if (!atomMaterial) {
-      atomMaterial = atomMaterials[materialKey] = new THREE.MeshPhongMaterial({color: color})
+      atomMaterial = atomMaterials[materialKey] = new THREE.MeshPhongMaterial({ color: color })
     }
     const atomMesh = new THREE.Mesh(sphereGeometry, atomMaterial)
     atomMesh.position.copy(position)
@@ -55,8 +55,8 @@ export default function pdbToThree(pdb, viewer) {
     const json = pdb.json
     const name = lookupName(json, i)
     // Verify format of json entry for this atom before trying to get name
-    atomMesh.Name = {value: name}
-    atomMesh.LongName = {value: name}
+    atomMesh.Name = { value: name }
+    atomMesh.LongName = { value: name }
 
     root.add(atomMesh)
   }
@@ -103,8 +103,8 @@ export default function pdbToThree(pdb, viewer) {
   }
 
   root.type = 'Molecule'
-  root.Name = {value: 'Molecule'}
-  root.LongName = {value: 'Molecule'}
+  root.Name = { value: 'Molecule' }
+  root.LongName = { value: 'Molecule' }
 
   return root
 }

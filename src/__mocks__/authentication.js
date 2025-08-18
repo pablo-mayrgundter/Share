@@ -1,8 +1,9 @@
-import {useAuth0} from '@auth0/auth0-react'
+import { mock } from 'bun:test'
 
-
-jest.mock('@auth0/auth0-react')
-
+// Mock @auth0/auth0-react for bun
+mock.module('@auth0/auth0-react', () => ({
+  useAuth0: mock(),
+}))
 
 const mockGitHubUser = {
   name: 'Unit Testing',
@@ -16,19 +17,19 @@ const mockGitHubUser = {
   updated_at: '2023-02-22T17:07:29.123Z',
 }
 
-export const mockedUseAuth0 = jest.mocked(useAuth0, true)
+export const mockedUseAuth0 = mock()
 
 export const mockedUserLoggedIn = {
   error: null,
   user: mockGitHubUser,
   isAuthenticated: true,
   isLoading: false,
-  getAccessTokenSilently: jest.fn(),
-  getAccessTokenWithPopup: jest.fn(),
-  getIdTokenClaims: jest.fn(),
-  loginWithRedirect: jest.fn(),
-  loginWithPopup: jest.fn(),
-  logout: jest.fn(),
+  getAccessTokenSilently: mock(),
+  getAccessTokenWithPopup: mock(),
+  getIdTokenClaims: mock(),
+  loginWithRedirect: mock(),
+  loginWithPopup: mock(),
+  logout: mock(),
 }
 
 export const mockedUserLoggedOut = {
@@ -36,10 +37,10 @@ export const mockedUserLoggedOut = {
   user: null,
   isAuthenticated: false,
   isLoading: false,
-  getAccessTokenSilently: jest.fn(),
-  getAccessTokenWithPopup: jest.fn(),
-  getIdTokenClaims: jest.fn(),
-  loginWithRedirect: jest.fn(),
-  loginWithPopup: jest.fn(),
-  logout: jest.fn(),
+  getAccessTokenSilently: mock(),
+  getAccessTokenWithPopup: mock(),
+  getIdTokenClaims: mock(),
+  loginWithRedirect: mock(),
+  loginWithPopup: mock(),
+  logout: mock(),
 }

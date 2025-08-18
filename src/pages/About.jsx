@@ -1,9 +1,9 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Typography from '@mui/material/Typography'
 import TitledLayout from '../layouts/TitledLayout'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function About() {
   return (
     <TitledLayout title='About Bldrs'>

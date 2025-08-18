@@ -1,27 +1,27 @@
-import {jwtDecode} from 'jwt-decode'
-import React, {useEffect, useState} from 'react'
-import {Outlet, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
+import React, { useEffect, useState } from 'react'
+import { Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import {ThemeProvider} from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import * as Sentry from '@sentry/react'
-import {useAuth0} from './Auth0/Auth0Proxy'
+import { useAuth0 } from './Auth0/Auth0Proxy'
 import PopupAuth from './Components/Auth/PopupAuth'
 import PopupCallback from './Components/Auth/PopupCallback'
-import {checkOPFSAvailability, setUpGlobalDebugFunctions} from './OPFS/utils'
+import { checkOPFSAvailability, setUpGlobalDebugFunctions } from './OPFS/utils'
 import ShareRoutes from './ShareRoutes'
 import Styles from './Styles'
 import About from './pages/About'
 import BlogRoutes from './pages/blog/BlogRoutes'
-import {initializeOctoKitAuthenticated, initializeOctoKitUnauthenticated} from './net/github/OctokitExport'
+import { initializeOctoKitAuthenticated, initializeOctoKitUnauthenticated } from './net/github/OctokitExport'
 import useStore from './store/useStore'
 import useShareTheme from './theme/Theme'
 import debug from './utils/debug'
-import {navWith} from './utils/navigate'
+import { navWith } from './utils/navigate'
 
 
 const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes)
@@ -41,12 +41,12 @@ const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes)
  * @param {React.Component} testElt For unit test allow use of a stub here instead of loading the app.
  * @return {object}
  */
-export default function BaseRoutes({testElt = null}) {
+export default function BaseRoutes({ testElt = null }) {
   const location = useLocation()
   const navigate = useNavigate()
   const installPrefix = window.location.pathname.startsWith('/Share') ? '/Share' : ''
   const basePath = `${installPrefix}/`
-  const {isLoading, isAuthenticated, getAccessTokenSilently, logout} = useAuth0()
+  const { isLoading, isAuthenticated, getAccessTokenSilently, logout } = useAuth0()
   const setAccessToken = useStore((state) => state.setAccessToken)
   const setHasGithubIdentity = useStore((state) => state.setHasGithubIdentity)
   const appPrefix = `${basePath}share`
@@ -148,7 +148,7 @@ export default function BaseRoutes({testElt = null}) {
         })
         .catch((err) => {
           if (err.error === 'invalid_grant') {
-            logout({returnTo: window.location.origin})
+            logout({ returnTo: window.location.origin })
           } else if (err.error !== 'login_required') {
             throw err
           }

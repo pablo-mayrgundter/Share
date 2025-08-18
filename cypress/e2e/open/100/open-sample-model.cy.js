@@ -52,7 +52,7 @@ describe.skip('Open 100: Open Sample Model', () => {
       beforeEach(() => {
         // Select element, opens nav
         const interceptEltSelectTag = 'twoLevelSelect'
-        cy.intercept('GET', '/share/v/p/index.ifc/81/621', {fixture: '404.html'}).as(interceptEltSelectTag)
+        cy.intercept('GET', '/share/v/p/index.ifc/81/621', { fixture: '404.html' }).as(interceptEltSelectTag)
         cy.visit('/share/v/p/index.ifc/81/621')
         waitForModelReady(interceptEltSelectTag)
 

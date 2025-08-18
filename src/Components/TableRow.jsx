@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
@@ -19,7 +19,7 @@ import SubmitIcon from '@mui/icons-material/Done'
  * @param {Array<string>} [props.options] The options for the select component.
  * @return {object} The rendered component.
  */
-export default function CustomTableRow({heading, subtext, inputType = 'input', options = []}) {
+export default function CustomTableRow({ heading, subtext, inputType = 'input', options = [] }) {
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState(subtext)
 
@@ -69,7 +69,7 @@ export default function CustomTableRow({heading, subtext, inputType = 'input', o
 
     return (
       <Input
-        sx={{...commonStyles, borderBottom: 'none'}}
+        sx={{ ...commonStyles, borderBottom: 'none' }}
         disableUnderline
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -85,7 +85,7 @@ export default function CustomTableRow({heading, subtext, inputType = 'input', o
       spacing={1}
       alignItems="center"
       justifyContent="space-between"
-      sx={{borderBottom: '1px solid gray'}}
+      sx={{ borderBottom: '1px solid gray' }}
     >
       <Typography variant="body1" sx={commonStyles}>
         {heading}
@@ -93,7 +93,7 @@ export default function CustomTableRow({heading, subtext, inputType = 'input', o
       {isEditing ? (
         <>
           {renderInputComponent()}
-          <Box sx={{width: '40px'}}>
+          <Box sx={{ width: '40px' }}>
             <IconButton size="small" onClick={handleSubmit}>
               <SubmitIcon fontSize="inherit" color='primary'/>
             </IconButton>
@@ -104,7 +104,7 @@ export default function CustomTableRow({heading, subtext, inputType = 'input', o
           <Typography variant="body1" sx={commonStyles}>
             {value}
           </Typography>
-          <Box sx={{width: '40px'}}>
+          <Box sx={{ width: '40px' }}>
             <IconButton size="small" onClick={() => setIsEditing(true)}>
               <EditIcon fontSize="inherit" color='primary'/>
             </IconButton>

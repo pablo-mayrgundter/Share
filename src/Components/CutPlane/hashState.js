@@ -5,8 +5,8 @@ import {
   getHashParams as utilsGetHashParams,
   removeHashParams as utilsRemoveHashParams,
 } from '../../utils/location'
-import {floatStrTrim, isNumeric} from '../../utils/strings'
-import {getPlanesOffset} from './CutPlaneMenu'
+import { floatStrTrim, isNumeric } from '../../utils/strings'
+import { getPlanesOffset } from './CutPlaneMenu'
 
 
 /** The prefix to use for the CutPlane state token */

@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'bun:test'
 import {
   addProperties,
   deepCloneObject,
@@ -6,7 +7,7 @@ import {
   filterObject,
   prefixObjectKeys,
 } from './objects'
-import {UUID_REGEX} from './strings'
+import { UUID_REGEX } from './strings'
 
 
 const templateObj = {
@@ -70,32 +71,32 @@ describe('objects util', () => {
   })
 
   it('filterObject removes a single name/value pair', () => {
-    const testObj = {a: 1, b: 2, c: 3}
+    const testObj = { a: 1, b: 2, c: 3 }
     const filteredObject = filterObject(testObj, (val, key) => {
       if (val === 1 && key === 'a') {
         return false
       }
       return true
     })
-    expect(filteredObject).toStrictEqual({b: 2, c: 3})
+    expect(filteredObject).toStrictEqual({ b: 2, c: 3 })
   })
 
 
   it('prefixObjectKeys', () => {
-    const testObj = {a: 1, b: 2}
+    const testObj = { a: 1, b: 2 }
     const prefixedObj = prefixObjectKeys(testObj, 'prefix_')
-    expect(prefixedObj).toStrictEqual({prefix_a: 1, prefix_b: 2})
+    expect(prefixedObj).toStrictEqual({ prefix_a: 1, prefix_b: 2 })
   })
 
 
   it('addProperties', () => {
-    const testObj = {a: 1, b: 2}
-    const sourceObj = {c: 3, d: 4}
+    const testObj = { a: 1, b: 2 }
+    const sourceObj = { c: 3, d: 4 }
     addProperties(testObj, sourceObj)
-    expect(testObj).toStrictEqual({a: 1, b: 2, c: 3, d: 4})
+    expect(testObj).toStrictEqual({ a: 1, b: 2, c: 3, d: 4 })
 
-    const testObj2 = {a: 1, b: 2}
+    const testObj2 = { a: 1, b: 2 }
     addProperties(testObj2, sourceObj, 'prefix_')
-    expect(testObj2).toStrictEqual({a: 1, b: 2, prefix_c: 3, prefix_d: 4})
+    expect(testObj2).toStrictEqual({ a: 1, b: 2, prefix_c: 3, prefix_d: 4 })
   })
 })

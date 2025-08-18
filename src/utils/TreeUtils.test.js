@@ -2,7 +2,7 @@ import {
   computeElementPathIds,
   setupLookupAndParentLinks,
 } from './TreeUtils'
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
 /**
  *Helper to create a mock IFC doc object tree.
@@ -28,7 +28,8 @@ export function makeTestTree() {
 }
 
 
-test('Test setupLookupAndParentLinks', () => {
+describe('TreeUtils', () => {
+  it('Test setupLookupAndParentLinks', () => {
   const tree = makeTestTree()
   const eltsById = {}
   setupLookupAndParentLinks(tree, eltsById)
@@ -44,7 +45,7 @@ test('Test setupLookupAndParentLinks', () => {
 })
 
 
-test('Test computeElementPathIds', () => {
+  it('Test computeElementPathIds', () => {
   const tree = makeTestTree()
   const a = tree
   const b = tree.children[0]
@@ -58,13 +59,14 @@ test('Test computeElementPathIds', () => {
   expect(computeElementPathIds(a, getIdCb)).toEqual(['a'])
   expect(computeElementPathIds(b, getIdCb)).toEqual(['a', 'b'])
   expect(computeElementPathIds(c, getIdCb)).toEqual(['a', 'b', 'c'])
+  })
 })
 
 
 // eslint-disable-next-line no-magic-numbers
 let nextExpressID = Math.floor(Math.random() * 100)
 
-export const createFakeProject = ({expressId, name, longName}) => {
+export const createFakeProject = ({ expressId, name, longName }) => {
   const project = {
     LongName: null,
     Name: null,
@@ -92,7 +94,7 @@ export const createFakeProject = ({expressId, name, longName}) => {
   return project
 }
 
-export const createFakeSite = ({expressId, globalId, name, longName, parent}) => {
+export const createFakeSite = ({ expressId, globalId, name, longName, parent }) => {
   const site = {
     CompositionType: {
       type: 3,
@@ -147,7 +149,7 @@ export const createFakeSite = ({expressId, globalId, name, longName, parent}) =>
   return site
 }
 
-export const createFakeBuilding = ({expressId, globalId, name, longName, parent}) => {
+export const createFakeBuilding = ({ expressId, globalId, name, longName, parent }) => {
   const building = {
     BuildingAddress: null,
     CompositionType: {
@@ -200,12 +202,12 @@ export const createFakeBuilding = ({expressId, globalId, name, longName, parent}
 }
 
 export const createFakeTree = () => {
-  const project = createFakeProject({name: 'Fake Project'})
+  const project = createFakeProject({ name: 'Fake Project' })
 
-  const site = createFakeSite({parent: project, name: 'Fake Site'})
+  const site = createFakeSite({ parent: project, name: 'Fake Site' })
   project.children.push(site)
 
-  const building = createFakeBuilding({parent: site, name: 'Fake Building'})
+  const building = createFakeBuilding({ parent: site, name: 'Fake Building' })
   site.children.push(building)
 
   return project

@@ -14,10 +14,10 @@ export default function createUIEnabledSlice(set, get) {
     isLoginEnabled: true,
     isModelActionsEnabled: true,
     isShareEnabled: true,
-    setIsAboutEnabled: (isEnabled) => set(() => ({isAboutEnabled: isEnabled})),
-    setIsImagineEnabled: (isEnabled) => set(() => ({isImagineEnabled: isEnabled})),
-    setIsLoginEnabled: (isEnabled) => set(() => ({isLoginEnabled: isEnabled})),
-    setIsModelActionsEnabled: (isEnabled) => set(() => ({isModelActionsEnabled: isEnabled})),
-    setIsShareEnabled: (isEnabled) => set(() => ({isShareEnabled: isEnabled})),
+    setIsAboutEnabled: (isEnabled) => set(() => ({ isAboutEnabled: isEnabled })),
+    setIsImagineEnabled: (isEnabled) => set(() => ({ isImagineEnabled: isEnabled })),
+    setIsLoginEnabled: (isEnabled) => set(() => ({ isLoginEnabled: isEnabled })),
+    setIsModelActionsEnabled: (isEnabled) => set(() => ({ isModelActionsEnabled: isEnabled })),
+    setIsShareEnabled: (isEnabled) => set(() => ({ isShareEnabled: isEnabled })),
   }
 }

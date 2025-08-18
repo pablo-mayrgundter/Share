@@ -1,13 +1,14 @@
-import React, {ReactElement, useEffect, useState} from 'react'
-import {useLocation} from 'react-router'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router'
+import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import SvgIcon from '@mui/material/SvgIcon'
 import ToggleButton from '@mui/material/ToggleButton'
 import Tooltip from '@mui/material/Tooltip'
 import useStore from '../store/useStore'
-import {assertDefined} from '../utils/assert'
-import {addHashParams, hasHashParams, removeHashParams} from '../utils/location'
-import {useIsMobile} from './Hooks'
+import { assertDefined } from '../utils/assert'
+import { addHashParams, hasHashParams, removeHashParams } from '../utils/location'
+import { useIsMobile } from './Hooks'
 import CloseIcon from '@mui/icons-material/Close'
 import ExpandIcon from '../assets/icons/Expand.svg'
 import BackIcon from '../assets/icons/Back.svg'
@@ -21,12 +22,12 @@ import BackIcon from '../assets/icons/Back.svg'
  * @property {Function} onClick Callback
  * @property {object} icon Button icon
  * @property {string} placement Tooltip placement
- * @property {Array<ReactElement>} [children] Optional child elts, e.g. a hosted dialog
+ * @property {Array<React.ReactElement>} [children] Optional child elts, e.g. a hosted dialog
  * @property {boolean} [enabled] Whether the button can be clicked.  Default: true
  * @property {boolean} [selected] Selected state.  Default: false
  * @property {string} [size] Size enum: 'small', 'medium' or 'large'.  Default: 'medium'
  * @property {string} [dataTestId] Internal attribute for component testing.
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export function TooltipIconButton({
   title,
@@ -56,7 +57,7 @@ export function TooltipIconButton({
       title={title}
       describeChild
       placement={placement}
-      PopperProps={{style: {zIndex: 0}}}
+      PopperProps={{ style: { zIndex: 0 } }}
       arrow={true}
       enterDelay={1000}
       slotProps={{
@@ -101,7 +102,7 @@ export function TooltipIconButton({
  * @property {object} children The controlled dialog
  * @property {string} [placement] See default in TooltipIconButton
  * @property {string} [variant] See default in TooltipIconButton
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export function ControlButton({
   title,
@@ -113,6 +114,7 @@ export function ControlButton({
   ...props
 }) {
   assertDefined(title, icon, isDialogDisplayed, setIsDialogDisplayed)
+  const buttonTestId = dataTestId || `control-button-${title.toLowerCase()}`
   return (
     <>
       <TooltipIconButton
@@ -123,7 +125,7 @@ export function ControlButton({
         variant='control'
         color='success'
         size='small'
-        dataTestId={dataTestId || `control-button-${title.toLowerCase()}`}
+        dataTestId={buttonTestId}
         {...props}
       />
       {children}
@@ -138,7 +140,7 @@ export function ControlButton({
  *
  * @property {string} hashPrefix The hash prefix for storing state
  * @property {string} props See ControlButton
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export function ControlButtonWithHashState({
   hashPrefix,
@@ -177,9 +179,37 @@ export function ControlButtonWithHashState({
 
 /**
  * @property {Function} onCloseClick Handler for close event.
- * @return {ReactElement}
+ * @property {string} [component] Component to render as (default: 'button')
+ * @return {React.ReactElement}
  */
-export function CloseButton({onCloseClick, ...props}) {
+export function CloseButton({ onCloseClick, component = 'button', ...props }) {
+  if (component === 'div') {
+    return (
+      <Box
+        component='div'
+        onClick={(e) => {
+          e.stopPropagation()
+          onCloseClick()
+        }}
+        sx={{
+          'cursor': 'pointer',
+          'display': 'flex',
+          'alignItems': 'center',
+          'justifyContent': 'center',
+          'width': 20,
+          'height': 20,
+          'borderRadius': '50%',
+          '&:hover': {
+            backgroundColor: 'action.hover',
+          },
+        }}
+        {...props}
+      >
+        <CloseIcon className='icon-share' style={{ fontSize: 16 }}/>
+      </Box>
+    )
+  }
+
   return (
     <IconButton
       title='Close'
@@ -197,14 +227,14 @@ export function CloseButton({onCloseClick, ...props}) {
 
 /**
  * @property {Function} onClick Handler for close event.
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export function FullScreenButton({onClick}) {
+export function FullScreenButton({ onClick }) {
   return (
     <TooltipIconButton
       title='Full screen'
       onClick={onClick}
-      icon={<ExpandIcon style={{width: '15px', height: '15px'}}/>}
+      icon={<ExpandIcon style={{ width: '15px', height: '15px' }}/>}
       placement='left'
       size='medium'
     />
@@ -214,9 +244,9 @@ export function FullScreenButton({onClick}) {
 
 /**
  * @property {Function} onClick Handler for close event.
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export function BackButton({onClick}) {
+export function BackButton({ onClick }) {
   return (
     <TooltipIconButton
       title='Back'

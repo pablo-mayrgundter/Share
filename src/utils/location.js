@@ -1,5 +1,5 @@
-import {isNumeric} from './strings'
-import {assertObject, assertString} from './assert'
+import { isNumeric } from './strings'
+import { assertObject, assertString } from './assert'
 import debug from './debug'
 
 
@@ -571,5 +571,5 @@ export function parseGitHubPath(path) {
     filePath = parts.slice(3).join('/')
     isPublic = false
   }
-  return {isPublic, owner, repo, branch, filePath}
+  return { isPublic, owner, repo, branch, filePath }
 }

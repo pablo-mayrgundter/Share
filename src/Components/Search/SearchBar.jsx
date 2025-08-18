@@ -1,12 +1,12 @@
-import React, {ReactElement, useRef, useEffect, useState} from 'react'
-import {useLocation, useNavigate, useSearchParams} from 'react-router-dom'
+import React, { useRef, useEffect, useState } from 'react'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
-import {looksLikeLink, githubUrlOrPathToSharePath} from '../../net/github/utils'
-import {disablePageReloadApprovalCheck} from '../../utils/event'
-import {navWithSearchParamRemoved} from '../../utils/navigate'
-import {assertDefined} from '../../utils/assert'
-import {useIsMobile} from '../Hooks'
+import { looksLikeLink, githubUrlOrPathToSharePath } from '../../net/github/utils'
+import { disablePageReloadApprovalCheck } from '../../utils/event'
+import { navWithSearchParamRemoved } from '../../utils/navigate'
+import { assertDefined } from '../../utils/assert'
+import { useIsMobile } from '../Hooks'
 import CloseIcon from '@mui/icons-material/Close'
 
 
@@ -17,7 +17,7 @@ import CloseIcon from '@mui/icons-material/Close'
  * @property {string} [placeholder] Text to display when search bar is inactive
  * @property {boolean} [isGitHubSearch] Strict screening for GH only links
  * @property {Function} [onSuccess] Optional callback when search succeeds
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function SearchBar({
   placeholder = 'Model query or GitHub model link',
@@ -68,7 +68,7 @@ export default function SearchBar({
       try {
         const modelPath = githubUrlOrPathToSharePath(inputText)
         disablePageReloadApprovalCheck()
-        navigate(modelPath, {replace: true})
+        navigate(modelPath, { replace: true })
         if (onSuccess) {
           onSuccess()
         }
@@ -87,7 +87,7 @@ export default function SearchBar({
         search: `?q=${inputText}`,
       })
     } else {
-      setSearchParams({q: inputText})
+      setSearchParams({ q: inputText })
       onSuccess()
     }
     searchInputRef.current.blur()
@@ -100,7 +100,7 @@ export default function SearchBar({
   // way to have them share the same width, which is now set in the
   // parent container (CadView).
   return (
-    <form onSubmit={onSubmit} style={{minWidth: '10em', width: isMobile ? `calc(100vw - ${twoButtonWidth})` : '25em'}}>
+    <form onSubmit={onSubmit} style={{ minWidth: '10em', width: isMobile ? `calc(100vw - ${twoButtonWidth})` : '25em' }}>
       <Autocomplete
         freeSolo
         options={['Dach', 'Decke', 'Fen', 'Wand', 'Leuchte', 'Pos', 'Te']}

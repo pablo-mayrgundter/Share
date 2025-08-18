@@ -1,6 +1,6 @@
 import '@percy/cypress'
-import {TITLE_NOTES} from '../../../src/Components/Notes/component'
-import {homepageSetup, returningUserVisitsHomepageWaitForModel} from '../../support/utils'
+import { TITLE_NOTES } from '../../../src/Components/Notes/component'
+import { homepageSetup, returningUserVisitsHomepageWaitForModel } from '../../support/utils'
 
 
 /** {@link https://github.com/bldrs-ai/Share/issues/1054} */

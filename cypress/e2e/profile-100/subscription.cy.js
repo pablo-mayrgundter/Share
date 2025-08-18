@@ -27,7 +27,7 @@ describe('Profile 100: subscription menu items', () => {
         {
           statusCode: 200,
           body: '<html><body><h1>Mock Stripe Portal</h1></body></html>',
-          headers: {'content-type': 'text/html'},
+          headers: { 'content-type': 'text/html' },
         },
       ).as('stripePortal')
     })

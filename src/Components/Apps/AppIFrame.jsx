@@ -1,13 +1,13 @@
-import React, {ReactElement, useCallback} from 'react'
+import React, { useCallback } from 'react'
 import Box from '@mui/material/Box'
-import {IFrameCommunicationChannel} from './AppsMessagesHandler'
+import { IFrameCommunicationChannel } from './AppsMessagesHandler'
 
 
 /**
  * @property {object} itemJson App description json
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function AppIFrame({itemJson}) {
+export default function AppIFrame({ itemJson }) {
   const appFrameRef = useCallback((elt) => {
     if (elt) {
       elt.addEventListener('load', () => {

@@ -1,17 +1,17 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Box from '@mui/material/Box'
 import useStore from '../../store/useStore'
-import {TooltipIconButton} from '../Buttons'
-import {setCameraFromParams, addCameraUrlParams} from '../Camera/CameraControl'
-import {removeCameraUrlParams} from '../Camera/hashState'
-import {navBackToIssue, setHashParams} from './hashState'
+import { TooltipIconButton } from '../Buttons'
+import { setCameraFromParams, addCameraUrlParams } from '../Camera/CameraControl'
+import { removeCameraUrlParams } from '../Camera/hashState'
+import { navBackToIssue, setHashParams } from './hashState'
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function NotesNavBar() {
   const isCreateNoteVisible = useStore((state) => state.isCreateNoteVisible)
 
@@ -40,7 +40,7 @@ export default function NotesNavBar() {
       const note = notes.filter((n) => n.index === index)[0]
       setSelectedNoteId(note.id)
       setSelectedNoteIndex(note.index)
-      setHashParams({id: note.id})
+      setHashParams({ id: note.id })
       if (note.url) {
         setCameraFromParams(note.url)
         addCameraUrlParams()

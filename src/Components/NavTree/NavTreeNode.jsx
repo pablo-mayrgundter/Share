@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types'
-import React, {ReactElement} from 'react'
-import {reifyName} from '@bldrs-ai/ifclib'
-import {useTheme} from '@mui/material/styles'
+import React, {} from 'react'
+import { reifyName } from '@bldrs-ai/ifclib'
+import { useTheme } from '@mui/material/styles'
 import HideToggleButton from '../HideToggleButton'
 import NodeClosedIcon from '@mui/icons-material/KeyboardArrowRight'
 import NodeOpenIcon from '@mui/icons-material/KeyboardArrowDown'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function NavTreeNode({
   node,
   depth,
@@ -32,7 +32,7 @@ export default function NavTreeNode({
   const handleHideClick = (event) => event.stopPropagation()
 
   // Determine the label based on whether it's a type node or an element node
-  const label = node.label || reifyName({properties: model}, node)
+  const label = node.label || reifyName({ properties: model }, node)
   const paddingLeft = 20 // Indentation for each tree depth
 
   const theme = useTheme()
@@ -70,7 +70,7 @@ export default function NavTreeNode({
           )}
         </div>
       ) : (
-        <div style={{width: 24, marginRight: 8}}/>
+        <div style={{ width: 24, marginRight: 8 }}/>
       )}
 
       {/* Label */}

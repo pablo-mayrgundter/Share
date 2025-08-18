@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react'
-import {HelmetProvider} from 'react-helmet-async'
-import {ThemeProvider} from '@mui/material/styles'
+import React, { useEffect } from 'react'
+import { HelmetProvider } from 'react-helmet-async'
+import { ThemeProvider } from '@mui/material/styles'
 import useStore from './store/useStore'
 import useShareTheme from './theme/Theme'
 import BaseRoutesMock from './BaseRoutesMock.test'
@@ -13,7 +13,7 @@ import BaseRoutesMock from './BaseRoutesMock.test'
  * @property {object} children Of this component.
  * @return {React.Component}
  */
-export default function ShareMock({initialEntries, children} = {}) {
+export default function ShareMock({ initialEntries, children } = {}) {
   const setRepository = useStore((state) => state.setRepository)
   useEffect(() => {
     setRepository('pablo-mayrgundter', 'Share')

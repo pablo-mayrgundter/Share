@@ -1,6 +1,6 @@
 // Adapted from web-ifc-viewer/components/context/raycaster.js
-import {Object3D, Raycaster} from 'three'
-import {assertDefined} from '../utils/assert'
+import { Object3D, Raycaster } from 'three'
+import { assertDefined } from '../utils/assert'
 
 
 /** Uses the THREE raycaster to pick items in the scene. */

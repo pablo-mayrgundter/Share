@@ -1,10 +1,10 @@
-import {useEffect, useMemo, useState} from 'react'
-import {createTheme} from '@mui/material/styles'
+import { useEffect, useMemo, useState } from 'react'
+import { createTheme } from '@mui/material/styles'
 import * as Preferences from '../privacy/preferences'
 import useStore from '../store/useStore'
-import {getComponentOverrides} from './Components'
-import {getTypography} from './Typography'
-import {day, night} from './Palette'
+import { getComponentOverrides } from './Components'
+import { getTypography } from './Typography'
+import { day, night } from './Palette'
 
 
 /**
@@ -54,7 +54,7 @@ function loadTheme(mode, setMode, themeChangeListeners) {
   const theme = {
     components: getComponentOverrides(activePalette),
     typography: getTypography(),
-    shape: {borderRadius: 10},
+    shape: { borderRadius: 10 },
     palette: activePalette,
     zIndex: {
       modal: 2000,

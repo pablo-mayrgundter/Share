@@ -1,14 +1,14 @@
 
-import React, {ReactElement, useState} from 'react'
+import React, { useState } from 'react'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import {navigateBaseOnModelPath} from '../../utils/location'
-import {useAuth0} from '../../Auth0/Auth0Proxy'
-import {pathSuffixSupported} from '../../Filetype'
-import {getFilesAndFolders} from '../../net/github/Files'
-import {getRepositories, getUserRepositories} from '../../net/github/Repositories'
-import {getBranches} from '../../net/github/Branches'
+import { navigateBaseOnModelPath } from '../../utils/location'
+import { useAuth0 } from '../../Auth0/Auth0Proxy'
+import { pathSuffixSupported } from '../../Filetype'
+import { getFilesAndFolders } from '../../net/github/Files'
+import { getRepositories, getUserRepositories } from '../../net/github/Repositories'
+import { getBranches } from '../../net/github/Branches'
 import useStore from '../../store/useStore'
 import Selector from './Selector'
 import SelectorSeparator from './SelectorSeparator'
@@ -18,7 +18,7 @@ import SelectorSeparator from './SelectorSeparator'
  * @property {Function} navigate Callback from CadView to change page url
  * @property {Array<string>} orgNamesArr List of org names for the current user.
  * @property {Function} setIsDialogDisplayed callback
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function GitHubFileBrowser({
   navigate,
@@ -27,7 +27,7 @@ export default function GitHubFileBrowser({
 }) {
   const [currentPath, setCurrentPath] = useState('')
   const [foldersArr, setFoldersArr] = useState([''])
-  const {user} = useAuth0()
+  const { user } = useAuth0()
   const [selectedOrgName, setSelectedOrgName] = useState('')
   const [selectedRepoName, setSelectedRepoName] = useState('')
   const [selectedFolderName, setSelectedFolderName] = useState('')
@@ -63,8 +63,8 @@ export default function GitHubFileBrowser({
   const selectRepo = async (repo) => {
     setSelectedRepoName(repo)
     const owner = orgNamesArr[selectedOrgName]
-    const {files, directories} = await getFilesAndFolders(repoNamesArr[repo], owner, '/', accessToken)
-    const repository = {orgName: owner, name: repoNamesArr[repo]}
+    const { files, directories } = await getFilesAndFolders(repoNamesArr[repo], owner, '/', accessToken)
+    const repository = { orgName: owner, name: repoNamesArr[repo] }
     const branches = await getBranches(repository, accessToken)
     const branchNames = branches.map((branch) => branch.name)
     setBranchesArr(branchNames)
@@ -103,7 +103,7 @@ export default function GitHubFileBrowser({
     setSelectedFolderName('none')
     setCurrentPath(newPath)
 
-    const {files, directories} = await getFilesAndFolders(repoName, owner, newPath, accessToken)
+    const { files, directories } = await getFilesAndFolders(repoName, owner, newPath, accessToken)
     const fileNames = files.map((file) => file.name)
     const directoryNames = directories.map((directory) => directory.name)
 
@@ -124,7 +124,7 @@ export default function GitHubFileBrowser({
   const navigateToFile = () => {
     if (pathSuffixSupported(fileName)) {
       const branch = branchName || 'main'
-      navigate({pathname: navigateBaseOnModelPath(orgName, repoName, branch, `${currentPath}/${fileName}`)})
+      navigate({ pathname: navigateBaseOnModelPath(orgName, repoName, branch, `${currentPath}/${fileName}`) })
       setIsDialogDisplayed(false)
     }
   }

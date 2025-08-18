@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Box from '@mui/material/Box'
 import useStore from '../store/useStore'
 import NavTreePanel from '../Components/NavTree/NavTreePanel'
@@ -9,7 +9,7 @@ import SideDrawer from '../Components/SideDrawer/SideDrawer'
 /**
  * Drawer for NavTree and Versions
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function NavTreeAndVersionsDrawer({
   pathPrefix,

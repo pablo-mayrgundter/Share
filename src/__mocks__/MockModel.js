@@ -1,4 +1,4 @@
-import {Vector3} from 'three'
+import { Vector3 } from 'three'
 
 /* eslint-disable no-magic-numbers */
 const ifcModel = {
@@ -11,6 +11,7 @@ const ifcModel = {
       },
     },
   },
+  getPropertySets: () => Promise.resolve([]),
 }
 
 export default ifcModel

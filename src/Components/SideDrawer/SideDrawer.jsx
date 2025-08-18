@@ -1,10 +1,10 @@
-import React, {ReactElement, useRef} from 'react'
+import React, { useRef } from 'react'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
-import {useTheme} from '@mui/material/styles'
-import {useIsMobile} from '../Hooks'
+import { useTheme } from '@mui/material/styles'
+import { useIsMobile } from '../Hooks'
 import useStore from '../../store/useStore'
-import {assertDefined} from '../../utils/assert'
+import { assertDefined } from '../../utils/assert'
 import HorizonResizerButton from './HorizonResizerButton'
 import VerticalResizerButton from './VerticalResizerButton'
 
@@ -18,8 +18,8 @@ import VerticalResizerButton from './VerticalResizerButton'
  * @property {Function} setDrawerWidth In pixels
  * @property {boolean} [isResizeOnLeft] Position of the resize handle. Default: true
  * @property {string} [dataTestId] data-testid tag
- * @property {Array<ReactElement>} children Drawer content
- * @return {ReactElement}
+ * @property {Array<React.ReactElement>} children Drawer content
+ * @return {React.ReactElement}
  */
 export default function SideDrawer({
   isDrawerVisible,

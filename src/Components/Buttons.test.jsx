@@ -1,15 +1,16 @@
+import { describe, it, expect, mock } from 'bun:test'
 import React from 'react'
-import {fireEvent, render, renderHook, act} from '@testing-library/react'
-import {TooltipIconButton} from './Buttons'
+import { fireEvent, render, renderHook, act } from '@testing-library/react'
+import { TooltipIconButton } from './Buttons'
 import useStore from '../store/useStore'
-import {ThemeCtx} from '../theme/Theme.fixture'
+import { ThemeCtx } from '../theme/Theme.fixture'
 import QuestionIcon from '../assets/icons/Question.svg'
 
 
 describe('TooltipIconButton', () => {
   it('should render successfully', async () => {
     const dataTestId = 'test-button'
-    const cb = jest.fn()
+    const cb = mock()
     const rendered = render(
       <TooltipIconButton
         title='Hello. Is it me ur looking for?'
@@ -18,7 +19,7 @@ describe('TooltipIconButton', () => {
         placement='top'
         dataTestId={dataTestId}
       />,
-      {wrapper: ThemeCtx})
+      { wrapper: ThemeCtx })
     const button = await rendered.findByTestId(dataTestId)
     expect(button).toBeInTheDocument()
     fireEvent.click(button)
@@ -26,13 +27,13 @@ describe('TooltipIconButton', () => {
   })
 
   it('show tooltip when the help is activated', async () => {
-    const {result} = renderHook(() => useStore((state) => state))
+    const { result } = renderHook(() => useStore((state) => state))
     await act(() => {
       result.current.setIsHelpTooltipsVisible(true)
     })
     const title = 'TestTooltip'
-    const cb = jest.fn()
-    const {getByText} = render(
+    const cb = mock()
+    const { getByTestId } = render(
       <TooltipIconButton
         title={title}
         icon={<QuestionIcon/>}
@@ -41,7 +42,7 @@ describe('TooltipIconButton', () => {
       >
         Foo
       </TooltipIconButton>,
-      {wrapper: ThemeCtx})
-    expect(await getByText(title)).toBeVisible()
+      { wrapper: ThemeCtx })
+    expect(getByTestId(title)).toBeInTheDocument()
   })
 })

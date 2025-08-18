@@ -1,13 +1,11 @@
-import {renderHook} from '@testing-library/react'
-import {useExistInFeature} from './useExistInFeature'
+import { describe, it, expect, mock } from 'bun:test'
+import { renderHook } from '@testing-library/react'
+import { useExistInFeature } from './useExistInFeature'
 
-
-jest.mock('react-router-dom', () => {
-  return {
-    ...jest.requireActual('react-router-dom'),
-    useSearchParams: () => [new URLSearchParams({feature: 'app,placemark'})],
-  }
-})
+// Mock react-router-dom for bun
+mock.module('react-router-dom', () => ({
+  useSearchParams: () => [new URLSearchParams({ feature: 'app,placemark' })],
+}))
 
 
 describe('useExistInFeature', () => {

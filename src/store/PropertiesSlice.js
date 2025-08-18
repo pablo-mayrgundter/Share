@@ -1,4 +1,4 @@
-import {isVisibleInitially} from '../Components/Properties/hashState'
+import { isVisibleInitially } from '../Components/Properties/hashState'
 
 
 /**
@@ -11,11 +11,11 @@ import {isVisibleInitially} from '../Components/Properties/hashState'
 export default function createPropertiesSlice(set, get) {
   return {
     isPropertiesEnabled: true,
-    setIsPropertiesEnabled: (is) => set(() => ({isPropertiesEnabled: is})),
+    setIsPropertiesEnabled: (is) => set(() => ({ isPropertiesEnabled: is })),
 
     isPropertiesVisible: isVisibleInitially(),
-    setIsPropertiesVisible: (is) => set(() => ({isPropertiesVisible: is})),
+    setIsPropertiesVisible: (is) => set(() => ({ isPropertiesVisible: is })),
     toggleIsPropertiesVisible: () =>
-      set((state) => ({isPropertiesVisible: !state.isPropertiesVisible})),
+      set((state) => ({ isPropertiesVisible: !state.isPropertiesVisible })),
   }
 }

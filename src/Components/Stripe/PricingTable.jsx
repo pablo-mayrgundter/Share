@@ -1,12 +1,12 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 
 
 /**
  * PricingTable returns the stripe pricing table
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-function PricingTable({theme = 'light', userEmail = ''}) {
+function PricingTable({ theme = 'light', userEmail = '' }) {
   // const stripeCustomerId = appMetadata?.stripeCustomerId || ''
 
   // return (<potio-pricing-table action="payment"data-key="BFrRi9f1cuR1Bdpv"

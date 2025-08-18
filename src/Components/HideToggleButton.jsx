@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import useStore from '../store/useStore'
 import IfcIsolator from '../Infrastructure/IfcIsolator'
 import VisibilityIcon from '@mui/icons-material/Visibility'
@@ -9,9 +9,9 @@ import GlassesIcon from '../assets/icons/Glasses.svg'
 /**
  * @param {IfcIsolator} The IFC isoaltor
  * @param {number} IFC element id
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function HideToggleButton({elementId}) {
+export default function HideToggleButton({ elementId }) {
   const isHidden = useStore((state) => state.hiddenElements[elementId])
   const updateHiddenStatus = useStore((state) => state.updateHiddenStatus)
   const isIsolated = useStore((state) => state.isolatedElements[elementId])

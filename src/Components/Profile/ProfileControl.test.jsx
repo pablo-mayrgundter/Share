@@ -1,47 +1,51 @@
+import { describe, it, expect, mock } from 'bun:test'
 import React from 'react'
-import {fireEvent, render} from '@testing-library/react'
-import {mockedUseAuth0, mockedUserLoggedIn, mockedUserLoggedOut} from '../../__mocks__/authentication'
-import {ThemeCtx} from '../../theme/Theme.fixture'
+import { act, fireEvent, render, renderHook } from '@testing-library/react'
+import { ThemeCtx } from '../../theme/Theme.fixture'
 import LoginMenu from './ProfileControl'
-import {MemoryRouter} from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
+import useStore from '../../store/useStore'
 
 
-export const withRouter = (ui, {route = '/'} = {}) => (
+export const withRouter = (ui, { route = '/' } = {}) => (
   <MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>
 )
 
 
-jest.mock('../../store/useStore', () => {
-  // Everything is inside the factory’s own scope 👇
-  const storeState = {
-    appMetadata: null,
-    setAppMetadata: (data) => {
- storeState.appMetadata = data
-},
-    setAccessToken: jest.fn(),
-  }
-  // This is the mock implementation of the useStore hook
-  const useStoreMock = (selector) => selector(storeState)
+// Mock Auth0 for bun
+const mockedUserLoggedOut = {
+  user: null,
+  isAuthenticated: false,
+  isLoading: false,
+  getAccessTokenSilently: mock(),
+  loginWithRedirect: mock(),
+  logout: mock(),
+}
 
-  /* ---- helpers the tests can call ---- */
-  useStoreMock.__setAppMetadata = (meta) => storeState.setAppMetadata(meta)
-  useStoreMock.__reset = () => {
-    storeState.appMetadata = null
-  }
+const mockedUserLoggedIn = {
+  user: {
+    name: 'Unit Testing',
+    nickname: 'testing',
+    email: 'testing@example.com',
+    picture: 'https://example.com/avatar.png',
+  },
+  isAuthenticated: true,
+  isLoading: false,
+  getAccessTokenSilently: mock(() => Promise.resolve('mock_token')),
+  loginWithRedirect: mock(),
+  logout: mock(),
+}
 
-  return {
-    __esModule: true,
-    default: useStoreMock,
-  }
-})
-
-const useStoreMock = require('../../store/useStore').default
+const mockedUseAuth0 = mock(() => mockedUserLoggedOut)
+mock.module('../../Auth0/Auth0Proxy', () => ({
+  useAuth0: mockedUseAuth0,
+}))
 
 
 describe('ProfileControl', () => {
   it('renders the login button when not logged in, and other links', async () => {
     mockedUseAuth0.mockReturnValue(mockedUserLoggedOut)
-    const {findByTestId, findByText} = render(withRouter(<LoginMenu/>), {wrapper: ThemeCtx})
+    const { findByTestId, findByText } = render(withRouter(<LoginMenu/>), { wrapper: ThemeCtx })
     const usersMenu = await findByTestId('control-button-profile')
     fireEvent.click(usersMenu)
 
@@ -55,7 +59,7 @@ describe('ProfileControl', () => {
 
   it('renders the user avatar when logged in', async () => {
     mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    const {findByTestId, findByText} = render(withRouter(<LoginMenu/>), {wrapper: ThemeCtx})
+    const { findByTestId, findByText } = render(withRouter(<LoginMenu/>), { wrapper: ThemeCtx })
     const usersMenu = await findByTestId('control-button-profile')
     fireEvent.click(usersMenu)
 
@@ -65,7 +69,7 @@ describe('ProfileControl', () => {
 
   it('renders the theme selection', async () => {
     mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    const {findByTestId, findByText} = render(withRouter(<LoginMenu/>), {wrapper: ThemeCtx})
+    const { findByTestId, findByText } = render(withRouter(<LoginMenu/>), { wrapper: ThemeCtx })
     const usersMenu = await findByTestId('control-button-profile')
     fireEvent.click(usersMenu)
 
@@ -75,7 +79,7 @@ describe('ProfileControl', () => {
 
   it('renders the night theme when selected', async () => {
     mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    const {findByTestId, findByText} = render(withRouter(<LoginMenu/>), {wrapper: ThemeCtx})
+    const { findByTestId, findByText } = render(withRouter(<LoginMenu/>), { wrapper: ThemeCtx })
     const usersMenu = await findByTestId('control-button-profile')
     fireEvent.click(usersMenu)
     const dayThemeButton = await findByText('Night theme')
@@ -87,20 +91,25 @@ describe('ProfileControl', () => {
 
   it('renders users avatar when logged in', async () => {
     mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    const {findByAltText} = render(withRouter(<LoginMenu/>), {wrapper: ThemeCtx})
+    const { findByAltText } = render(withRouter(<LoginMenu/>), { wrapper: ThemeCtx })
     const avatarImage = await findByAltText('Unit Testing')
     expect(avatarImage).toBeInTheDocument()
   })
 
-  it('shows “Manage Subscription” for a paying (Pro) user', async () => {
+  it('shows "Manage Subscription" for a paying (Pro) user', async () => {
     mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    useStoreMock.__setAppMetadata({
-      userEmail: 'pro@test.com',
-      stripeCustomerId: 'cus_test_123',
-      subscriptionStatus: 'sharePro',
+
+    // Set store state using renderHook
+    const { result } = renderHook(() => useStore((state) => state))
+    await act(() => {
+      result.current.setAppMetadata({
+        userEmail: 'pro@test.com',
+        stripeCustomerId: 'cus_test_123',
+        subscriptionStatus: 'sharePro',
+      })
     })
 
-    const {findByTestId, queryByTestId} = render(withRouter(<LoginMenu/>), {wrapper: ThemeCtx})
+    const { findByTestId, queryByTestId } = render(withRouter(<LoginMenu/>), { wrapper: ThemeCtx })
     const usersMenu = await findByTestId('control-button-profile')
     fireEvent.click(usersMenu)
 
@@ -108,15 +117,20 @@ describe('ProfileControl', () => {
     expect(queryByTestId('upgrade-to-pro')).toBeNull()
   })
 
-  it('shows “Upgrade to Pro” for an authenticated Free user', async () => {
+  it('shows "Upgrade to Pro" for an authenticated Free user', async () => {
     mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    useStoreMock.__setAppMetadata({
-      userEmail: 'free@test.com',
-      stripeCustomerId: null,
-      subscriptionStatus: 'free',
+
+    // Set store state using renderHook
+    const { result } = renderHook(() => useStore((state) => state))
+    await act(() => {
+      result.current.setAppMetadata({
+        userEmail: 'free@test.com',
+        stripeCustomerId: null,
+        subscriptionStatus: 'free',
+      })
     })
 
-    const {findByTestId, queryByTestId} = render(withRouter(<LoginMenu/>), {wrapper: ThemeCtx})
+    const { findByTestId, queryByTestId } = render(withRouter(<LoginMenu/>), { wrapper: ThemeCtx })
     const usersMenu = await findByTestId('control-button-profile')
     fireEvent.click(usersMenu)
 

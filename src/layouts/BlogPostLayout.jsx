@@ -1,6 +1,6 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Typography from '@mui/material/Typography'
-import {assertDefined} from '../utils/assert'
+import { assertDefined } from '../utils/assert'
 import TitledLayout from './TitledLayout'
 
 
@@ -9,10 +9,10 @@ import TitledLayout from './TitledLayout'
  *
  * @property {string} title Page title
  * @property {string} dateline Page title
- * @property {Array<ReactElement>} children The text content elements for the page
- * @return {ReactElement}
+ * @property {Array<React.ReactElement>} children The text content elements for the page
+ * @return {React.ReactElement}
  */
-export default function BlogPostLayout({title, dateline, children}) {
+export default function BlogPostLayout({ title, dateline, children }) {
   assertDefined(title, dateline, children)
   return (
     <TitledLayout title={title}>

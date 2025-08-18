@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
-import {memo, useEffect} from 'react'
-import {Vector3} from 'three'
-import {assertDefined} from '../../utils/assert'
+import { memo, useEffect } from 'react'
+import { Vector3 } from 'three'
+import { assertDefined } from '../../utils/assert'
 import debug from '../../utils/debug'
-import {roundCoord} from '../../utils/math'
-import {setGroupColor} from '../../utils/svg'
+import { roundCoord } from '../../utils/math'
+import { setGroupColor } from '../../utils/svg'
 import {
   getHashParamsFromUrl,
 } from '../../utils/location'
@@ -14,7 +14,7 @@ import {
   HASH_PREFIX_NOTES,
 } from '../Notes/hashState'
 import useStore from '../../store/useStore'
-import {MARKER_COLOR_ACTIVE, MARKER_COLOR_INACTIVE} from './component'
+import { MARKER_COLOR_ACTIVE, MARKER_COLOR_INACTIVE } from './component'
 import {
   HASH_PREFIX_PLACE_MARK,
   saveMarkToHash,
@@ -33,17 +33,17 @@ import {
  * @param {Function} props.postProcessor A callback function for post-processing marker-related actions.
  * @return {null}
  */
-function MarkerControl({context, oppositeObjects, postProcessor}) {
+function MarkerControl({ context, oppositeObjects, postProcessor }) {
   assertDefined(context, oppositeObjects, postProcessor)
 
   // eslint-disable-next-line new-cap
-  const {createPlaceMark} = PlacemarkHandlers()
+  const { createPlaceMark } = PlacemarkHandlers()
   const placeMark = useStore((state) => state.placeMark)
   const isNotesVisible = useStore((state) => state.isNotesVisible)
   const selectedPlaceMarkId = useStore((state) => state.selectedPlaceMarkId)
   const markers = useStore((state) => state.markers)
   // eslint-disable-next-line no-unused-vars
-  const {selectedPlaceMarkInNoteId, cameraHash, forceMarkerNoteSync} = useStore((state) => ({
+  const { selectedPlaceMarkInNoteId, cameraHash, forceMarkerNoteSync } = useStore((state) => ({
     selectedPlaceMarkInNoteId: state.selectedPlaceMarkInNoteId,
     cameraHash: state.cameraHash,
     forceMarkerNoteSync: state.forceMarkerNoteSync,
@@ -60,7 +60,7 @@ function MarkerControl({context, oppositeObjects, postProcessor}) {
     )
 
     if (selectedMarker) {
-      const {id, commentId, coordinates} = selectedMarker
+      const { id, commentId, coordinates } = selectedMarker
 
       // Construct the coordinates hash segment
       const coordinatesHash = `#${HASH_PREFIX_PLACE_MARK}:${coordinates.join(',')}`
@@ -109,7 +109,7 @@ function MarkerControl({context, oppositeObjects, postProcessor}) {
     }
 
     // Initialize PlaceMark and start render loop only once
-    const _placeMark = createPlaceMark({context, oppositeObjects, postProcessor})
+    const _placeMark = createPlaceMark({ context, oppositeObjects, postProcessor })
 
     // Only start render loop once
     _placeMark.onRender()
@@ -154,7 +154,7 @@ export function PlacemarkHandlers() {
   const setSelectedPlaceMarkId = useStore((state) => state.setSelectedPlaceMarkId)
   const commentMutatedSignal = useStore((state) => state.commentMutatedSignal)
   // eslint-disable-next-line no-unused-vars
-  const {selectedPlaceMarkInNoteId, cameraHash} = useStore((state) => ({
+  const { selectedPlaceMarkInNoteId, cameraHash } = useStore((state) => ({
     selectedPlaceMarkInNoteId: state.selectedPlaceMarkInNoteId,
     cameraHash: state.cameraHash,
   }))
@@ -237,7 +237,7 @@ export function PlacemarkHandlers() {
 
 
   // Save a placemark
-  const savePlaceMark = async ({point, normal, promiseGroup}) => {
+  const savePlaceMark = async ({ point, normal, promiseGroup }) => {
     if (point && normal && promiseGroup) {
       const svgGroup = await promiseGroup
       const positionData = roundCoord(...point)
@@ -409,16 +409,16 @@ export function PlacemarkHandlers() {
     setPlaceMarkId(id)
   }
 
-  const createPlaceMark = ({context, oppositeObjects, postProcessor}) => {
+  const createPlaceMark = ({ context, oppositeObjects, postProcessor }) => {
     debug().log('usePlaceMark#createPlaceMark')
-    const newPlaceMark = new PlaceMark({context, postProcessor})
+    const newPlaceMark = new PlaceMark({ context, postProcessor })
     newPlaceMark.setObjects(oppositeObjects)
     setPlaceMark(newPlaceMark)
     return newPlaceMark
   }
 
 
-  return {createPlaceMark, onSceneDoubleTap, onSceneSingleTap, togglePlaceMarkActive}
+  return { createPlaceMark, onSceneDoubleTap, onSceneSingleTap, togglePlaceMarkActive }
 }
 
 

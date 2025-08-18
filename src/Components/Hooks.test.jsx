@@ -1,10 +1,11 @@
-import React, {ReactElement} from 'react'
-import {render} from '@testing-library/react'
-import {useIsMobile} from './Hooks'
-import {MOBILE_WIDTH} from '../utils/constants'
+import { describe, it, expect } from 'bun:test'
+import React, {} from 'react'
+import { render } from '@testing-library/react'
+import { useIsMobile } from './Hooks'
+import { MOBILE_WIDTH } from '../utils/constants'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 function TestComponent() {
   const isMobile = useIsMobile()
   return <>isMobile: {isMobile ? 'true' : 'false'}</>

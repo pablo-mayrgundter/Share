@@ -1,4 +1,4 @@
-import {removeParams} from '../../utils/location'
+import { removeParams } from '../../utils/location'
 
 
 /** The prefix to use for the Share state token */

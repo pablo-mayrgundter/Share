@@ -1,5 +1,5 @@
-import {assertDefined} from '../../utils/assert'
-import {pathSuffixSupported} from '../../Filetype'
+import { assertDefined } from '../../utils/assert'
+import { pathSuffixSupported } from '../../Filetype'
 
 
 /** Named capture groups for a GitHub URL's path parts. */
@@ -31,7 +31,7 @@ export const parseGitHubRepositoryUrl = (githubUrl) => {
   if (match === null) {
     throw new Error('Could not match GitHub repository URL')
   }
-  const {groups: {org, repo, branch, file}} = match
+  const { groups: { org, repo, branch, file } } = match
   return {
     url: url,
     owner: org,
@@ -63,7 +63,7 @@ const re = new RegExp(`^/${pathParts.join('/')}$`)
 export function extractOrgPrefixedPath(urlWithPath) {
   const match = re.exec(urlWithPath) // TODO actually handle
   if (match) {
-    const {groups: {org, repo, branch, file}} = match
+    const { groups: { org, repo, branch, file } } = match
     return `/${org}/${repo}/${branch}/${file}`
   }
   throw new Error(`Expected a multi-part file path: ${urlWithPath}`)

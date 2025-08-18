@@ -13,11 +13,11 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import LogoutIcon from '@mui/icons-material/Logout'
-import {useAuth0} from '../Auth0/Auth0Proxy'
+import { useAuth0 } from '../Auth0/Auth0Proxy'
 
 
-const UserProfile = ({size = 'medium'}) => {
-  const {user, isAuthenticated, logout} = useAuth0()
+const UserProfile = ({ size = 'medium' }) => {
+  const { user, isAuthenticated, logout } = useAuth0()
   const popupState = usePopupState({
     variant: 'popup',
     popupId: 'user-profile',
@@ -40,7 +40,7 @@ const UserProfile = ({size = 'medium'}) => {
         <Avatar
           alt={user.name}
           src={user.picture}
-          sx={{width: 22, height: 22}}
+          sx={{ width: 22, height: 22 }}
         />
       </IconButton>
 
@@ -72,18 +72,18 @@ const UserProfile = ({size = 'medium'}) => {
         {...bindMenu(popupState)}
       >
         <MenuItem>
-          <ListItemIcon sx={{display: 'flex', alignItems: 'center'}}>
+          <ListItemIcon sx={{ display: 'flex', alignItems: 'center' }}>
             <GitHubIcon className='icon-share'/>
-            <Typography sx={{paddingLeft: '11px'}}>
+            <Typography sx={{ paddingLeft: '11px' }}>
               Hi, {user.name}!
             </Typography>
           </ListItemIcon>
         </MenuItem>
         <Divider/>
-        <MenuItem onClick={() => logout({returnTo: process.env.OAUTH2_REDIRECT_URI || window.location.origin})}>
+        <MenuItem onClick={() => logout({ returnTo: process.env.OAUTH2_REDIRECT_URI || window.location.origin })}>
           <ListItemIcon>
             <LogoutIcon/>
-            <Typography sx={{paddingLeft: '11px'}}>
+            <Typography sx={{ paddingLeft: '11px' }}>
               Logout
             </Typography>
           </ListItemIcon>

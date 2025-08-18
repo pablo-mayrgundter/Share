@@ -1,13 +1,13 @@
 import React from 'react'
-import {act, render, renderHook, fireEvent} from '@testing-library/react'
+import { act, render, renderHook, fireEvent } from '@testing-library/react'
 import useStore from '../../store/useStore'
 import NotesNavBar from './NotesNavBar'
-import {RouteThemeCtx} from '../../Share.fixture'
+import { RouteThemeCtx } from '../../Share.fixture'
 
 
 describe('IssueControl', () => {
   beforeEach(async () => {
-    const {result} = renderHook(() => useStore((state) => state))
+    const { result } = renderHook(() => useStore((state) => state))
     await act(() => {
       result.current.setNotes(null)
     })
@@ -15,8 +15,8 @@ describe('IssueControl', () => {
 
 
   it('NavBar changes to back nav when issue selected', async () => {
-    const {result} = renderHook(() => useStore((state) => state))
-    const {getByTitle} = render(<RouteThemeCtx><NotesNavBar/></RouteThemeCtx>)
+    const { result } = renderHook(() => useStore((state) => state))
+    const { getByTitle } = render(<RouteThemeCtx><NotesNavBar/></RouteThemeCtx>)
     const testNoteId = 10
     await act(() => {
       result.current.setSelectedNoteId(testNoteId)
@@ -26,12 +26,12 @@ describe('IssueControl', () => {
 
 
   it('Navigate notes', async () => {
-    const {result} = renderHook(() => useStore((state) => state))
-    const {getByTitle} = render(<RouteThemeCtx><NotesNavBar/></RouteThemeCtx>)
+    const { result } = renderHook(() => useStore((state) => state))
+    const { getByTitle } = render(<RouteThemeCtx><NotesNavBar/></RouteThemeCtx>)
     const notes = [
-      {id: 1, index: 0},
-      {id: 2, index: 1},
-      {id: 3, index: 2},
+      { id: 1, index: 0 },
+      { id: 2, index: 1 },
+      { id: 3, index: 2 },
     ]
     await act(() => {
       result.current.setNotes(notes)
@@ -46,12 +46,12 @@ describe('IssueControl', () => {
 
 
   it('Navigate notes, back', async () => {
-    const {result} = renderHook(() => useStore((state) => state))
-    const {getByTitle, queryByTitle} = render(<RouteThemeCtx><NotesNavBar/></RouteThemeCtx>)
+    const { result } = renderHook(() => useStore((state) => state))
+    const { getByTitle, queryByTitle } = render(<RouteThemeCtx><NotesNavBar/></RouteThemeCtx>)
     const notes = [
-      {id: 1, index: 0},
-      {id: 2, index: 1},
-      {id: 3, index: 2},
+      { id: 1, index: 0 },
+      { id: 2, index: 1 },
+      { id: 3, index: 2 },
     ]
     await act(() => {
       result.current.setNotes(notes)
@@ -66,8 +66,8 @@ describe('IssueControl', () => {
 
 
   it('Navigate to create note', async () => {
-    const {result} = renderHook(() => useStore((state) => state))
-    const {getByTitle} = render(<RouteThemeCtx><NotesNavBar/></RouteThemeCtx>)
+    const { result } = renderHook(() => useStore((state) => state))
+    const { getByTitle } = render(<RouteThemeCtx><NotesNavBar/></RouteThemeCtx>)
     await act(() => {
       result.current.setSelectedNoteId(null)
     })

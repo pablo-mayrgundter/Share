@@ -5,7 +5,7 @@ import GlobalStyles from '@mui/material/GlobalStyles'
  * @property {object} theme To set link, icon and scrollbar colors.
  * @return {React.Component}
  */
-export default function Styles({theme}) {
+export default function Styles({ theme }) {
   return (
     <GlobalStyles
       styles={{

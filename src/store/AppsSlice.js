@@ -1,4 +1,4 @@
-import {isVisibleInitially as appsIsVisibleInitially} from '../Components/Apps/hashState'
+import { isVisibleInitially as appsIsVisibleInitially } from '../Components/Apps/hashState'
 
 
 const isAppsEnabled = process.env.APPS_IS_ENABLED
@@ -16,9 +16,9 @@ export default function createAppsSlice(set, get) {
     isAppsEnabled: isAppsEnabled,
 
     isAppsVisible: appsIsVisibleInitially(),
-    setIsAppsVisible: (is) => set(() => ({isAppsVisible: is})),
+    setIsAppsVisible: (is) => set(() => ({ isAppsVisible: is })),
 
     selectedApp: null,
-    setSelectedApp: (appInfo) => set(() => ({selectedApp: appInfo})),
+    setSelectedApp: (appInfo) => set(() => ({ selectedApp: appInfo })),
   }
 }

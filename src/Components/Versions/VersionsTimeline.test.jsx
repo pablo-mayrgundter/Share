@@ -1,15 +1,15 @@
+import { describe, it, expect, mock } from 'bun:test'
 import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
-import {render, fireEvent} from '@testing-library/react'
-import {ThemeCtx} from '../../theme/Theme.fixture'
+import { render, fireEvent } from '@testing-library/react'
+import { ThemeCtx } from '../../theme/Theme.fixture'
 import VersionsTimeline from './VersionsTimeline'
-import {MOCK_COMMITS} from './VersionsTimeline.fixture'
+import { MOCK_COMMITS } from './VersionsTimeline.fixture'
 
 
 describe('CustomTimeline', () => {
   it('displays the correct timeline items', () => {
-    const commitNavigateCb = jest.fn()
-    const {getByText} = render(
+    const commitNavigateCb = mock()
+    const { getByText } = render(
       <ThemeCtx>
         <VersionsTimeline
           commits={MOCK_COMMITS}
@@ -25,8 +25,8 @@ describe('CustomTimeline', () => {
   })
 
   it('updates the active timeline item on click', () => {
-    const commitNavigateCb = jest.fn()
-    const {getByText} = render(
+    const commitNavigateCb = mock()
+    const { getByText } = render(
       <ThemeCtx>
         <VersionsTimeline
           commits={MOCK_COMMITS}

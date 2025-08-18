@@ -41,7 +41,7 @@ describe('View 100: Synchronized View and NavTree', () => {
   context('Visits permalink to selected element', () => {
     beforeEach(() => {
       // TODO(pablo): root id selection doesn't work after search state working.  Also move this to a helper
-      cy.intercept('GET', '/share/v/p/index.ifc/81/621', {fixture: '404.html'}).as('twoLevelSelect')
+      cy.intercept('GET', '/share/v/p/index.ifc/81/621', { fixture: '404.html' }).as('twoLevelSelect')
       cy.visit('/share/v/p/index.ifc/81/621')
       waitForModelReady('twoLevelSelect')
     })

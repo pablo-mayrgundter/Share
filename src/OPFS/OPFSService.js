@@ -1,5 +1,5 @@
 import debug from '../utils/debug'
-import {GITHUB_BASE_URL_AUTHED, GITHUB_BASE_URL_UNAUTHED} from '../net/github/OctokitExport'
+import { GITHUB_BASE_URL_AUTHED, GITHUB_BASE_URL_UNAUTHED } from '../net/github/OctokitExport'
 
 // TODO(pablo): probably don't need global state, can
 // pass worker refs as needed.

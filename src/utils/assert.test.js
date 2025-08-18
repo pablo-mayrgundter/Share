@@ -1,3 +1,4 @@
+import { describe, it } from 'bun:test'
 import {
   assert,
   assertArraysEqualLength,
@@ -6,7 +7,8 @@ import {
 } from './assert'
 
 
-test('assert', () => {
+describe('assert', () => {
+  it('assert', () => {
   assert(true, 'Should validate')
   try {
     assert(false, 'Should fail')
@@ -17,7 +19,7 @@ test('assert', () => {
 })
 
 
-test('assertDefined', () => {
+  it('assertDefined', () => {
   assertDefined(1)
   assertDefined(1, 2)
   assertDefined(1, 2, 3)
@@ -59,7 +61,7 @@ test('assertDefined', () => {
 })
 
 
-test('assertArraysEqualLength', () => {
+  it('assertArraysEqualLength', () => {
   expectFailure(() => {
     assertArraysEqualLength()
   })
@@ -75,20 +77,21 @@ test('assertArraysEqualLength', () => {
 })
 
 
-test('assertNumber', () => {
-  assertNumber(-1)
-  assertNumber(0)
-  assertNumber(1)
-  assertNumber(2 * Math.PI) // Tau >> Pi
-  // @ts-ignore
-  expectFailure(() => assertNumber('-1'))
-  // @ts-ignore
-  expectFailure(() => assertNumber('0'))
-  // @ts-ignore
-  expectFailure(() => assertNumber('1'))
-  // @ts-ignore
-  expectFailure(() => assertNumber('PI'))
-  expectFailure(() => assertNumber(Number.NaN))
+  it('assertNumber', () => {
+    assertNumber(-1)
+    assertNumber(0)
+    assertNumber(1)
+    assertNumber(2 * Math.PI) // Tau >> Pi
+    // @ts-ignore
+    expectFailure(() => assertNumber('-1'))
+    // @ts-ignore
+    expectFailure(() => assertNumber('0'))
+    // @ts-ignore
+    expectFailure(() => assertNumber('1'))
+    // @ts-ignore
+    expectFailure(() => assertNumber('PI'))
+    expectFailure(() => assertNumber(Number.NaN))
+  })
 })
 
 

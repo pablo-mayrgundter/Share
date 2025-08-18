@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Card from '@mui/material/Card'
 import CardActionArea from '@mui/material/CardActionArea'
 import CardContent from '@mui/material/CardContent'
@@ -10,9 +10,9 @@ import Typography from '@mui/material/Typography'
 /**
  * @property {object} itemJson App description json
  * @property {Function} onClickCb Called when app's card is clicked
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function AppEntry({itemJson, onClickCb}) {
+export default function AppEntry({ itemJson, onClickCb }) {
   return (
     <Paper>
       <Card>

@@ -13,8 +13,8 @@ import {
   ImageLoader,
   Color,
 } from 'three'
-import {SVGLoader} from 'three/examples/jsm/loaders/SVGLoader'
-import {assertDefined} from './assert'
+import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader'
+import { assertDefined } from './assert'
 
 
 const svgLoader = new SVGLoader()
@@ -159,7 +159,7 @@ export function getSvgGroupFromObj({
  * @param {string} fillColor
  * @return {object}
  */
-export async function getSvgCanvas({svgUrl, fillColor}) {
+export async function getSvgCanvas({ svgUrl, fillColor }) {
   const svgStr = await fileLoader.loadAsync(svgUrl)
   const parser = new DOMParser()
   const svgEl = parser.parseFromString(svgStr, 'image/svg+xml').documentElement
@@ -204,7 +204,7 @@ export function getSpriteFromSvgCanvas({
   }
   const texture = new Texture(svgCanvas)
   texture.needsUpdate = true
-  const material = new SpriteMaterial({map: texture, side: DoubleSide})
+  const material = new SpriteMaterial({ map: texture, side: DoubleSide })
   material.map.minFilter = LinearFilter
   const sprite = new Sprite(material)
   sprite.scale.set(width, height, 1.0)

@@ -1,7 +1,7 @@
 import esbuild from 'esbuild'
 import config from './common.js'
-import {createProxyServer} from './proxy.js'
-import {log} from './utils.js'
+import { createProxyServer } from './proxy.js'
+import { log } from './utils.js'
 
 
 const ctx = await esbuild.context(config)
@@ -24,7 +24,7 @@ if (process.env.ESBUILD_WATCH === 'true') {
  * See https://esbuild.github.io/api/#customizing-server-behavior
  */
 const SERVE_PORT = 8080
-const {host, port} = await ctx.serve({
+const { host, port } = await ctx.serve({
   port: SERVE_PORT - 1,
   servedir: config.outdir,
 })

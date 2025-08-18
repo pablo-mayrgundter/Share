@@ -1,41 +1,40 @@
+import { describe, it, expect } from 'bun:test'
 import React from 'react'
-import {render, fireEvent} from '@testing-library/react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
 import InputAutocomplete from './InputAutocomplete' // Adjust the import path
 
 
 describe('InputAutocomplete', () => {
   const elements = [
-    {title: 'Option 1'},
-    {title: 'Option 2'},
-    {title: 'Option 3'},
+    { title: 'Option 1' },
+    { title: 'Option 2' },
+    { title: 'Option 3' },
   ]
 
   it('renders the input with placeholder', () => {
     const placeholderText = 'Type something'
-    const {getByPlaceholderText} = render(
+    const { getByPlaceholderText } = render(
         <InputAutocomplete elements={elements} placeholder={placeholderText}/>,
     )
     const inputElement = getByPlaceholderText(placeholderText)
     expect(inputElement).toBeInTheDocument()
   })
 
-  it('displays suggestions when typing', () => {
-    const {getByPlaceholderText, getByText} = render(
+  it('displays suggestions when typing', async () => {
+    const { getByText, getByRole } = render(
         <InputAutocomplete elements={elements} placeholder="Type something"/>,
     )
 
-    const inputElement = getByPlaceholderText('Type something')
-
-    // Type some text into the input
-    fireEvent.change(inputElement, {target: {value: 'Option'}})
+    // Click the dropdown arrow button to open suggestions
+    const dropdownButton = getByRole('button', { name: 'Open' })
+    fireEvent.click(dropdownButton)
 
     // Wait for suggestions to appear
-    const suggestion1 = getByText('Option 1')
-    const suggestion2 = getByText('Option 2')
-    const suggestion3 = getByText('Option 3')
+    await waitFor(() => {
+      expect(getByText('Option 1')).toBeInTheDocument()
+    })
 
-    expect(suggestion1).toBeInTheDocument()
-    expect(suggestion2).toBeInTheDocument()
-    expect(suggestion3).toBeInTheDocument()
+    expect(getByText('Option 2')).toBeInTheDocument()
+    expect(getByText('Option 3')).toBeInTheDocument()
   })
 })

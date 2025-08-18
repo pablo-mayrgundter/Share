@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import {assertDefined} from '../utils/assert'
+import { assertDefined } from '../utils/assert'
 import Expires from './Expires'
 
 
@@ -19,7 +19,7 @@ export function isAllowed() {
  */
 export function setIsAllowed(allowed) {
   assertDefined(allowed)
-  Cookies.set(COOKIE_NAME, allowed, {expires: Expires.DAYS})
+  Cookies.set(COOKIE_NAME, allowed, { expires: Expires.DAYS })
 }
 
 

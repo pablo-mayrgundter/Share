@@ -1,16 +1,16 @@
-import React, {ReactElement, useEffect, useRef} from 'react'
-import {Helmet} from 'react-helmet-async'
-import {useNavigate, useParams} from 'react-router-dom'
-import {HASH_PREFIX_CAMERA} from './Components/Camera/hashState'
+import React, { useEffect, useRef } from 'react'
+import { Helmet } from 'react-helmet-async'
+import { useNavigate, useParams } from 'react-router-dom'
+import { HASH_PREFIX_CAMERA } from './Components/Camera/hashState'
 import CadView from './Containers/CadView'
 import WidgetApi from './WidgetApi/WidgetApi'
 import useStore from './store/useStore'
 import debug from './utils/debug'
-import {disablePageReloadApprovalCheck} from './utils/event'
-import {navWith} from './utils/navigate'
-import {testUuid} from './utils/strings'
-import {splitAroundExtension} from './Filetype'
-import {processExternalUrl, processProjectFile, processGitHubFile} from './utils/urlHelpers'
+import { disablePageReloadApprovalCheck } from './utils/event'
+import { navWith } from './utils/navigate'
+import { testUuid } from './utils/strings'
+import { splitAroundExtension } from './Filetype'
+import { processExternalUrl, processProjectFile, processGitHubFile } from './utils/urlHelpers'
 
 
 /**
@@ -19,9 +19,9 @@ import {processExternalUrl, processProjectFile, processGitHubFile} from './utils
  * @property {string} installPrefix e.g. '' on bldrs.ai or /Share on GitHub pages.
  * @property {string} appPrefix e.g. /share is the prefix for this component.
  * @property {string} pathPrefix e.g. v/p for CadView, currently the only child.
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function Share({installPrefix, appPrefix, pathPrefix}) {
+export default function Share({ installPrefix, appPrefix, pathPrefix }) {
   const navigate = useNavigate()
   const urlParams = useParams()
   const isAppsEnabled = useStore((state) => state.isAppsEnabled)
@@ -70,7 +70,7 @@ export default function Share({installPrefix, appPrefix, pathPrefix}) {
     onChangeUrlParams()
 
     // TODO(pablo): currently expect these to both be defined.
-    const {org, repo} = urlParams
+    const { org, repo } = urlParams
     if (org && repo) {
       setRepository(org, repo)
       setIsVersionsEnabled(true)
@@ -115,8 +115,8 @@ export default function Share({installPrefix, appPrefix, pathPrefix}) {
 }
 
 
-/** @return {ReactElement} */
-function ModelTitle({repository, modelPath}) {
+/** @return {React.ReactElement} */
+function ModelTitle({ repository, modelPath }) {
   let modelName = ''
   if (modelPath.srcUrl) {
     modelName = modelPath.srcUrl.split('/').pop() // Get the last part of the URL
@@ -200,10 +200,10 @@ export function getModelPath(installPrefix, pathPrefix, urlParams) {
   let parts
   let extension
   try {
-    ({parts, extension} = splitAroundExtension(filepath))
+    ({ parts, extension } = splitAroundExtension(filepath))
   } catch (e) {
     if (testUuid(filepath)) {
-      return {filepath, extension: null}
+      return { filepath, extension: null }
     }
     alert(`Unsupported filetype: ${filepath}`)
     debug().error(e)

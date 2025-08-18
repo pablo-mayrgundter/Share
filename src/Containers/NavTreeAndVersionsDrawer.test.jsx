@@ -1,9 +1,10 @@
+import { describe, it, expect, beforeAll, mock } from 'bun:test'
 import React from 'react'
-import {__getIfcViewerAPIExtendedMockSingleton} from 'web-ifc-viewer'
-import {act, render, renderHook, fireEvent} from '@testing-library/react'
-import {useIsMobile} from '../Components/Hooks'
-import {TITLE as TITLE_NAV_TREE} from '../Components/NavTree/NavTreePanel'
-import {TITLE as TITLE_VERSIONS} from '../Components/Versions/VersionsPanel'
+import { __getIfcViewerAPIExtendedMockSingleton } from 'web-ifc-viewer'
+import { act, render, renderHook, fireEvent } from '@testing-library/react'
+import { useIsMobile } from '../Components/Hooks'
+import { TITLE as TITLE_NAV_TREE } from '../Components/NavTree/NavTreePanel'
+import { VERSIONS_TITLE } from '../Components/Versions/component'
 import ShareMock from '../ShareMock'
 import useStore from '../store/useStore'
 import NavTreeAndVersionsDrawer from './NavTreeAndVersionsDrawer'
@@ -15,13 +16,13 @@ import {
 
 describe('NavTreeAndVersionsDrawer', () => {
   beforeAll(async () => {
-    const {result} = renderHook(() => useStore((state) => state))
+    const { result } = renderHook(() => useStore((state) => state))
     const viewer = __getIfcViewerAPIExtendedMockSingleton()
     viewer.isolator = {
-      toggleIsolationMode: jest.fn(),
-      hideSelectedElements: jest.fn(),
-      unHideAllElements: jest.fn(),
-      canBeHidden: jest.fn(),
+      toggleIsolationMode: mock(() => {}),
+      hideSelectedElements: mock(() => {}),
+      unHideAllElements: mock(() => {}),
+      canBeHidden: mock(() => {}),
     }
     await act(() => {
       result.current.setViewer(viewer)
@@ -29,15 +30,15 @@ describe('NavTreeAndVersionsDrawer', () => {
   })
 
   it.skip('properties panel renders', async () => {
-    const {result: {current: store}} = renderHook(() => useStore((state) => state))
+    const { result: { current: store } } = renderHook(() => useStore((state) => state))
     await act(() => {
-      store.setModel({getIfcType: jest.fn()})
+      store.setModel({ getIfcType: mock(() => {}) })
       store.setModelPath({})
-      store.setRootElement({expressID: 0, children: []})
+      store.setRootElement({ expressID: 0, children: [] })
     })
-    const {findByText} = render(
+    const { findByText } = render(
       <ShareMock>
-        <NavTreeAndVersionsDrawer pathPrefix='' branch='' selectWithShiftClickEvents={jest.fn()}/>
+        <NavTreeAndVersionsDrawer pathPrefix='' branch='' selectWithShiftClickEvents={mock(() => {})}/>
       </ShareMock>)
     await act(() => {
       store.setIsNavTreeVisible(true)
@@ -52,12 +53,12 @@ describe('NavTreeAndVersionsDrawer', () => {
 
   it.skip('double-click resizes horizontally', async () => {
     const mobileHook = renderHook(() => useIsMobile())
-    const {result: {current: store}} = renderHook(() => useStore((state) => state))
+    const { result: { current: store } } = renderHook(() => useStore((state) => state))
     await act(() => {
       // NavTree
-      store.setModel({getIfcType: jest.fn()})
+      store.setModel({ getIfcType: mock(() => {}) })
       store.setModelPath({})
-      store.setRootElement({expressID: 0, children: []})
+      store.setRootElement({ expressID: 0, children: [] })
       // Versions
       store.setModelPath(MOCK_MODEL_PATH_GIT)
       store.setRepository(MOCK_REPOSITORY)
@@ -65,12 +66,12 @@ describe('NavTreeAndVersionsDrawer', () => {
     })
     const notesAndPropsRender = render(
       <ShareMock>
-        <NavTreeAndVersionsDrawer pathPrefix='' branch='' selectWithShiftClickEvents={jest.fn()}/>
+        <NavTreeAndVersionsDrawer pathPrefix='' branch='' selectWithShiftClickEvents={mock(() => {})}/>
       </ShareMock>)
     await act(() => {
       store.setIsVersionsVisible(true)
     })
-    expect(await notesAndPropsRender.findByText(TITLE_VERSIONS)).toBeVisible()
+    expect(await notesAndPropsRender.findByText(VERSIONS_TITLE)).toBeVisible()
     expect(mobileHook.result.current).toBe(false)
     const leftDrawerWidthInitial = store.leftDrawerWidthInitial
     const xResizerEl = notesAndPropsRender.getByTestId('x_resizer')

@@ -1,7 +1,7 @@
 import ApiEventDispatcher from './ApiEventDispatcher'
 import Utils from '../Utils'
 import useStore from '../../store/useStore'
-import {unsortedArraysAreEqual} from '../../utils/arrays'
+import { unsortedArraysAreEqual } from '../../utils/arrays'
 
 /**
  * class HiddenElementsEventDispatcher
@@ -46,7 +46,7 @@ class HiddenElementsEventDispatcher extends ApiEventDispatcher {
       if (noChanges) {
         return
       }
-      const eventData = {previous: lastHiddenElementsGlobalIds, current: currHiddenElementsGlobalIds}
+      const eventData = { previous: lastHiddenElementsGlobalIds, current: currHiddenElementsGlobalIds }
       this.apiConnection.send(this.name, eventData)
       lastHiddenElementsGlobalIds = currHiddenElementsGlobalIds
     })

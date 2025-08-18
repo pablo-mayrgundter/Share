@@ -17,6 +17,11 @@ module.exports = {
   ],
   overrides: [{
     files: ['*.js', '*.mjs', '*.jsx'],
+  }, {
+    files: ['*.test.js', '*.test.jsx', '*.test.mjs'],
+    rules: {
+      'no-empty-function': 'off',
+    },
   }],
   parser: '@babel/eslint-parser',
   parserOptions: {
@@ -94,6 +99,8 @@ module.exports = {
     'no-useless-concat': 'error',
     'no-useless-constructor': 'error',
     'no-useless-return': 'error',
+    'object-curly-spacing': ['error', 'always'],
+    'array-bracket-spacing': ['error', 'never'],
     'prefer-const': 'error',
     'prefer-rest-params': 'off',
     'prefer-template': 'error',

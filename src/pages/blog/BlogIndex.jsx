@@ -1,9 +1,9 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Link from '@mui/material/Link'
 import BlogLayout from '../../layouts/BlogLayout'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function BlogIndex() {
   return (
     <BlogLayout title='Blog Posts'>

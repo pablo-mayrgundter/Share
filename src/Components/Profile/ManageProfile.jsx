@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useState} from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,7 @@ import {
   Chip,
   Divider,
 } from '@mui/material'
-import {useAuth0} from '../../Auth0/Auth0Proxy'
+import { useAuth0 } from '../../Auth0/Auth0Proxy'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import GoogleIcon from '@mui/icons-material/Google'
 
@@ -26,8 +26,8 @@ const useMock = OAUTH_2_CLIENT_ID === 'cypresstestaudience'
 const CUSTOM_CLAIM = 'https://bldrs.ai/identities'
 
 const providerMeta = {
-  'google-oauth2': {name: 'Google', icon: <GoogleIcon/>, color: 'primary'},
-  'github': {name: 'GitHub', icon: <GitHubIcon/>, color: 'default'},
+  'google-oauth2': { name: 'Google', icon: <GoogleIcon/>, color: 'primary' },
+  'github': { name: 'GitHub', icon: <GitHubIcon/>, color: 'default' },
 }
 
 const NETLIFY_UNLINK_ENDPOINT = '/.netlify/functions/unlink-identity'
@@ -35,22 +35,22 @@ const NETLIFY_UNLINK_ENDPOINT = '/.netlify/functions/unlink-identity'
 /**
  * ManageProfile component for managing user profile and linked provider identities
  *
- * @return {ReactElement} Dialog component for profile management
+ * @return {React.ReactElement} Dialog component for profile management
  */
-export default function ManageProfile({open, onClose}) {
-  const {user, isAuthenticated, getAccessTokenSilently} = useAuth0()
+export default function ManageProfile({ open, onClose }) {
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0()
   const [linkedIdentities, setLinkedIdentities] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   const primaryProviderId = user?.sub?.split('|')[0]
   const primaryProvider = primaryProviderId ? providerMeta[primaryProviderId] : undefined
 
   const refreshUser = useCallback(async () => {
     try {
-      await getAccessTokenSilently({authorizationParams:
-                                    {audience: 'https://api.github.com/', scope:
-                                     'openid profile email offline_access'},
-                                    cacheMode: 'off', useRefreshTokens: true})
+      await getAccessTokenSilently({ authorizationParams:
+                                    { audience: 'https://api.github.com/', scope:
+                                     'openid profile email offline_access' },
+                                    cacheMode: 'off', useRefreshTokens: true })
     } catch (err) {
       console.error('Error refreshing user after link/unlink', err)
     }
@@ -62,7 +62,7 @@ export default function ManageProfile({open, onClose}) {
     }
     const identitiesClaim = user?.[CUSTOM_CLAIM] || user?.identities || []
     setLinkedIdentities(identitiesClaim)
-    setLoading(false)
+    setIsLoading(false)
   }, [isAuthenticated, user])
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function ManageProfile({open, onClose}) {
 
   const handleLink = async (connection) => {
     if (useMock) {
-      setLinkedIdentities((p) => [...p, {provider: connection, user_id: `mock-${connection}`}]); return
+      setLinkedIdentities((p) => [...p, { provider: connection, user_id: `mock-${connection}` }]); return
     }
     try {
       const primaryToken = await getAccessTokenSilently(
@@ -118,7 +118,7 @@ export default function ManageProfile({open, onClose}) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${primaryAccessToken}`,
           },
-          body: JSON.stringify({secondaryProvider: connection, secondaryUserId}),
+          body: JSON.stringify({ secondaryProvider: connection, secondaryUserId }),
         })
       if (!res.ok) {
         throw new Error(await res.text())
@@ -135,18 +135,18 @@ export default function ManageProfile({open, onClose}) {
     'alignSelf': 'center',
     'borderColor': 'divider',
     'color': 'text.primary',
-    '&:hover': {borderColor: 'text.primary'},
+    '&:hover': { borderColor: 'text.primary' },
   }
-  const listAvatarSx = {minWidth: 56, mr: 1.5} // 40px avatar + 16px gap
+  const listAvatarSx = { minWidth: 56, mr: 1.5 } // 40px avatar + 16px gap
 
   const providers = [
-    {id: 'google-oauth2', ...providerMeta['google-oauth2']},
-    {id: 'github', ...providerMeta.github},
+    { id: 'google-oauth2', ...providerMeta['google-oauth2'] },
+    { id: 'github', ...providerMeta.github },
   ]
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth='sm' scroll='paper'>
-      <DialogTitle sx={{textAlign: 'center', fontWeight: 600, fontSize: '1.35rem'}}>Account Settings</DialogTitle>
+      <DialogTitle sx={{ textAlign: 'center', fontWeight: 600, fontSize: '1.35rem' }}>Account Settings</DialogTitle>
       <DialogContent dividers>
           <Box
           display='flex'
@@ -158,20 +158,20 @@ export default function ManageProfile({open, onClose}) {
           />
         <Box display='flex' alignItems='center' justifyContent='space-between' mb={3}>
           <Box display='flex' alignItems='center'>
-            <Avatar src={user?.picture} alt={user?.name} sx={{width: 56, height: 56, mr: 2}}/>
+            <Avatar src={user?.picture} alt={user?.name} sx={{ width: 56, height: 56, mr: 2 }}/>
             <Box>
-              <Typography variant='h3' sx={{lineHeight: 1.2, pl: 4, ml: -2}}>{user?.name || user?.email}</Typography>
-              <Typography variant='h3' color='text.secondary' sx={{lineHeight: 1.2, pr: -4, ml: -4}}>{user?.email}</Typography>
+              <Typography variant='h3' sx={{ lineHeight: 1.2, pl: 4, ml: -2 }}>{user?.name || user?.email}</Typography>
+              <Typography variant='h3' color='text.secondary' sx={{ lineHeight: 1.2, pr: -4, ml: -4 }}>{user?.email}</Typography>
             </Box>
           </Box>
           {primaryProvider && <Chip label={primaryProvider.name} size='small' color={primaryProvider.color}/>}
         </Box>
 
-        <Divider sx={{mb: 2}}/>
+        <Divider sx={{ mb: 2 }}/>
 
         <Typography variant='subtitle1' gutterBottom>Additional Provider Connections</Typography>
 
-        {loading ? (
+        {isLoading ? (
           <Box display='flex' justifyContent='center' py={3}><CircularProgress size={28}/></Box>
         ) : (
           <List disablePadding>
@@ -183,13 +183,13 @@ return null
               const isConnected = Boolean(identity)
               const connectedEmail = identity?.profileData?.email
               return (
-                <ListItem key={provider.id} divider disableGutters sx={{px: 3}}>
+                <ListItem key={provider.id} divider disableGutters sx={{ px: 3 }}>
                   <Box display='flex' alignItems='center' width='100%'>
                     <ListItemAvatar sx={listAvatarSx}><Avatar>{provider.icon}</Avatar></ListItemAvatar>
-                    <ListItemText sx={{mr: 1}}
+                    <ListItemText sx={{ mr: 1 }}
                       primary={provider.name}
                       secondary={isConnected ? (connectedEmail ? `Connected as ${connectedEmail}` : 'Connected') : 'Not connected'}
-                      secondaryTypographyProps={{color: 'text.secondary'}}
+                      secondaryTypographyProps={{ color: 'text.secondary' }}
                     />
                     {isConnected ? (
                       <Button variant='outlined'

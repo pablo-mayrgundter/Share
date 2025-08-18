@@ -6,7 +6,7 @@ import {
   setParamsToHash,
   batchUpdateHash,
 } from '../../utils/location'
-import {removeParamsFromHash as removeMarkerParamsFromHash} from '../Markers/hashState'
+import { removeParamsFromHash as removeMarkerParamsFromHash } from '../Markers/hashState'
 
 
 /** The prefix to use for the Note state tokens */

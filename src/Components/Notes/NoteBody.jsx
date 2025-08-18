@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import CardActionArea from '@mui/material/CardActionArea'
 import NoteContent from './NoteContent'
 
@@ -6,9 +6,9 @@ import NoteContent from './NoteContent'
 /**
  * @property {Function} selectCard Card click handler
  * @property {string} markdownContent The note text in markdown format
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function NoteBody({selectCard, markdownContent, issueID, commentID}) {
+export default function NoteBody({ selectCard, markdownContent, issueID, commentID }) {
   return (
     <CardActionArea
       onClick={selectCard}

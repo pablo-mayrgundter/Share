@@ -1,8 +1,8 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
-import {disablePageReloadApprovalCheck} from '../../utils/event'
+import { disablePageReloadApprovalCheck } from '../../utils/event'
 
 
 /**
@@ -12,7 +12,7 @@ import {disablePageReloadApprovalCheck} from '../../utils/event'
  * @property {Function} setSelected callback to select the element
  * @property {Array} list list of eleemnt to populate select options
  * @property {any} props For prop drilling to the TextField
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function SelectorSeparator({
   setIsDialogDisplayed,
@@ -28,7 +28,7 @@ export default function SelectorSeparator({
   }
   return (
     <TextField
-      sx={{width: '260px', marginBottom: '.5em'}}
+      sx={{ width: '260px', marginBottom: '.5em' }}
       value={selected}
       onChange={(e) => handleSelect(e)}
       variant='outlined'
@@ -39,7 +39,7 @@ export default function SelectorSeparator({
     >
       {list.map((listMember, i) => {
         if (listMember.isSeparator) {
-          return <div style={{borderTop: '0.5px solid #cccccc', margin: '4px 0'}}/>
+          return <div style={{ borderTop: '0.5px solid #cccccc', margin: '4px 0' }}/>
         }
         return (
           <MenuItem key={i} value={i}><Typography variant='p'>{listMember}</Typography></MenuItem>

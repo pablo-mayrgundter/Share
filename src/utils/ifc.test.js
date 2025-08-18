@@ -1,17 +1,19 @@
-import {groupElementsByTypes, prettyType} from './ifc'
-import {newMockElementHirerachyWithType} from './IfcMock.test'
+import { describe, it, expect } from 'bun:test'
+import { groupElementsByTypes, prettyType } from './ifc'
+import { newMockElementHirerachyWithType } from './IfcMock.test'
 
 
-test('prettyType', () => {
+describe('ifc', () => {
+  it('prettyType', () => {
   expect(prettyType('IFCREINFORCINGBAR')).toBe('Reinforcing Bar')
   expect(prettyType('IFCBUILDINGELEMENTPROXY')).toBe('Element (generic proxy)')
   expect(prettyType('IFCWALLSTANDARDCASE')).toBe('Wall (std. case)')
   // Types that ends with 'ELEMENT' should be handled properly
   expect(prettyType('IFCTESTELEMENT')).toBe('Test Element')
   expect(prettyType('IFCDUMMYELEMENT')).toBe('Dummy Element')
-})
+  })
 
-test('groupElementsByTypes', () => {
+  it('groupElementsByTypes', () => {
   const rootElement = {
     expressID: 1,
     type: 'IFCPROJECT',
@@ -48,4 +50,5 @@ test('groupElementsByTypes', () => {
   expect(group.elements[2].expressID).toBe(13)
   expect(group.elements[3].expressID).toBe(14)
   expect(group.elements[4].expressID).toBe(17)
+  })
 })

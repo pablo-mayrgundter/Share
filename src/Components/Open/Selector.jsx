@@ -1,8 +1,8 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
-import {disablePageReloadApprovalCheck} from '../../utils/event'
+import { disablePageReloadApprovalCheck } from '../../utils/event'
 
 
 /**
@@ -12,7 +12,7 @@ import {disablePageReloadApprovalCheck} from '../../utils/event'
  * @property {Function} setSelected callback to select the element
  * @property {Array} list list of element to populate select options
  * @property {string} [data-testid] id for testing
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function Selector({
   setIsDialogDisplayed,
@@ -36,7 +36,7 @@ export default function Selector({
       label={label}
       select
       size='small'
-      sx={{maxWidth: '260px', marginBottom: '.5em'}}
+      sx={{ maxWidth: '260px', marginBottom: '.5em' }}
       {...props}
     >
       {list.map((listMember, i) => {

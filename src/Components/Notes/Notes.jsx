@@ -1,18 +1,18 @@
-import React, {ReactElement, useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import * as Sentry from '@sentry/react'
-import {useAuth0} from '../../Auth0/Auth0Proxy'
+import { useAuth0 } from '../../Auth0/Auth0Proxy'
 import debug from '../../utils/debug'
-import {getIssueComments} from '../../net/github/Issues'
-import {getObjectParams} from '../../utils/location'
+import { getIssueComments } from '../../net/github/Issues'
+import { getObjectParams } from '../../utils/location'
 import useStore from '../../store/useStore'
 import ApplicationError from '../ApplicationError'
 import Loader from '../Loader'
 import NoContent from '../NoContent'
-import {parsePlacemarkFromIssue, getActivePlaceMarkHash, parsePlacemarkFromURL} from '../Markers/hashState'
-import {HASH_PREFIX_NOTES, HASH_PREFIX_COMMENT} from './hashState'
+import { parsePlacemarkFromIssue, getActivePlaceMarkHash, parsePlacemarkFromURL } from '../Markers/hashState'
+import { HASH_PREFIX_NOTES, HASH_PREFIX_COMMENT } from './hashState'
 import NoteCard from './NoteCard'
 import NoteCardCreate from './NoteCardCreate'
 
@@ -20,7 +20,7 @@ import NoteCardCreate from './NoteCardCreate'
 /**
  * List of Notes
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function Notes() {
   const accessToken = useStore((state) => state.accessToken)
@@ -42,7 +42,7 @@ export default function Notes() {
 
   const [hasError, setHasError] = useState(false)
 
-  const {user} = useAuth0()
+  const { user } = useAuth0()
 
   const selectedNote =
         (notes && selectedNoteId) ?
@@ -191,11 +191,11 @@ export default function Notes() {
   }
 
 
-  const liSx = {paddingTop: '0px', paddingLeft: '0px', paddingRight: '0px'}
+  const liSx = { paddingTop: '0px', paddingLeft: '0px', paddingRight: '0px' }
   return (hasError ? <ApplicationError/> :
     <List
       spacing={3}
-      sx={{height: '100%', padding: '0px', overflow: 'scroll'}}
+      sx={{ height: '100%', padding: '0px', overflow: 'scroll' }}
       data-testid='list-notes'
     >
       {isLoadingNotes && !isCreateNoteVisible && <Loader type={'linear'}/>}
@@ -242,12 +242,12 @@ export default function Notes() {
         {user && selectedNote && !selectedNote.locked && <NoteCardCreate isNote={false} noteNumber={selectedNote.number}/>}
       </ListItem>
       {selectedNote && !user &&
-       <Box sx={{paddingBottom: '1em'}}>
+       <Box sx={{ paddingBottom: '1em' }}>
          <NoContent message={'Please login to leave comments.'}/>
        </Box>
       }
       {selectedNote && user && selectedNote.locked &&
-       <Box sx={{paddingBottom: '1em'}}><NoContent message={'The note is locked.'}/></Box>
+       <Box sx={{ paddingBottom: '1em' }}><NoContent message={'The note is locked.'}/></Box>
       }
       {comments && selectedNote &&
        comments.map((comment, index) => {

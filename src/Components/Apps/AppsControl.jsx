@@ -1,7 +1,7 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import useStore from '../../store/useStore'
-import {ControlButtonWithHashState} from '../Buttons'
-import {HASH_PREFIX_APPS} from './hashState'
+import { ControlButtonWithHashState } from '../Buttons'
+import { HASH_PREFIX_APPS } from './hashState'
 import WidgetsIcon from '@mui/icons-material/WidgetsOutlined'
 
 
@@ -9,7 +9,7 @@ import WidgetsIcon from '@mui/icons-material/WidgetsOutlined'
  * This button hosts the AppsDialog component and toggles it open and
  * closed.
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function AppsControl() {
   const isAppsVisible = useStore((state) => state.isAppsVisible)

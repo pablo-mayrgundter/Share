@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Stack from '@mui/material/Stack'
 import AboutControl from '../Components/About/AboutControl'
 import ElementsControl from '../Components/ElementsControl'
@@ -9,9 +9,9 @@ import HelpControl from '../Components/Help/HelpControl'
  * BottomBar contains AboutControl, ElementsControl and HelpControl
  *
  * @property {Function} deselectItems deselects currently selected element
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function BottomBar({deselectItems}) {
+export default function BottomBar({ deselectItems }) {
   return (
     <Stack
       spacing={2}

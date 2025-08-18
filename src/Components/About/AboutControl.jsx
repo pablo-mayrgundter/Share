@@ -1,10 +1,10 @@
-import React, {ReactElement} from 'react'
-import {isFirst, setVisited} from '../../privacy/firstTime'
+import React, {} from 'react'
+import { isFirst, setVisited } from '../../privacy/firstTime'
 import useStore from '../../store/useStore'
-import {ControlButtonWithHashState} from '../Buttons'
-import {LogoB} from '../Logo/Logo'
+import { ControlButtonWithHashState } from '../Buttons'
+import { LogoB } from '../Logo/Logo'
 import AboutDialog from './AboutDialog'
-import {HASH_PREFIX_ABOUT} from './hashState'
+import { HASH_PREFIX_ABOUT } from './hashState'
 import PkgJson from '../../../package.json'
 
 
@@ -12,7 +12,7 @@ import PkgJson from '../../../package.json'
  * Button to toggle About panel on and off.  Default state is open until
  * firstTime cookie is set, then closed.
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function AboutControl() {
   const isAboutVisible = useStore((state) => state.isAboutVisible)

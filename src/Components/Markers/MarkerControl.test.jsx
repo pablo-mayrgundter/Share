@@ -1,156 +1,87 @@
+import { describe, it, expect, beforeEach, beforeAll, afterEach, mock } from 'bun:test'
 import React from 'react'
-import {act, render, renderHook} from '@testing-library/react'
+import { act, render, renderHook } from '@testing-library/react'
 import ShareMock from '../../ShareMock'
 import useStore from '../../store/useStore'
 import MarkerControl from './MarkerControl'
-import CadView from '../../Containers/CadView'
-import {MOCK_MARKERS} from './Marker.fixture'
-import {IfcViewerAPIExtended} from '../../Infrastructure/IfcViewerAPIExtended'
-import {makeTestTree} from '../../utils/TreeUtils.test'
-import {actAsyncFlush} from '../../utils/tests'
-import {Mesh, BoxGeometry, MeshBasicMaterial} from 'three'
-import {HASH_PREFIX_NOTES} from '../../Components/Notes/hashState'
-import {HASH_PREFIX_PLACE_MARK} from './hashState'
+import { MOCK_MARKERS } from './Marker.fixture'
+import { actAsyncFlush } from '../../utils/tests'
+import { Mesh, BoxGeometry, MeshBasicMaterial } from 'three'
+import { HASH_PREFIX_NOTES } from '../../Components/Notes/hashState'
+import { HASH_PREFIX_PLACE_MARK } from './hashState'
 
 
-window.HTMLElement.prototype.scrollIntoView = jest.fn()
-const mockedUseNavigate = jest.fn()
-const defaultLocationValue = {pathname: '/index.ifc', search: '', hash: '', state: null, key: 'default'}
+window.HTMLElement.prototype.scrollIntoView = mock()
+const mockedUseNavigate = mock()
+const defaultLocationValue = { pathname: '/index.ifc', search: '', hash: '', state: null, key: 'default' }
 // mock createObjectURL
-global.URL.createObjectURL = jest.fn(() => '1111111111111111111111111111111111111111')
-
-jest.mock('../../OPFS/utils', () => {
-  const actualUtils = jest.requireActual('../../OPFS/utils')
-  const fs = jest.requireActual('fs')
-  const path = jest.requireActual('path')
-  const Blob = jest.requireActual('node:buffer').Blob
-
-  /**
-   * FileMock - Mocks File Web Interface
-   */
-  class FileMock {
-    /**
-     *
-     * @param {Blob} blobParts
-     * @param {string} fileName
-     * @param {any} options
-     */
-    constructor(blobParts, fileName, options) {
-      this.blobParts = blobParts
-      this.name = fileName
-      this.lastModified = options.lastModified || Date.now()
-      this.type = options.type
-      // Implement other properties and methods as needed for your tests
-    }
-
-    // Implement any required methods (e.g., slice, arrayBuffer, text) if your code uses them
-  }
-
-  return {
-    ...actualUtils, // Preserve other exports from the module
-    downloadToOPFS: jest.fn().mockImplementation(() => {
-      // Read the file content from disk
-      const fileContent = fs.readFileSync(path.join(__dirname, './index.ifc'), 'utf8')
-
-      const uint8Array = new Uint8Array(fileContent)
-      const blob = new Blob([uint8Array])
-
-      // The lastModified property is optional, and can be omitted or set to Date.now() if needed
-      const file = new FileMock([blob], 'index.ifc', {type: 'text/plain', lastModified: Date.now()})
-      // Return the mocked File in a promise if it's an async function
-      return Promise.resolve(file)
-    }),
-    downloadModel: jest.fn().mockImplementation(() => {
-      // Read the file content from disk
-      const fileContent = fs.readFileSync(path.join(__dirname, './index.ifc'), 'utf8')
-
-      const uint8Array = new Uint8Array(fileContent)
-      const blob = new Blob([uint8Array])
-
-      // The lastModified property is optional, and can be omitted or set to Date.now() if needed
-      const file = new FileMock([blob], 'index.ifc', {type: 'text/plain', lastModified: Date.now()})
-      // Return the mocked File in a promise if it's an async function
-      return Promise.resolve(file)
-    }),
-  }
-})
+global.URL.createObjectURL = mock(() => '1111111111111111111111111111111111111111')
 
 
-jest.mock('react-router-dom', () => {
-  return {
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => mockedUseNavigate,
-    useLocation: jest.fn(() => defaultLocationValue),
-  }
-})
-jest.mock('postprocessing')
-jest.mock('@auth0/auth0-react', () => {
-  return {
-    ...jest.requireActual('@auth0/auth0-react'),
-    useAuth0: () => jest.fn(() => {
-      return {
-        isLoading: () => false,
-        isAuthenticated: () => false,
-      }
-    }),
-  }
-})
+mock.module('react-router-dom', () => ({
+  useNavigate: () => mockedUseNavigate,
+  useLocation: mock(() => defaultLocationValue),
+}))
+
+mock.module('postprocessing', () => ({}))
+
+mock.module('@auth0/auth0-react', () => ({
+  useAuth0: () => ({
+    isLoading: false,
+    isAuthenticated: false,
+  }),
+}))
+
 
 describe('MarkerControl', () => {
-    let viewer
+  let originalWorker
 
-    let originalWorker
-
-    beforeAll(() => {
-      // Store the original Worker in case other tests need it
-      originalWorker = global.Worker
-    })
+  beforeAll(() => {
+    // Store the original Worker in case other tests need it
+    originalWorker = global.Worker
+  })
 
 
-    // TODO: `document.createElement` can't be used in testing-library directly,
-    // need to move this after fixing that issue
-    beforeEach(() => {
-      viewer = new IfcViewerAPIExtended()
-      viewer._loadedModel.ifcManager.getSpatialStructure.mockReturnValue(makeTestTree())
-      viewer.context.getDomElement = jest.fn(() => {
-        return document.createElement('div')
-      })
-    })
+  // TODO: `document.createElement` can't be used in testing-library directly,
+  // need to move this after fixing that issue
+  beforeEach(() => {
+    mockedUseNavigate.mockClear()
+  })
 
 
-    afterEach(() => {
-      jest.clearAllMocks()
-      global.Worker = originalWorker
-    })
+  afterEach(() => {
+    mockedUseNavigate.mockClear()
+    global.Worker = originalWorker
+  })
 
-  // Properly mock viewer context
+
   const mockCanvas = document.createElement('canvas')
   const mockContext = {
-    getDomElement: jest.fn(() => mockCanvas), // Return the mocked canvas element
-    getCamera: jest.fn(() => ({
-      position: {x: 0, y: 0, z: 0},
+    getDomElement: mock(() => mockCanvas), // Return the mocked canvas element
+    getCamera: mock(() => ({
+      position: { x: 0, y: 0, z: 0 },
     })),
-    getScene: jest.fn(() => ({
+    getScene: mock(() => ({
       children: [],
     })),
   }
 
-  // Create mock opposite objects
+
   const mockOppositeObjects = [
     new Mesh(
       new BoxGeometry(1, 1, 1),
-      new MeshBasicMaterial({color: 0x00ff00}),
+      new MeshBasicMaterial({ color: 0x00ff00 }),
     ),
     new Mesh(
       new BoxGeometry(2, 2, 2),
-      new MeshBasicMaterial({color: 0xff0000}),
+      new MeshBasicMaterial({ color: 0xff0000 }),
     ),
   ]
   const mockPostProcessor = {}
 
   beforeEach(async () => {
-    const {result} = renderHook(() => useStore((state) => state))
-    await act(() => result.current.setModelPath({filepath: `/index.ifc`}))
+    const { result } = renderHook(() => useStore((state) => state))
+    await act(() => result.current.setModelPath({ filepath: `/index.ifc` }))
     await act(() => {
       result.current.writeMarkers([])
       result.current.setSelectedPlaceMarkId(null)
@@ -158,16 +89,15 @@ describe('MarkerControl', () => {
   })
 
   it('Renders MarkerControl without crashing', async () => {
-    const {result} = renderHook(() => useStore((state) => state))
-    await act(() => result.current.setModelPath({filepath: `/index.ifc`}))
-    const {container} = render(
+    const { result } = renderHook(() => useStore((state) => state))
+    await act(() => result.current.setModelPath({ filepath: `/index.ifc` }))
+    const { container } = render(
       <ShareMock>
-       <CadView installPrefix='/' appPrefix='' pathPrefix='' modelPath={{filepath: '/index.ifc'}}/>
-          <MarkerControl
-            context={mockContext}
-            oppositeObjects={mockOppositeObjects}
-            postProcessor={mockPostProcessor}
-          />
+        <MarkerControl
+          context={mockContext}
+          oppositeObjects={mockOppositeObjects}
+          postProcessor={mockPostProcessor}
+        />
       </ShareMock>,
     )
     await actAsyncFlush()
@@ -175,16 +105,15 @@ describe('MarkerControl', () => {
   })
 
   it('Updates the hash based on the selected placemark', async () => {
-    const {result} = renderHook(() => useStore((state) => state))
-    await act(() => result.current.setModelPath({filepath: `/index.ifc`}))
+    const { result } = renderHook(() => useStore((state) => state))
+    await act(() => result.current.setModelPath({ filepath: `/index.ifc` }))
     render(
       <ShareMock>
-        <CadView installPrefix='/' appPrefix='' pathPrefix='' modelPath={{filepath: '/index.ifc'}}/>
-          <MarkerControl
-            context={mockContext}
-            oppositeObjects={mockOppositeObjects}
-            postProcessor={mockPostProcessor}
-          />
+        <MarkerControl
+          context={mockContext}
+          oppositeObjects={mockOppositeObjects}
+          postProcessor={mockPostProcessor}
+        />
       </ShareMock>,
     )
 
@@ -198,7 +127,7 @@ describe('MarkerControl', () => {
       result.current.setSelectedPlaceMarkId(MOCK_MARKERS[0].id)
     })
 
-    const {coordinates, id} = MOCK_MARKERS[0]
+    const { coordinates, id } = MOCK_MARKERS[0]
     const expectedHash = `#${HASH_PREFIX_PLACE_MARK}:${coordinates.join(',')};${HASH_PREFIX_NOTES}:${id}`
 
     expect(window.location.hash).toBe(expectedHash)

@@ -29,7 +29,7 @@ export function getComponentOverrides(palette, typography) {
         },
       },
       variants: [{
-        props: {variant: 'rectangular'},
+        props: { variant: 'rectangular' },
         style: {
           border: `1px solid ${palette.primary.main}`,
         },
@@ -37,30 +37,30 @@ export function getComponentOverrides(palette, typography) {
     },
     MuiButtonGroup: {
       variants: [{
-        props: {orientation: 'horizontal'},
+        props: { orientation: 'horizontal' },
         style: {
           '& .MuiButtonBase-root + .MuiButtonBase-root': {
             marginLeft: '0.25em', // same as vertical
           },
         },
       }, {
-        props: {orientation: 'vertical'},
+        props: { orientation: 'vertical' },
         style: {
           '& .MuiButtonBase-root + .MuiButtonBase-root': {
             marginTop: '0.25em', // same as horizontal
           },
         },
       }, {
-        props: {variant: 'controls'},
+        props: { variant: 'controls' },
         style: {},
       }, {
-        props: {variant: 'contained'},
-        style: ({theme}) => ({
+        props: { variant: 'contained' },
+        style: ({ theme }) => ({
           boxShadow: theme.shadows[0],
         }),
       }, {
-        props: {variant: 'outlined'},
-        style: ({theme}) => ({
+        props: { variant: 'outlined' },
+        style: ({ theme }) => ({
           boxShadow: theme.shadows[0],
         }),
       }],
@@ -94,7 +94,7 @@ export function getComponentOverrides(palette, typography) {
     },
     MuiChip: {
       variants: [{
-        props: {variant: 'sampleModel'},
+        props: { variant: 'sampleModel' },
         style: {
           width: '11em',
           height: '6em',
@@ -160,7 +160,7 @@ export function getComponentOverrides(palette, typography) {
       },
       variants: [{
         // Used in HelpControl to indicate activity state
-        props: {variant: 'alert'},
+        props: { variant: 'alert' },
         style: {
           padding: '.2em 0',
         },
@@ -185,27 +185,27 @@ export function getComponentOverrides(palette, typography) {
     MuiPaper: {
       variants: [
         {
-          props: {variant: 'control'},
-          style: ({ownerState, theme}) => ({
+          props: { variant: 'control' },
+          style: ({ ownerState, theme }) => ({
             boxShadow: theme.shadows[ownerState.elevation],
           }),
         },
         {
-          props: {variant: 'background'},
-          style: ({ownerState, theme}) => ({
+          props: { variant: 'background' },
+          style: ({ ownerState, theme }) => ({
             boxShadow: theme.shadows[ownerState.elevation],
             padding: '10px',
           }),
         },
         {
-          props: {variant: 'page-background'},
+          props: { variant: 'page-background' },
           style: {
             padding: '10px',
             borderRadius: '0',
           },
         },
         {
-          props: {variant: 'page'},
+          props: { variant: 'page' },
           style: {
             padding: '10px',
             borderRadius: '0',
@@ -239,7 +239,7 @@ export function getComponentOverrides(palette, typography) {
       },
       variants: [{
         // Used in HelpControl to indicate activity state
-        props: {variant: 'success'},
+        props: { variant: 'success' },
         style: {
           color: palette.success.main,
         },
@@ -272,7 +272,7 @@ export function getComponentOverrides(palette, typography) {
         root: StandardButton, // Same as MuiIconButton
       },
       variants: [{
-        props: {variant: 'control'},
+        props: { variant: 'control' },
         style: {
         },
       }],

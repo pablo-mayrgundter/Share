@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/react'
-import {gtagEvent} from '../privacy/analytics'
+import { gtagEvent } from '../privacy/analytics'
 
 
 /**

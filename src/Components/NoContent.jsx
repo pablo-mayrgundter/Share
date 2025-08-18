@@ -10,11 +10,11 @@ import AttentionIcon from '../assets/icons/Attention.svg'
  *
  * @return {React.Component}
  */
-export default function NoContent({message = 'no content'}) {
+export default function NoContent({ message = 'no content' }) {
   return (
-    <Paper sx={{textAlign: 'center', padding: '20px', borderRadius: '10px'}}>
+    <Paper sx={{ textAlign: 'center', padding: '20px', borderRadius: '10px' }}>
       <AttentionIcon className='icon-share'/>
-      <Typography sx={{marginTop: '1em'}}>{message}</Typography>
+      <Typography sx={{ marginTop: '1em' }}>{message}</Typography>
     </Paper>
   )
 }

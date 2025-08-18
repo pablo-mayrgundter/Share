@@ -1,16 +1,16 @@
-import React, {useState, ReactElement} from 'react'
+import React, { useState } from 'react'
 import MuiTabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import {assertDefined} from '../utils/assert'
+import { assertDefined } from '../utils/assert'
 
 
 /**
  * @property {Array<string>} tabLabels Names of each tab
  * @property {Function} actionCb callBack fired when the tabs is selected, returns currect tab number
  * @property {boolean} [isScrollable] Enable scrolling for many (> 5) tabs
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function Tabs({tabLabels, currentTab, actionCb, isScrollable = false}) {
+export default function Tabs({ tabLabels, currentTab, actionCb, isScrollable = false }) {
   assertDefined(tabLabels, actionCb)
   const [value, setValue] = useState(currentTab)
   const handleChange = (event, newValue) => {

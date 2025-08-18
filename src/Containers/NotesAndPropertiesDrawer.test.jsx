@@ -1,9 +1,10 @@
+import { describe, it, expect, mock } from 'bun:test'
 import React from 'react'
-import {act, render, renderHook, fireEvent} from '@testing-library/react'
-import {useIsMobile} from '../Components/Hooks'
-import {TITLE_NOTES} from '../Components/Notes/component'
-import {TITLE as TITLE_PROPS} from '../Components/Properties/component'
-import {ID_RESIZE_HANDLE_X} from '../Components/SideDrawer/HorizonResizerButton'
+import { act, render, renderHook, fireEvent } from '@testing-library/react'
+import { useIsMobile } from '../Components/Hooks'
+import { TITLE_NOTES } from '../Components/Notes/component'
+import { TITLE as TITLE_PROPS } from '../Components/Properties/component'
+import { ID_RESIZE_HANDLE_X } from '../Components/SideDrawer/HorizonResizerButton'
 import ShareMock from '../ShareMock'
 import useStore from '../store/useStore'
 import NotesAndPropertiesDrawer from './NotesAndPropertiesDrawer'
@@ -11,9 +12,9 @@ import NotesAndPropertiesDrawer from './NotesAndPropertiesDrawer'
 
 describe('NotesAndPropertiesDrawer', () => {
   it('properties panel renders', async () => {
-    const mockSetDrawerWidth = jest.fn()
-    const {result} = renderHook(() => useStore((state) => state))
-    const {findByText} = render(<ShareMock><NotesAndPropertiesDrawer setDrawerWidth={mockSetDrawerWidth}/></ShareMock>)
+    const mockSetDrawerWidth = mock(() => {})
+    const { result } = renderHook(() => useStore((state) => state))
+    const { findByText } = render(<ShareMock><NotesAndPropertiesDrawer setDrawerWidth={mockSetDrawerWidth}/></ShareMock>)
     await act(() => {
       result.current.setIsPropertiesVisible(true)
     })
@@ -26,7 +27,7 @@ describe('NotesAndPropertiesDrawer', () => {
   })
 
   it('double-click resizes horizontally', async () => {
-    const mockSetDrawerWidth = jest.fn()
+    const mockSetDrawerWidth = mock(() => {})
     const mobileHook = renderHook(() => useIsMobile())
     const storeHook = renderHook(() => useStore((state) => state))
     const notesAndPropsRender = render(<ShareMock>

@@ -1,13 +1,13 @@
-import React, {ReactElement} from 'react'
+import React from 'react'
 import Box from '@mui/material/Box'
 import SvgIcon from '@mui/material/SvgIcon'
-import {useTheme} from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 import LogoBIcon from '../../assets/LogoB.svg'
 import LogoBWithDomainIcon from '../../assets/LogoBWithDomain.svg'
 
 
-/** @return {ReactElement} */
-export function LogoB({...props}) {
+/** @return {React.ReactElement} */
+export function LogoB({ ...props }) {
   return (
     <ThemeBox>
       <SvgIcon
@@ -21,8 +21,8 @@ export function LogoB({...props}) {
 }
 
 
-/** @return {ReactElement} */
-export function LogoBWithDomain({...props}) {
+/** @return {React.ReactElement} */
+export function LogoBWithDomain({ ...props }) {
   const theme = useTheme()
   // We're currently only showing Logo in dialogs, etc. so
   // use secondary contrastText
@@ -45,10 +45,10 @@ export function LogoBWithDomain({...props}) {
 
 
 /**
- * @property {Array.<ReactElement>} children The logo
- * @return {ReactElement}
+ * @property {Array.<React.ReactElement>} children The logo
+ * @return {React.ReactElement}
  */
-function ThemeBox({children}) {
+function ThemeBox({ children }) {
   const theme = useTheme()
   return (
     <Box

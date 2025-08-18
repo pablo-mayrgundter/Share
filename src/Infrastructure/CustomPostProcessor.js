@@ -1,5 +1,5 @@
-import {WebGLRenderer, Camera, Scene} from 'three'
-import {EffectComposer, EffectPass, OutlineEffect, RenderPass} from 'postprocessing'
+import { WebGLRenderer, Camera, Scene } from 'three'
+import { EffectComposer, EffectPass, OutlineEffect, RenderPass } from 'postprocessing'
 
 /**
  *  A custom post processor utility

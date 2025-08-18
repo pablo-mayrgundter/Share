@@ -1,6 +1,6 @@
 import * as Ifc from '@bldrs-ai/ifclib'
 import debug from '../utils/debug'
-import {deleteProperties} from '../utils/objects'
+import { deleteProperties } from '../utils/objects'
 
 
 /** TODO(pablo): maybe refactor into {IfcSearchIndex extends SearchIndex}. */

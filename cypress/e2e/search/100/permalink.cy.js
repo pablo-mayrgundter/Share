@@ -1,5 +1,5 @@
 import '@percy/cypress'
-import {waitForModelReady} from '../../../support/models'
+import { waitForModelReady } from '../../../support/models'
 import {
   homepageSetup,
   setIsReturningUser,

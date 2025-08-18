@@ -1,4 +1,4 @@
-import {parseColor, interpolateColors, changeValueScale} from './ColorHelperFunctions'
+import { parseColor, interpolateColors, changeValueScale } from './ColorHelperFunctions'
 import IfcColor from './IfcColor'
 
 

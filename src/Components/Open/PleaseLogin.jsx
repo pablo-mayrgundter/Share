@@ -1,12 +1,12 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Divider from '@mui/material/Divider'
 import Paper from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-import {useTheme} from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function PleaseLogin() {
   const theme = useTheme()
   return (
@@ -22,7 +22,7 @@ export default function PleaseLogin() {
     >
       <Typography variant={'caption'}>
         Host your model on GitHub and log in to Share with your GitHub credentials to access and share your library of projects
-        <Divider sx={{margin: '.5em 0em'}}/>
+        <Divider sx={{ margin: '.5em 0em' }}/>
          Visit our{' '}
         <Link
           href='https://github.com/bldrs-ai/Share/wiki'

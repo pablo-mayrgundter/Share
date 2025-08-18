@@ -1,7 +1,7 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import useStore from '../../store/useStore'
-import {ControlButtonWithHashState} from '../Buttons'
-import {HASH_PREFIX_IMAGINE} from './hashState'
+import { ControlButtonWithHashState } from '../Buttons'
+import { HASH_PREFIX_IMAGINE } from './hashState'
 import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined'
 import ImagineDialog from './ImagineDialog'
 
@@ -10,7 +10,7 @@ import ImagineDialog from './ImagineDialog'
  * This button hosts the ImagineDialog component and toggles it open and
  * closed.
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function ImagineControl() {
   const isImagineVisible = useStore((state) => state.isImagineVisible)

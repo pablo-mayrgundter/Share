@@ -1,7 +1,7 @@
-import {assertDefined} from '../../utils/assert'
-import {HTTP_NOT_MODIFIED} from '../http'
-import {checkCache, updateCache} from './Cache'
-import {octokit} from './OctokitExport'
+import { assertDefined } from '../../utils/assert'
+import { HTTP_NOT_MODIFIED } from '../http'
+import { checkCache, updateCache } from './Cache'
+import { octokit } from './OctokitExport'
 
 
 /**
@@ -24,7 +24,7 @@ export async function getGitHubResource(repository, path, args = {}, useCache = 
       ...args.headers,
     }
   } else {
-    args.headers = {...args.headers}
+    args.headers = { ...args.headers }
   }
 
 

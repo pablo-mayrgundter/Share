@@ -1,8 +1,8 @@
-import React, {ReactElement, useState} from 'react'
+import React, { useState } from 'react'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Stack from '@mui/material/Stack'
 import useStore from '../store/useStore'
-import {TooltipIconButton} from './Buttons'
+import { TooltipIconButton } from './Buttons'
 import CutPlaneMenu from './CutPlane/CutPlaneMenu'
 import CloseIcon from '@mui/icons-material/Close'
 import FilterCenterFocusIcon from '@mui/icons-material/FilterCenterFocus'
@@ -14,9 +14,9 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
  * ElementGroup contains tools for controlling element visibility
  *
  * @property {Function} deselectItems deselects currently selected element
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function ElementGroup({deselectItems}) {
+export default function ElementGroup({ deselectItems }) {
   const viewer = useStore((state) => state.viewer)
   const selectedElement = useStore((state) => state.selectedElement)
   const [isIsolate, setIsIsolate] = useState(false)

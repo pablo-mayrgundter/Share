@@ -1,4 +1,8 @@
-test('MockViewer getProperties', () => {
+import { describe, it, expect } from 'bun:test'
+
+
+describe('IfcMock', () => {
+  it('MockViewer getProperties', () => {
   const testLabel = 'test label'
   const mv = new MockViewer({
     0: {
@@ -12,16 +16,17 @@ test('MockViewer getProperties', () => {
 })
 
 
-test('MockViewer getIfcType', () => {
+  it('MockViewer getIfcType', () => {
   expect(new MockViewer().IFC.loader.ifcManager
       .getIfcType(undefined, undefined))
       .toEqual('IFCELEMENT')
 })
 
 
-test('MockViewer getPropertySets', async () => {
+  it('MockViewer getPropertySets', async () => {
   const val = await new MockViewer().IFC.loader.ifcManager.getPropertySets(undefined, undefined)
   expect(val).toEqual([])
+  })
 })
 
 

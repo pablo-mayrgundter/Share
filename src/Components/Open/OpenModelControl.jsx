@@ -1,18 +1,18 @@
-import React, {ReactElement, useState, useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
-import {useAuth0} from '../../Auth0/Auth0Proxy'
-import {getOrganizations} from '../../net/github/Organizations'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth0 } from '../../Auth0/Auth0Proxy'
+import { getOrganizations } from '../../net/github/Organizations'
 import useStore from '../../store/useStore'
-import {ControlButtonWithHashState} from '../Buttons'
+import { ControlButtonWithHashState } from '../Buttons'
 import OpenModelDialog from './OpenModelDialog'
-import {HASH_PREFIX_OPEN_MODEL} from './hashState'
+import { HASH_PREFIX_OPEN_MODEL } from './hashState'
 import FolderOpenIcon from '@mui/icons-material/FolderOpen'
 
 
 /**
  * Displays Open Model dialog
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function OpenModelControl() {
   const accessToken = useStore((state) => state.accessToken)
@@ -22,7 +22,7 @@ export default function OpenModelControl() {
 
   const [orgNamesArr, setOrgNamesArray] = useState([''])
 
-  const {user} = useAuth0()
+  const { user } = useAuth0()
   const navigate = useNavigate()
 
 

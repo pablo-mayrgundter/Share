@@ -1,4 +1,4 @@
-import {Slide} from '@mui/material'
+import { Slide } from '@mui/material'
 import React from 'react'
 
 

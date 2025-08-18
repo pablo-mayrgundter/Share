@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react'
-import {useAuth0} from '../../Auth0/Auth0Proxy'
+import React, { useEffect } from 'react'
+import { useAuth0 } from '../../Auth0/Auth0Proxy'
 
 
 /**
@@ -10,7 +10,7 @@ import {useAuth0} from '../../Auth0/Auth0Proxy'
  * @return {React.Element} A div indicating the user is being redirected to Auth0.
  */
 function PopupAuth() {
-  const {loginWithRedirect} = useAuth0()
+  const { loginWithRedirect } = useAuth0()
 
   useEffect(() => {
     // Extract scope from the query parameters
@@ -28,7 +28,7 @@ function PopupAuth() {
           scope: 'openid profile email offline_access',
           connection: connection,
           connection_scope: scope,
-          ...(linkToken && {linkToken}), // ← forward it
+          ...(linkToken && { linkToken }), // ← forward it
         },
      })
     } else {
@@ -38,7 +38,7 @@ function PopupAuth() {
           redirect_uri: `${window.location.origin}/popup-callback`,
           scope: 'openid profile email offline_access',
           connection: connection,
-          ...(linkToken && {linkToken}), // ← forward it
+          ...(linkToken && { linkToken }), // ← forward it
         },
       })
     }

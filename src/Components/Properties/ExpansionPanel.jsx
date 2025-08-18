@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
@@ -12,9 +12,9 @@ import PsetOpenIcon from '@mui/icons-material/KeyboardArrowDown'
  * @property {string} summary Title of the panel
  * @property {string} detail Content of the panel
  * @property {boolean} expandState global control of the panel
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function ExpansionPanel({summary, detail, expandState}) {
+export default function ExpansionPanel({ summary, detail, expandState }) {
   const [expanded, setExpanded] = useState(expandState)
 
   useEffect(() => {

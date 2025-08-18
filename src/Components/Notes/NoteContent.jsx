@@ -1,24 +1,24 @@
-import React, {ReactElement, useMemo} from 'react'
+import React, { useMemo } from 'react'
 import Markdown from 'react-markdown'
 import useStore from '../../store/useStore'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import {modifyPlaceMarkHash, parsePlacemarkFromURL} from '../Markers/hashState'
-import {getHashParamsFromHashStr, getObjectParams} from '../../utils/location'
-import {HASH_PREFIX_CAMERA} from '../Camera/hashState'
-import {HASH_PREFIX_NOTES, HASH_PREFIX_COMMENT} from './hashState'
+import { modifyPlaceMarkHash, parsePlacemarkFromURL } from '../Markers/hashState'
+import { getHashParamsFromHashStr, getObjectParams } from '../../utils/location'
+import { HASH_PREFIX_CAMERA } from '../Camera/hashState'
+import { HASH_PREFIX_NOTES, HASH_PREFIX_COMMENT } from './hashState'
 
 
 /**
  * @property {string} markdownContent The note text in markdown format
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function NoteContent({markdownContent, issueID, commentID}) {
+export default function NoteContent({ markdownContent, issueID, commentID }) {
   const setSelectedPlaceMarkInNoteIdData = useStore((state) => state.setSelectedPlaceMarkInNoteIdData)
   const setSelectedPlaceMarkId = useStore((state) => state.setSelectedPlaceMarkId)
 
   // eslint-disable-next-line no-unused-vars
-  const {selectedPlaceMarkInNoteId, cameraHash, forceMarkerNoteSync} = useStore((state) => ({
+  const { selectedPlaceMarkInNoteId, cameraHash, forceMarkerNoteSync } = useStore((state) => ({
     selectedPlaceMarkInNoteId: state.selectedPlaceMarkInNoteId,
     cameraHash: state.cameraHash,
     forceMarkerNoteSync: state.forceMarkerNoteSync,
@@ -89,7 +89,7 @@ export default function NoteContent({markdownContent, issueID, commentID}) {
     <CardContent>
       <Markdown
         components={{
-          a: ({href, children, ...props}) => (
+          a: ({ href, children, ...props }) => (
             <a
               href={href}
               onClick={handleLinkClick}
@@ -98,15 +98,15 @@ export default function NoteContent({markdownContent, issueID, commentID}) {
               {children}
             </a>
           ),
-          h1: ({children}) => <Typography variant='h1' sx={headerStyle}>{children}</Typography>,
-          h2: ({children}) => <Typography variant='h2' sx={headerStyle}>{children}</Typography>,
-          h3: ({children}) => <Typography variant='h3' sx={headerStyle}>{children}</Typography>,
-          h4: ({children}) => <Typography variant='h4' sx={headerStyle}>{children}</Typography>,
-          h5: ({children}) => <Typography variant='h5' sx={headerStyle}>{children}</Typography>,
-          h6: ({children}) => <Typography variant='h6' sx={headerStyle}>{children}</Typography>,
-          p: ({children}) => <Typography variant='body1'>{children}</Typography>,
-          ul: ({children}) => <Typography variant='body1'><ul>{children}</ul></Typography>,
-          ol: ({children}) => <Typography variant='body1'><ol>{children}</ol></Typography>,
+          h1: ({ children }) => <Typography variant='h1' sx={headerStyle}>{children}</Typography>,
+          h2: ({ children }) => <Typography variant='h2' sx={headerStyle}>{children}</Typography>,
+          h3: ({ children }) => <Typography variant='h3' sx={headerStyle}>{children}</Typography>,
+          h4: ({ children }) => <Typography variant='h4' sx={headerStyle}>{children}</Typography>,
+          h5: ({ children }) => <Typography variant='h5' sx={headerStyle}>{children}</Typography>,
+          h6: ({ children }) => <Typography variant='h6' sx={headerStyle}>{children}</Typography>,
+          p: ({ children }) => <Typography variant='body1'>{children}</Typography>,
+          ul: ({ children }) => <Typography variant='body1'><ul>{children}</ul></Typography>,
+          ol: ({ children }) => <Typography variant='body1'><ol>{children}</ol></Typography>,
         }}
       >
         {noteContentLinksLocalized}

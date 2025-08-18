@@ -1,5 +1,5 @@
 // PricingDialog.js
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Dialog from '@mui/material/Dialog'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -12,9 +12,9 @@ import PricingTable from '../Stripe/PricingTable'
 /**
  * PricingDialog returns the Stripe pricing dialog
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function PricingDialog({openPricing, handleClosePricing, isDay}) {
+export default function PricingDialog({ openPricing, handleClosePricing, isDay }) {
   return (
     <Dialog
       open={openPricing}
@@ -35,8 +35,8 @@ export default function PricingDialog({openPricing, handleClosePricing, isDay}) 
         },
       }}
     >
-    <AppBar sx={{position: 'relative'}}>
-      <Toolbar sx={{position: 'relative'}}>
+    <AppBar sx={{ position: 'relative' }}>
+      <Toolbar sx={{ position: 'relative' }}>
         {/* Absolutely‐positioned icon on the left */}
         <IconButton
           edge='start'

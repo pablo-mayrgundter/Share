@@ -1,22 +1,25 @@
+import { describe, it, expect, mock } from 'bun:test'
 import React from 'react'
-import {act, fireEvent, render, renderHook} from '@testing-library/react'
+import { act, fireEvent, render, renderHook } from '@testing-library/react'
 import useStore from '../../store/useStore'
-import {ThemeCtx} from '../../theme/Theme.fixture'
+import { ThemeCtx } from '../../theme/Theme.fixture'
 import SideDrawer from './SideDrawer'
-import {ID_RESIZE_HANDLE_X} from './HorizonResizerButton'
-import {useIsMobile} from '../Hooks'
+import { ID_RESIZE_HANDLE_X } from './HorizonResizerButton'
 
-
-jest.mock('../Hooks', () => ({
-  useIsMobile: jest.fn(() => false),
+// Mock Hooks module for bun
+const mockUseIsMobile = mock(() => false)
+mock.module('../Hooks', () => ({
+  useIsMobile: mockUseIsMobile,
 }))
 
 describe('SideDrawer', () => {
   const childText = 'NOTES'
 
   it('renders and drags', async () => {
-    const mockSetDrawerWidth = jest.fn()
-    const {findByText, getByTestId} = render(
+    // Ensure we're not in mobile mode
+    mockUseIsMobile.mockReturnValue(false)
+    const mockSetDrawerWidth = mock()
+    const { findByText, getByTestId } = render(
       <SideDrawer
         isDrawerVisible={true}
         drawerWidth={100}
@@ -25,14 +28,14 @@ describe('SideDrawer', () => {
       >
         {childText}
       </SideDrawer>,
-      {wrapper: ThemeCtx},
+      { wrapper: ThemeCtx },
     )
     expect(await findByText(childText)).toBeVisible()
     const resizeHandle = getByTestId(ID_RESIZE_HANDLE_X)
     const dragStart = 150
     const dragEnd = 100 // drag left 50px
-    fireEvent.mouseDown(resizeHandle, {clientX: dragStart})
-    fireEvent.mouseMove(document, {clientX: dragEnd})
+    fireEvent.mouseDown(resizeHandle, { clientX: dragStart })
+    fireEvent.mouseMove(document, { clientX: dragEnd })
     fireEvent.mouseUp(document)
     expect(mockSetDrawerWidth).toHaveBeenCalledWith(dragEnd, false)
   })
@@ -40,22 +43,22 @@ describe('SideDrawer', () => {
   context('mobile renders and drags', () => {
     it('renders vertical', async () => {
       const initHeight = 10
-      const {result} = renderHook(() => useStore((state) => state))
+      const { result } = renderHook(() => useStore((state) => state))
       await act(() => {
         result.current.setDrawerHeight(initHeight)
         result.current.setDrawerHeightInitial(initHeight)
       })
-      useIsMobile.mockReturnValue(true)
-      const {findByText} = render(
+      mockUseIsMobile.mockReturnValue(true)
+      const { findByText } = render(
         <SideDrawer
           isDrawerVisible={true}
           drawerWidth={100}
           drawerWidthInitial={100}
-          setDrawerWidth={jest.fn()}
+          setDrawerWidth={mock()}
         >
           {childText}
         </SideDrawer>,
-        {wrapper: ThemeCtx},
+        { wrapper: ThemeCtx },
       )
       expect(await findByText(childText)).toBeVisible()
       // TODO(pablo): test component isn't working like in hosted page, so can't

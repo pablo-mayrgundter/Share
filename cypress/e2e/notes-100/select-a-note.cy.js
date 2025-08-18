@@ -1,5 +1,5 @@
 import '@percy/cypress'
-import {TITLE_NOTE} from '../../../src/Components/Notes/component'
+import { TITLE_NOTE } from '../../../src/Components/Notes/component'
 import {
   homepageSetup,
   returningUserVisitsHomepageWaitForModel,

@@ -1,15 +1,15 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import useStore from '../../store/useStore'
-import {ControlButtonWithHashState} from '../Buttons'
-import {VERSIONS_TITLE} from './component'
-import {HASH_PREFIX_VERSIONS} from './hashState'
+import { ControlButtonWithHashState } from '../Buttons'
+import { VERSIONS_TITLE } from './component'
+import { HASH_PREFIX_VERSIONS } from './hashState'
 import HistoryIcon from '@mui/icons-material/History'
 
 
 /**
  * ControlButton that toggles VersionsPanel, with nav state
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function VersionsControl() {
   const isVersionsVisible = useStore((state) => state.isVersionsVisible)

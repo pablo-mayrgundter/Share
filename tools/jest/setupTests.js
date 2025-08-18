@@ -5,11 +5,11 @@
 import '@testing-library/jest-dom'
 // Needed for async test
 import 'regenerator-runtime/runtime'
-import {disableDebug} from '../../src/utils/debug'
-import {getAndExportEnvVars} from './vars.jest'
+import { disableDebug } from '../../src/utils/debug'
+import { getAndExportEnvVars } from './vars.jest'
 
 
-const {initServer} = require('../../src/__mocks__/server')
+const { initServer } = require('../../src/__mocks__/server')
 
 
 disableDebug()
@@ -35,7 +35,7 @@ global.context = describe
 
 // Polyfill TextEncoder/TextDecoder for Node.js test environment
 if (typeof global.TextEncoder === 'undefined') {
-  const {TextEncoder, TextDecoder} = require('util')
+  const { TextEncoder, TextDecoder } = require('util')
   global.TextEncoder = TextEncoder
   global.TextDecoder = TextDecoder
 }

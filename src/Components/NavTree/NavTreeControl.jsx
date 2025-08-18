@@ -1,15 +1,15 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import SvgIcon from '@mui/material/SvgIcon'
 import useStore from '../../store/useStore'
-import {ControlButtonWithHashState} from '../Buttons'
-import {HASH_PREFIX_NAV_TREE} from './hashState'
+import { ControlButtonWithHashState } from '../Buttons'
+import { HASH_PREFIX_NAV_TREE } from './hashState'
 import TreeIcon from '../../assets/icons/Tree.svg'
 
 
 /**
  * Button and url hash state to control the NavTree
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function NavTreeControl() {
   const isNavTreeVisible = useStore((state) => state.isNavTreeVisible)

@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
-import {ControlButton} from '../../Components/Buttons'
-import {ThemeCtx} from '../../theme/Theme.fixture'
+import React, { useState } from 'react'
+import { ControlButton } from '../../Components/Buttons'
+import { ThemeCtx } from '../../theme/Theme.fixture'
 import AnnouncementIcon from '@mui/icons-material/Announcement'
 
 
@@ -19,7 +19,7 @@ export default function ControlButtonFixture() {
         setIsDialogDisplayed={setIsDisplayed}
         icon={<AnnouncementIcon/>}
         dialog={
-          <div style={{border: 'solid 1px black'}}>
+          <div style={{ border: 'solid 1px black' }}>
             {isDisplayed ?
              <div>
                <h1>Controlled component</h1>

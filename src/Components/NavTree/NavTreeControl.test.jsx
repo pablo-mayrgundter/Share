@@ -1,5 +1,5 @@
 import React from 'react'
-import {act, render, renderHook, fireEvent} from '@testing-library/react'
+import { act, render, renderHook, fireEvent } from '@testing-library/react'
 import ShareMock from '../../ShareMock'
 import useStore from '../../store/useStore'
 import NavTreeControl from './NavTreeControl'
@@ -8,11 +8,11 @@ import NavTreeControl from './NavTreeControl'
 describe('NavTree', () => {
   it('NavTree to remain close when an element is selected', async () => {
     const testLabel = 'control-button-navigation'
-    const {result} = renderHook(() => useStore((state) => state))
+    const { result } = renderHook(() => useStore((state) => state))
     await act(() => {
-      result.current.setSelectedElement({id: 123})
+      result.current.setSelectedElement({ id: 123 })
     })
-    const {getByTestId} = render(
+    const { getByTestId } = render(
         <ShareMock>
           <NavTreeControl/>
         </ShareMock>)
@@ -21,11 +21,11 @@ describe('NavTree', () => {
   })
   it('NavTree to open when nav control button is pressed', async () => {
     const testLabel = 'control-button-navigation'
-    const {result} = renderHook(() => useStore((state) => state))
+    const { result } = renderHook(() => useStore((state) => state))
     await act(() => {
-      result.current.setSelectedElement({id: 123})
+      result.current.setSelectedElement({ id: 123 })
     })
-    const {getByTestId} = render(
+    const { getByTestId } = render(
         <ShareMock>
           <NavTreeControl/>
         </ShareMock>)

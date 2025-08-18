@@ -1,8 +1,8 @@
-import {CypressHistorySupport} from 'cypress-react-router'
-import React, {ReactElement, StrictMode, useEffect} from 'react'
-import {createRoot} from 'react-dom/client'
-import {FlagsProvider} from 'react-feature-flags'
-import {Helmet, HelmetProvider} from 'react-helmet-async'
+import { CypressHistorySupport } from 'cypress-react-router'
+import React, { StrictMode, useEffect } from 'react'
+import { createRoot } from 'react-dom/client'
+import { FlagsProvider } from 'react-feature-flags'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import {
   BrowserRouter,
   useLocation,
@@ -14,7 +14,7 @@ import * as Sentry from '@sentry/react'
 import Auth0ProviderWithHistory from './Auth0ProviderWithHistory'
 import BaseRoutes from './BaseRoutes'
 import ApplicationError from './Components/ApplicationError'
-import {flags} from './FeatureFlags'
+import { flags } from './FeatureFlags'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
@@ -44,7 +44,7 @@ Sentry.init({
 // NB: This transcludes all msw for testing.  Without it the prod build is much
 // smaller.
 if (process.env.MSW_IS_ENABLED) {
-  const {initWorker} = require('./__mocks__/browser')
+  const { initWorker } = require('./__mocks__/browser')
   // We used to read process.env in api-helpers, but that was behind the dynamic
   // require above (which saves us from putting all of msw into prod).  Those
   // defines were getting removed during esbuild tree shaking.  So, to maintain
@@ -80,7 +80,7 @@ if (process.env.NODE_ENV === 'development') {
 const root = createRoot(document.getElementById('root'))
 
 
-/** @return {ReactElement} The app with its context. */
+/** @return {React.ReactElement} The app with its context. */
 function AppWithContext() {
   return (
     <FlagsProvider value={flags}>

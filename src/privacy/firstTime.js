@@ -16,7 +16,7 @@ export function isFirst() {
 
 /** Sets isFirstTime to a truthy value. */
 export function setVisited() {
-  Cookies.set(COOKIE_NAME, SERIAL_VALUE, {expires: Expires.DAYS})
+  Cookies.set(COOKIE_NAME, SERIAL_VALUE, { expires: Expires.DAYS })
 }
 
 

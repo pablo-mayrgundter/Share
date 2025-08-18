@@ -1,7 +1,6 @@
 import React from 'react'
-import {render, screen} from '@testing-library/react'
-// import ShareMock from '../../ShareMock'
-import {RouteThemeCtx} from '../../Share.fixture'
+import { render } from '@testing-library/react'
+import { RouteThemeCtx } from '../../Share.fixture'
 import SearchBar, {
   containsIfcPath,
   stripIfcPathFromLocation,
@@ -26,7 +25,7 @@ describe( 'SearchBar', () => {
     }
     for (const path in testPairs) {
       if (Object.prototype.hasOwnProperty.call(testPairs, path)) {
-        expect(containsIfcPath({pathname: path})).toEqual(testPairs[path])
+        expect(containsIfcPath({ pathname: path })).toEqual(testPairs[path])
       }
     }
   })
@@ -62,8 +61,10 @@ describe( 'SearchBar', () => {
   })
 
   it('SeachBar', () => {
-    // eslint-disable-next-line no-empty-function
-    render(<SearchBar onClickMenuCb={() => {}} isOpen={true} placeholder={'Search'}/>, {wrapper: RouteThemeCtx})
-    expect(screen.getByPlaceholderText('Search')).toBeInTheDocument()
+    const { getByPlaceholderText } = render(
+      <SearchBar onClickMenuCb={() => {}} isOpen={true} placeholder={'Search'}/>,
+      { wrapper: RouteThemeCtx },
+    )
+    expect(getByPlaceholderText('Search')).toBeInTheDocument()
   })
 })

@@ -1,11 +1,11 @@
-import React, {ReactElement, useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import AppsPanel from '../Components/Apps/AppsPanel'
 import AppPanel from '../Components/Apps/AppPanel'
-import {CloseButton} from '../Components/Buttons'
+import { CloseButton } from '../Components/Buttons'
 import NavTreePanel from '../Components/NavTree/NavTreePanel'
 import NotesPanel from '../Components/Notes/NotesPanel'
 import PropertiesPanel from '../Components/Properties/PropertiesPanel'
@@ -15,7 +15,7 @@ import useStore from '../store/useStore'
 
 
 /**
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function TabbedPanels({
   pathPrefix,
@@ -80,39 +80,13 @@ export default function TabbedPanels({
         isVersionsVisible
 
 
-        /** @return {boolean} */
-  function samePageLinkNavigation(event) {
-    if (
-      event.defaultPrevented ||
-        event.button !== 0 || // ignore everything but left-click
-        event.metaKey ||
-        event.ctrlKey ||
-        event.altKey ||
-        event.shiftKey
-    ) {
-      return false
-    }
-    return true
-  }
-
-  /** @return {ReactElement} */
-  function LinkTab({label, onClose, ...props}) {
+  /** @return {React.ReactElement} */
+  function TabLabel({ label, onClose }) {
     return (
-      <Tab
-        label={
-          <Stack direction='row' alignItems='center'>
-            {label}
-            <CloseButton onCloseClick={onClose} className='share-button-tab-close'/>
-          </Stack>
-        }
-        onClick={(event) => {
-          // Routing libraries handle this, you can remove the onClick handle when using them.
-          if (samePageLinkNavigation(event)) {
-            event.preventDefault()
-          }
-        }}
-        aria-current={props.selected && 'page'}
-      />
+      <Stack direction='row' alignItems='center'>
+        {label}
+        <CloseButton onCloseClick={onClose} component='div' className='share-button-tab-close'/>
+      </Stack>
     )
   }
 
@@ -121,13 +95,13 @@ export default function TabbedPanels({
   const panelsMap = {
     apps: isAppsEnabled && isAppsVisible ?
       {
-          label: <LinkTab label='Apps' onClose={() => setIsAppsVisible(false)}/>,
+          label: <TabLabel label='Apps' onClose={() => setIsAppsVisible(false)}/>,
           panel: !selectedApp ? <AppsPanel/> : <AppPanel itemJson={selectedApp}/>,
         } :
       null,
     nav: isNavTreeEnabled && isNavTreeVisible ?
       {
-          label: <LinkTab label='Nav' onClose={() => setIsNavTreeVisible(false)}/>,
+          label: <TabLabel label='Nav' onClose={() => setIsNavTreeVisible(false)}/>,
           panel: model && rootElement && (
             <NavTreePanel
               model={model}
@@ -145,19 +119,19 @@ export default function TabbedPanels({
       null,
     notes: isNotesEnabled && isNotesVisible ?
       {
-          label: <LinkTab label='Notes' onClose={() => setIsNotesVisible(false)}/>,
+          label: <TabLabel label='Notes' onClose={() => setIsNotesVisible(false)}/>,
           panel: <NotesPanel/>,
         } :
       null,
     props: isPropertiesEnabled && isPropertiesVisible ?
       {
-          label: <LinkTab label='Props' onClose={() => setIsPropertiesVisible(false)}/>,
+          label: <TabLabel label='Props' onClose={() => setIsPropertiesVisible(false)}/>,
           panel: <PropertiesPanel/>,
         } :
       null,
     versions: isVersionsEnabled && isVersionsVisible ?
       {
-          label: <LinkTab label='Versions' onClose={() => setIsVersionsVisible(false)}/>,
+          label: <TabLabel label='Versions' onClose={() => setIsVersionsVisible(false)}/>,
           panel: modelPath.repo !== undefined && <VersionsPanel filePath={modelPath.filepath} currentRef={branch}/>,
         } :
       null,
@@ -199,7 +173,11 @@ export default function TabbedPanels({
   useEffect(() => {
     if (labelAndPanels.length > 0) {
       // Select the last added panel (which should be the last in openPanels, hence last in labelAndPanels)
-      setValue(labelAndPanels.length - 1)
+      const newValue = labelAndPanels.length - 1
+      // Ensure the value is within valid bounds
+      if (newValue >= 0 && newValue < labelAndPanels.length) {
+        setValue(newValue)
+      }
     } else {
       // No panels left
       setValue(0)
@@ -232,9 +210,9 @@ export default function TabbedPanels({
               flexDirection: 'column',
             }}
           >
-            <Box sx={{position: 'sticky', top: 0, zIndex: 1}}>
+            <Box sx={{ position: 'sticky', top: 0, zIndex: 1 }}>
               <Tabs
-                value={value}
+                value={labelAndPanels.length > 0 ? Math.min(value, labelAndPanels.length - 1) : 0}
                 onChange={handleChange}
                 variant='scrollable'
                 scrollButtons='auto'
@@ -258,12 +236,12 @@ export default function TabbedPanels({
                     label={entry.label}
                     {...a11yProps(index)}
                     key={index}
-                    sx={{padding: 0}}
+                    sx={{ padding: 0 }}
                   />
                 ))}
               </Tabs>
             </Box>
-            <Box sx={{flex: 1, overflow: 'auto'}}>
+            <Box sx={{ flex: 1, overflow: 'auto' }}>
               {labelAndPanels.map((entry, index) => (
                 <CustomTabPanel value={value} index={index} key={index}>
                   {entry.panel}
@@ -280,10 +258,10 @@ export default function TabbedPanels({
 
 /**
  * @param {object} props
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 function CustomTabPanel(props) {
-  const {children, value, index, ...other} = props
+  const { children, value, index, ...other } = props
 
   return (
     <Box
@@ -296,7 +274,7 @@ function CustomTabPanel(props) {
       }}
       {...other}
     >
-      {value === index && <Box sx={{height: '100%'}}>{children}</Box>}
+      {value === index && <Box sx={{ height: '100%' }}>{children}</Box>}
     </Box>
   )
 }

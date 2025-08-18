@@ -1,14 +1,14 @@
-import React, {ReactElement, useState} from 'react'
+import React, { useState } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import TextField from '@mui/material/TextField'
-import {disablePageReloadApprovalCheck} from '../../utils/event'
+import { disablePageReloadApprovalCheck } from '../../utils/event'
 
 
 /**
  * @property {Function} setIsDialogDisplayed callback
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function SampleModelFileSelector({navigate, setIsDialogDisplayed}) {
+export default function SampleModelFileSelector({ navigate, setIsDialogDisplayed }) {
   const [selected, setSelected] = useState('')
 
   const handleSelect = (e, closeDialog) => {
@@ -23,13 +23,13 @@ export default function SampleModelFileSelector({navigate, setIsDialogDisplayed}
       6: '/share/v/gh/bldrs-ai/test-models/main/fbx/samba-dancing.fbx#c:-1.016,129.356,253.729,0,90.107,2.409',
     }
     disablePageReloadApprovalCheck()
-    navigate({pathname: modelPath[e.target.value]})
+    navigate({ pathname: modelPath[e.target.value] })
     closeDialog()
   }
 
   return (
     <TextField
-      sx={{width: '260px'}}
+      sx={{ width: '260px' }}
       value={selected}
       onChange={(e) => handleSelect(e, () => setIsDialogDisplayed(false))}
       variant='outlined'

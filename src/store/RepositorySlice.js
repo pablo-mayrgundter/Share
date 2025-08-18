@@ -9,19 +9,19 @@
 export default function createRepositorySlice(set, get) {
   return {
     accessToken: '',
-    setAccessToken: (token) => set(() => ({accessToken: token})),
+    setAccessToken: (token) => set(() => ({ accessToken: token })),
 
     hasGithubIdentity: false,
-    setHasGithubIdentity: (hasIdentity) => set(() => ({hasGithubIdentity: hasIdentity})),
+    setHasGithubIdentity: (hasIdentity) => set(() => ({ hasGithubIdentity: hasIdentity })),
 
     appMetadata: {},
-    setAppMetadata: (metadata) => set({appMetadata: metadata}),
+    setAppMetadata: (metadata) => set({ appMetadata: metadata }),
 
     branches: [],
-    setBranches: (branches) => set(() => ({issues: branches})),
+    setBranches: (branches) => set(() => ({ issues: branches })),
 
     modelPath: null,
-    setModelPath: (path) => set(() => ({modelPath: path})),
+    setModelPath: (path) => set(() => ({ modelPath: path })),
 
     repository: null,
     /**
@@ -34,7 +34,7 @@ export default function createRepositorySlice(set, get) {
      */
     setRepository: (org, repo) =>
       set(() => ({
-        repository: org && repo ? {orgName: org, name: repo} : null,
+        repository: org && repo ? { orgName: org, name: repo } : null,
       })),
   }
 }

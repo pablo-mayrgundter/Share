@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {assertDefined} from './utils/assert'
+import { assertDefined } from './utils/assert'
 import debug from './utils/debug'
 
 
@@ -189,7 +189,7 @@ export function splitAroundExtension(filepath) {
     throw new FilenameParseError(`Filepath(${filepath}) must contain ".${typeRegexStr}" (case-insensitive)`)
   }
   const parts = filepath.split(fileSuffixRegex)
-  return {parts, extension: match[0]}
+  return { parts, extension: match[0] }
 }
 
 

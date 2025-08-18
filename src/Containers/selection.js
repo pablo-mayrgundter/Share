@@ -1,5 +1,5 @@
 import debug from '../utils/debug'
-import {getDescendantExpressIds} from '../utils/TreeUtils'
+import { getDescendantExpressIds } from '../utils/TreeUtils'
 
 
 /**

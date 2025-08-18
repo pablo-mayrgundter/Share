@@ -1,8 +1,8 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import MuiAppBar from '@mui/material/AppBar'
 import Stack from '@mui/material/Stack'
 import Toolbar from '@mui/material/Toolbar'
-import {useTheme} from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 import ControlsGroup from './ControlsGroup'
 import LoginMenu from './LoginMenu'
 import SearchBar from './Search/SearchBar'
@@ -10,9 +10,9 @@ import SearchBar from './Search/SearchBar'
 
 /**
  * @property {boolean} isRepoActive TODO(pablo): maybe better in store
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function AppBar({isRepoActive}) {
+export default function AppBar({ isRepoActive }) {
   const theme = useTheme()
   return (
     <MuiAppBar
@@ -34,7 +34,7 @@ export default function AppBar({isRepoActive}) {
           spacing={1}
           justifyContent='space-evenly'
           alignItems='center'
-          sx={{width: '100%'}}
+          sx={{ width: '100%' }}
         >
           <ControlsGroup isRepoActive={isRepoActive}/>
           <SearchBar/>

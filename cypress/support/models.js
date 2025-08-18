@@ -10,7 +10,7 @@ export function setupVirtualPathIntercept(path, fixturePath, interceptTag) {
   if (!path.startsWith(sharePrefix)) {
     throw new Error(`Path must start with ${sharePrefix}`)
   }
-  cy.intercept('GET', `${path}`, {fixture: '404.html'})
+  cy.intercept('GET', `${path}`, { fixture: '404.html' })
     .as(`${interceptTag}-bounce`)
   const ghPath = path.substring(sharePrefix.length)
   const proxyEnv = Cypress.env('RAW_GIT_PROXY_URL')
@@ -18,7 +18,7 @@ export function setupVirtualPathIntercept(path, fixturePath, interceptTag) {
   cy.log('INTERCEPT URL:', interceptUrl)
   cy.log(`RAW_GIT_PROXY_URL: ${Cypress.env('RAW_GIT_PROXY_URL')}`)
   cy.log(`interceptUrl: ${interceptUrl}`)
-  cy.intercept('GET', interceptUrl, {fixture: fixturePath})
+  cy.intercept('GET', interceptUrl, { fixture: fixturePath })
     .as(interceptTag)
 }
 
@@ -27,7 +27,7 @@ export function setupVirtualPathIntercept(path, fixturePath, interceptTag) {
 export function waitForModelReady(tag) {
   cy.wait(`@${tag}`)
   // TODO(pablo): same as index.ifc load
-  cy.get('[data-model-ready="true"]').should('exist', {timeout: 1000})
+  cy.get('[data-model-ready="true"]').should('exist', { timeout: 1000 })
   const animWaitTimeMs = 1000
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(animWaitTimeMs)

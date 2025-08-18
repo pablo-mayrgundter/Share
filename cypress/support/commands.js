@@ -34,7 +34,7 @@ import 'cypress-react-router/add-commands'
  *
  * @see https://www.nicknish.co/blog/cypress-targeting-elements-inside-iframes
  */
-Cypress.Commands.add('iframe', {prevSubject: 'element'}, ($iframe, callback = () => {}) => {
+Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe, callback = () => {}) => {
   return cy
       .wrap($iframe)
       .should((iframe) => expect(iframe.contents().find('body')).to.exist)
@@ -49,9 +49,9 @@ Cypress.Commands.overwrite('percySnapshot', (label) => {
   const desktopWidth = 1280
   const desktopHeight = 1024
   return cy.viewport(mobileWidth, mobileHeight)
-    .percySnapshot(label, {width: mobileWidth})
+    .percySnapshot(label, { width: mobileWidth })
     .viewport(desktopWidth, desktopHeight)
-    .percySnapshot({width: 1280})
+    .percySnapshot({ width: 1280 })
 })
 
 /**

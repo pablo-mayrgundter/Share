@@ -1,4 +1,4 @@
-import {assertNumber} from './assert'
+import { assertNumber } from './assert'
 import debug from './debug'
 
 

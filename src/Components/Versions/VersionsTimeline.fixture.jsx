@@ -1,5 +1,5 @@
 import React from 'react'
-import {ThemeCtx} from '../../theme/Theme.fixture'
+import { ThemeCtx } from '../../theme/Theme.fixture'
 import VersionsTimeline from './VersionsTimeline'
 
 

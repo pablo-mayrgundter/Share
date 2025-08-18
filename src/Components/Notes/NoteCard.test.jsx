@@ -1,22 +1,32 @@
 import React from 'react'
+import { describe, it, expect, beforeAll, mock } from 'bun:test'
 import {
   act,
   fireEvent,
   render,
   renderHook,
-  screen,
   within,
 } from '@testing-library/react'
-import {mockedUseAuth0, mockedUserLoggedIn} from '../../__mocks__/authentication'
+import { mockedUseAuth0, mockedUserLoggedIn } from '../../__mocks__/authentication'
 import useStore from '../../store/useStore'
 import ShareMock from '../../ShareMock'
 import NoteCard from './NoteCard'
-import {MOCK_NOTES} from './Notes.fixture'
+import { MOCK_NOTES } from './Notes.fixture'
+
+// Override global Auth0 mock to ensure test isolation
+mock.module('../../Auth0/Auth0Proxy', () => ({
+  useAuth0: mockedUseAuth0,
+}))
+
+// Mock GitHub API for NoteCard
+mock.module('../../net/github/Http', () => ({
+  patchGitHub: mock(() => ({ data: { state: 'closed' } })),
+}))
 
 
 describe('NoteCard', () => {
   beforeAll(async () => {
-    const {result} = renderHook(() => useStore((state) => state))
+    const { result } = renderHook(() => useStore((state) => state))
     await act(() => {
       result.current.setRepository('testOrg', 'testRepo')
     })
@@ -30,7 +40,7 @@ describe('NoteCard', () => {
     const id = 123
     const index = 123
     mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    render(
+    const { getByText } = render(
         <ShareMock>
           <NoteCard
             id={id}
@@ -40,10 +50,10 @@ describe('NoteCard', () => {
             title="new_title"
           />
         </ShareMock>)
-    expect(screen.getByText('new_title')).toBeInTheDocument()
-    expect(screen.getByText(/2000-01-01/)).toBeInTheDocument()
-    expect(screen.getByText(/00:00:00Z/)).toBeInTheDocument()
-    expect(screen.getByText(/bob/)).toBeInTheDocument()
+    expect(getByText('new_title')).toBeInTheDocument()
+    expect(getByText(/2000-01-01/)).toBeInTheDocument()
+    expect(getByText(/00:00:00Z/)).toBeInTheDocument()
+    expect(getByText(/bob/)).toBeInTheDocument()
   })
 
   it('Number of comments', () => {
@@ -51,8 +61,8 @@ describe('NoteCard', () => {
     const index = 123
     const commentCount = 10
     mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    render(<ShareMock><NoteCard id={id} index={index} numberOfComments={commentCount}/></ShareMock>)
-    expect(screen.getByText(commentCount)).toBeInTheDocument()
+    const { getByText } = render(<ShareMock><NoteCard id={id} index={index} numberOfComments={commentCount}/></ShareMock>)
+    expect(getByText(commentCount)).toBeInTheDocument()
   })
 
   it('Select the note card', () => {
@@ -65,7 +75,7 @@ describe('NoteCard', () => {
         </ShareMock>)
     const selectIssueButton = rendered.getByTestId('note-body')
     fireEvent.click(selectIssueButton)
-    expect(screen.getByText('Select the note card - title')).toBeInTheDocument()
+    expect(rendered.getByText('Select the note card - title')).toBeInTheDocument()
   })
 
   it('Camera Position control', () => {
@@ -92,14 +102,14 @@ describe('NoteCard', () => {
     const noteNumber = 1
     const date = ''
     const synchedNote = true
-    const {result} = renderHook(() => useStore((state) => state))
+    const { result } = renderHook(() => useStore((state) => state))
 
     mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
 
     await act(() => {
       result.current.setNotes(MOCK_NOTES)
     })
-    const {getByTestId} = render(
+    const { getByTestId } = render(
         <ShareMock>
           <NoteCard
             id={id}

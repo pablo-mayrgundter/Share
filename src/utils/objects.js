@@ -1,4 +1,4 @@
-import {assertDefined} from './assert'
+import { assertDefined } from './assert'
 
 
 /**

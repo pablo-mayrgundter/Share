@@ -1,5 +1,5 @@
-import {Mesh} from 'three'
-import {areDefinedAndNotNull} from '../utils/assert'
+import { Mesh } from 'three'
+import { areDefinedAndNotNull } from '../utils/assert'
 
 
 // From https://github.com/ThatOpen/web-ifc-viewer/blob/master/viewer/src/components/ifc/selection/selection.ts
@@ -72,7 +72,7 @@ export default class Selection {
     if (focusSelection) {
       await this.focusSelection(selected)
     }
-    return {modelID: mesh.modelID, id}
+    return { modelID: mesh.modelID, id }
   }
 
 

@@ -1,6 +1,6 @@
 import debug from '../../utils/debug'
-import {assertDefined} from '../../utils/assert'
-import {getGitHub} from './Http'
+import { assertDefined } from '../../utils/assert'
+import { getGitHub } from './Http'
 
 
 /**

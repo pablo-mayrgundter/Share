@@ -1,6 +1,6 @@
-import {EffectComposer, BlendFunction} from 'postprocessing'
-import {Mesh} from 'three'
-import {IfcContext} from 'web-ifc-viewer/dist/components'
+import { EffectComposer, BlendFunction } from 'postprocessing'
+import { Mesh } from 'three'
+import { IfcContext } from 'web-ifc-viewer/dist/components'
 import CustomPostProcessor from './CustomPostProcessor'
 
 /**

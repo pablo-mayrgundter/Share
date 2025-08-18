@@ -1,19 +1,19 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import {useTheme} from '@mui/material/styles'
-import {assertDefined} from '../../utils/assert'
-import {CloseButton} from '../Buttons'
-import {useIsMobile} from '../Hooks'
+import { useTheme } from '@mui/material/styles'
+import { assertDefined } from '../../utils/assert'
+import { CloseButton } from '../Buttons'
+import { useIsMobile } from '../Hooks'
 
 
 /**
  * @property {string} title Panel title
  * @property {Function} onClose Callback for close
  * @property {object} [actions] Actions component placed to the right of the title
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function PanelTitle({title, onClose, actions}) {
+export default function PanelTitle({ title, onClose, actions }) {
   assertDefined(title, onClose)
   const isMobile = useIsMobile()
   const theme = useTheme()

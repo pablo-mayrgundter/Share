@@ -1,16 +1,16 @@
-import React, {ReactElement, useState, useEffect} from 'react'
-import {useLocation} from 'react-router-dom'
-import {Vector3} from 'three'
+import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { Vector3 } from 'three'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import SvgIcon from '@mui/material/SvgIcon'
 import Typography from '@mui/material/Typography'
 import useStore from '../../store/useStore'
 import debug from '../../utils/debug'
-import {addHashParams, getHashParams, getObjectParams, removeParams} from '../../utils/location'
-import {floatStrTrim, isNumeric} from '../../utils/strings'
-import {TooltipIconButton} from '../Buttons'
-import {HASH_PREFIX_CUT_PLANE} from './hashState'
+import { addHashParams, getHashParams, getObjectParams, removeParams } from '../../utils/location'
+import { floatStrTrim, isNumeric } from '../../utils/strings'
+import { TooltipIconButton } from '../Buttons'
+import { HASH_PREFIX_CUT_PLANE } from './hashState'
 import CloseIcon from '@mui/icons-material/Close'
 import CropOutlinedIcon from '@mui/icons-material/CropOutlined'
 import ElevationIcon from '../../assets/icons/Elevation.svg'
@@ -21,7 +21,7 @@ import SectionIcon from '../../assets/icons/Section.svg'
 /**
  * Menu of three cut planes for the model
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function CutPlaneMenu() {
   const model = useStore((state) => state.model)
@@ -64,12 +64,12 @@ export default function CutPlaneMenu() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [model])
 
-  const togglePlane = ({direction, offset = 0}) => {
+  const togglePlane = ({ direction, offset = 0 }) => {
     setLevelInstance(null)
     const modelCenter = new Vector3
     model?.geometry.boundingBox.getCenter(modelCenter)
     setAnchorEl(null)
-    const {normal, modelCenterOffset} = getPlaneSceneInfo({modelCenter, direction, offset})
+    const { normal, modelCenterOffset } = getPlaneSceneInfo({ modelCenter, direction, offset })
     debug().log('CutPlaneMenu#togglePlane: normal: ', normal)
     debug().log('CutPlaneMenu#togglePlane: modelCenterOffset: ', modelCenterOffset)
     debug().log('CutPlaneMenu#togglePlane: ifcPlanes: ', viewer.clipper.planes)
@@ -81,7 +81,7 @@ export default function CutPlaneMenu() {
       viewer.clipper.deleteAllPlanes()
       const restCutPlanes = cutPlanes.filter((cutPlane) => cutPlane.direction !== direction)
       restCutPlanes.forEach((restCutPlane) => {
-        const planeInfo = getPlaneSceneInfo({modelCenter, direction: restCutPlane.direction, offset: restCutPlane.offset})
+        const planeInfo = getPlaneSceneInfo({ modelCenter, direction: restCutPlane.direction, offset: restCutPlane.offset })
         viewer.clipper.createFromNormalAndCoplanarPoint(planeInfo.normal, planeInfo.modelCenterOffset)
       })
       if (restCutPlanes.length === 0) {
@@ -89,8 +89,8 @@ export default function CutPlaneMenu() {
       }
     } else {
       debug().log('CutPlaneMenu#togglePlane: found: ', false)
-      addHashParams(window.location, HASH_PREFIX_CUT_PLANE, {[direction]: offset}, true)
-      addCutPlaneDirection({direction, offset})
+      addHashParams(window.location, HASH_PREFIX_CUT_PLANE, { [direction]: offset }, true)
+      addCutPlaneDirection({ direction, offset })
       viewer.clipper.createFromNormalAndCoplanarPoint(normal, modelCenterOffset)
       setIsCutPlaneActive(true)
     }
@@ -113,33 +113,33 @@ export default function CutPlaneMenu() {
         anchorEl={anchorEl}
         open={isMenuVisible}
         onClose={handleClose}
-        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-        transformOrigin={{vertical: 'bottom', horizontal: 'center'}}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         data-testid='menu-cut-plane'
       >
         <MenuItem
-          onClick={() => togglePlane({direction: 'y'})}
+          onClick={() => togglePlane({ direction: 'y' })}
           selected={cutPlanes.findIndex((cutPlane) => cutPlane.direction === 'y') > -1}
           data-testid='menu-item-plan'
         >
           <SvgIcon><PlanIcon className='icon-share'/></SvgIcon>
-          <Typography sx={{marginLeft: '10px'}} variant='overline'>Plan</Typography>
+          <Typography sx={{ marginLeft: '10px' }} variant='overline'>Plan</Typography>
         </MenuItem>
         <MenuItem
-          onClick={() => togglePlane({direction: 'x'})}
+          onClick={() => togglePlane({ direction: 'x' })}
           selected={cutPlanes.findIndex((cutPlane) => cutPlane.direction === 'x') > -1}
           data-testid='menu-item-section'
         >
           <SvgIcon><SectionIcon className='icon-share'/></SvgIcon>
-          <Typography sx={{marginLeft: '10px'}} variant='overline'>Section</Typography>
+          <Typography sx={{ marginLeft: '10px' }} variant='overline'>Section</Typography>
         </MenuItem>
         <MenuItem
-          onClick={() => togglePlane({direction: 'z'})}
+          onClick={() => togglePlane({ direction: 'z' })}
           selected={cutPlanes.findIndex((cutPlane) => cutPlane.direction === 'z') > -1}
           data-testid='menu-item-elevation'
         >
           <SvgIcon><ElevationIcon className='icon-share'/></SvgIcon>
-          <Typography sx={{marginLeft: '10px'}} variant='overline'>Elevation</Typography>
+          <Typography sx={{ marginLeft: '10px' }} variant='overline'>Elevation</Typography>
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -149,7 +149,7 @@ export default function CutPlaneMenu() {
           data-testid='menu-item-clear-all'
         >
           <CloseIcon className='icon-share'/>
-          <Typography sx={{marginLeft: '10px'}} variant='overline'>Clear all</Typography>
+          <Typography sx={{ marginLeft: '10px' }} variant='overline'>Clear all</Typography>
         </MenuItem>
       </Menu>
     </>
@@ -288,7 +288,7 @@ export function removePlanesFromHashState() {
  * @param {number} offset
  * @return {object}
  */
-export function getPlaneSceneInfo({modelCenter, direction, offset = 0}) {
+export function getPlaneSceneInfo({ modelCenter, direction, offset = 0 }) {
   let normal
   let planeOffsetX = 0
   let planeOffsetY = 0
@@ -318,5 +318,5 @@ export function getPlaneSceneInfo({modelCenter, direction, offset = 0}) {
           modelCenter.x + planeOffsetX,
           modelCenter.y + planeOffsetY,
           modelCenter.z + planeOffsetZ)
-  return {normal, modelCenterOffset}
+  return { normal, modelCenterOffset }
 }

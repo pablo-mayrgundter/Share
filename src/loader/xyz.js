@@ -1,4 +1,4 @@
-import {BufferGeometry, Points, PointsMaterial} from 'three'
+import { BufferGeometry, Points, PointsMaterial } from 'three'
 
 
 /**

@@ -1,4 +1,5 @@
-import {getFinalUrl} from './urls'
+import { describe, it, expect, beforeEach, afterAll } from 'bun:test'
+import { getFinalUrl } from './urls'
 
 
 describe('With environment variables', () => {
@@ -6,8 +7,7 @@ describe('With environment variables', () => {
 
 
   beforeEach(() => {
-    jest.resetModules()
-    process.env = {...OLD_ENV}
+    process.env = { ...OLD_ENV }
   })
 
 

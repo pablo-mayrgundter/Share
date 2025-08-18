@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Typography from '@mui/material/Typography'
-import {deref, decodeIFCString} from '@bldrs-ai/ifclib'
+import { deref, decodeIFCString } from '@bldrs-ai/ifclib'
 import debug from '../../utils/debug'
-import {stoi} from '../../utils/strings'
+import { stoi } from '../../utils/strings'
 
 
 /**
@@ -175,7 +175,7 @@ export async function unpackHelper(model, eltArr, serial, ifcToRowCb) {
     }
     return (
       <tr key={`hasProps-${serial++}`}>
-        <td colSpan={2} style={{borderBottom: 'none'}}>
+        <td colSpan={2} style={{ borderBottom: 'none' }}>
           <table>
             <tbody>{rows}</tbody>
           </table>
@@ -216,7 +216,7 @@ export async function hasProperties(model, hasPropertiesArr, serial) {
  * @param {number} serial
  * @return {object} The react component
  */
-function Row({d1, d2}) {
+function Row({ d1, d2 }) {
   const [isActive, setIsActive] = useState(false)
   const toggleActive = () => {
     setIsActive(!isActive)
@@ -236,7 +236,7 @@ function Row({d1, d2}) {
     isActive ? (
       <tr onDoubleClick={toggleActive}>
         <td colSpan={2}>
-          <Typography variant='propTitle' sx={{display: 'block'}}>{d1}</Typography>
+          <Typography variant='propTitle' sx={{ display: 'block' }}>{d1}</Typography>
           <Typography variant='propValue'>{d2}</Typography>
         </td>
       </tr>

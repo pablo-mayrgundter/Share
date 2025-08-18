@@ -1,11 +1,11 @@
 import '@percy/cypress'
-import {Raycaster, Vector2, Vector3} from 'three'
-import {TITLE_NOTES} from '../../../src/Components/Notes/component'
-import {homepageSetup,
+import { Raycaster, Vector2, Vector3 } from 'three'
+import { TITLE_NOTES } from '../../../src/Components/Notes/component'
+import { homepageSetup,
    returningUserVisitsHomepageWaitForModel,
    auth0Login,
   } from '../../support/utils'
-import {MOCK_MARKERS} from '../../../src/Components/Markers/Marker.fixture'
+import { MOCK_MARKERS } from '../../../src/Components/Markers/Marker.fixture'
 
 
 /** {@link https://github.com/bldrs-ai/Share/issues/1054} */
@@ -28,7 +28,7 @@ describe('Placemarks 100: Not visible when notes is not open', () => {
         cy.wait(waitTimeMs)
     })
       it('should select a marker and url hash should change', () => {
-        const {markerObjects, camera, domElement} = win.markerScene
+        const { markerObjects, camera, domElement } = win.markerScene
 
         // Assert that markers exist
         expect(markerObjects.length).to.eq(2)

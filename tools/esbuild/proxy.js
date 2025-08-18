@@ -2,7 +2,7 @@ import http from 'node:http'
 import https from 'node:https'
 import fs from 'fs'
 import path from 'path'
-import {fileURLToPath} from 'url'
+import { fileURLToPath } from 'url'
 
 /**
  * @param {string} proxiedHost The host to which traffic will be sent. E.g. localhost
@@ -73,7 +73,7 @@ export function createProxyServer(host, port, useHttps = false) {
       }
 
       res.writeHead(proxyResponse.statusCode, headersToSend)
-      proxyResponse.pipe(res, {end: true})
+      proxyResponse.pipe(res, { end: true })
     })
 
     proxyReq.on('error', (err) => {
@@ -82,7 +82,7 @@ export function createProxyServer(host, port, useHttps = false) {
       res.end('Internal Server Error')
     })
 
-    req.pipe(proxyReq, {end: true})
+    req.pipe(proxyReq, { end: true })
   }
 
 

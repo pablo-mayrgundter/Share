@@ -1,6 +1,6 @@
 import '@percy/cypress'
-import {TITLE_NOTE, TITLE_NOTES} from '../../../src/Components/Notes/component'
-import {waitForModel, homepageSetup, setIsReturningUser} from '../../support/utils'
+import { TITLE_NOTE, TITLE_NOTES } from '../../../src/Components/Notes/component'
+import { waitForModel, homepageSetup, setIsReturningUser } from '../../support/utils'
 
 /** {@link https://github.com/bldrs-ai/Share/issues/1072} */
 describe('Notes 100: Access shared note', () => {

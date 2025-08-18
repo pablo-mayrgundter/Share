@@ -1,29 +1,63 @@
+import { describe, it, expect, beforeEach, mock } from 'bun:test'
 import React from 'react'
-import {act, fireEvent, render, renderHook} from '@testing-library/react'
-import {getOrganizations} from '../../net/github/Organizations'
+import { act, fireEvent, render, renderHook, waitFor } from '@testing-library/react'
 import useStore from '../../store/useStore'
-import {
-  mockedUseAuth0,
-  mockedUserLoggedIn,
-  mockedUserLoggedOut,
-} from '../../__mocks__/authentication'
-import {OpenModelControlFixture} from './OpenModelControl.fixture'
-import {LABEL_GITHUB} from './component'
+import { OpenModelControlFixture } from './OpenModelControl.fixture'
+import { LABEL_GITHUB } from './component'
 
+// Mock GitHub Organizations module for bun
+const mockGetOrganizations = mock(() => Promise.resolve({}))
+mock.module('../../net/github/Organizations', () => ({
+  getOrganizations: mockGetOrganizations,
+}))
 
-jest.mock('../../net/github/Organizations', () => ({
-  getOrganizations: jest.fn(),
+// Create test-specific Auth0 mocks
+const mockUserLoggedOut = {
+  user: null,
+  isAuthenticated: false,
+  isLoading: false,
+  getAccessTokenSilently: mock(),
+  loginWithRedirect: mock(),
+  logout: mock(),
+}
+
+const mockUserLoggedIn = {
+  user: { nickname: 'testing', email: 'test@example.com' },
+  isAuthenticated: true,
+  isLoading: false,
+  getAccessTokenSilently: mock(() => Promise.resolve('mock_token')),
+  loginWithRedirect: mock(),
+  logout: mock(),
+}
+
+// Create flexible auth mock for this test file
+const testAuth0Mock = mock(() => mockUserLoggedOut)
+mock.module('../../Auth0/Auth0Proxy', () => ({
+  useAuth0: testAuth0Mock,
 }))
 
 
 describe('OpenModelControl', () => {
-  it('Renders a login message if the user is not logged in', () => {
-    mockedUseAuth0.mockReturnValue(mockedUserLoggedOut)
-    const {getByTestId, getByText} = render(<OpenModelControlFixture/>)
-    const openControlButton = getByTestId('control-button-open')
-    fireEvent.click(openControlButton)
-    const GithubTab = getByText(LABEL_GITHUB)
-    fireEvent.click(GithubTab)
+  beforeEach(() => {
+    // Reset mock call counts
+    mockGetOrganizations.mockClear()
+  })
+  it('Renders a login message if the user is not logged in', async () => {
+    testAuth0Mock.mockReturnValue(mockUserLoggedOut)
+    let getByTestId; let getByText
+    await act(async () => {
+      const rendered = render(<OpenModelControlFixture/>)
+      getByTestId = rendered.getByTestId
+      getByText = rendered.getByText
+    })
+    await act(async () => {
+      const openControlButton = getByTestId('control-button-open')
+      fireEvent.click(openControlButton)
+    })
+    await act(async () => {
+      const GithubTab = getByText(LABEL_GITHUB)
+      fireEvent.click(GithubTab)
+    })
     const loginTextMatcher = (content, node) => {
       const hasText = (_node) => _node.textContent.includes('Host your model on GitHub and log in to Share')
       const nodeHasText = hasText(node)
@@ -37,12 +71,21 @@ describe('OpenModelControl', () => {
   })
 
   it('Renders file selector if the user is logged in', async () => {
-    mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    const {getByTestId, getByText} = render(<OpenModelControlFixture/>)
-    const openControlButton = getByTestId('control-button-open')
-    fireEvent.click(openControlButton)
-    const GithubTab = getByText(LABEL_GITHUB)
-    fireEvent.click(GithubTab)
+    testAuth0Mock.mockReturnValue(mockUserLoggedIn)
+    let getByTestId; let getByText
+    await act(async () => {
+      const rendered = render(<OpenModelControlFixture/>)
+      getByTestId = rendered.getByTestId
+      getByText = rendered.getByText
+    })
+    await act(async () => {
+      const openControlButton = getByTestId('control-button-open')
+      fireEvent.click(openControlButton)
+    })
+    await act(async () => {
+      const GithubTab = getByText(LABEL_GITHUB)
+      fireEvent.click(GithubTab)
+    })
     const File = getByTestId('openFile')
     const Repository = await getByTestId('openRepository')
     expect(File).toBeInTheDocument()
@@ -50,28 +93,27 @@ describe('OpenModelControl', () => {
   })
 
   it('Does not fetch repo info on initial render when isOpenModelVisible=false in zustand', async () => {
-    mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    getOrganizations.mockResolvedValue({})
-    // eslint-disable-next-line require-await
+    testAuth0Mock.mockReturnValue(mockUserLoggedIn)
+    mockGetOrganizations.mockResolvedValue({})
     await act(async () => {
       render(<OpenModelControlFixture/>)
     })
-    expect(getOrganizations).not.toHaveBeenCalled()
+    expect(mockGetOrganizations).not.toHaveBeenCalled()
   })
 
   it('Fetches repo info on initial render when isOpenModelVisible in zustand', async () => {
-    mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    getOrganizations.mockResolvedValue({})
-    const {result} = renderHook(() => useStore((state) => state))
-    // eslint-disable-next-line require-await
+    testAuth0Mock.mockReturnValue(mockUserLoggedIn)
+    mockGetOrganizations.mockResolvedValue({})
+    const { result } = renderHook(() => useStore((state) => state))
     await act(async () => {
       result.current.setAccessToken('foo')
       result.current.setIsOpenModelVisible(true)
     })
-    // eslint-disable-next-line require-await
     await act(async () => {
       render(<OpenModelControlFixture/>)
     })
-    expect(getOrganizations).toHaveBeenCalled()
+    await waitFor(() => {
+      expect(mockGetOrganizations).toHaveBeenCalled()
+    })
   })
 })

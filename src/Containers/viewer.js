@@ -1,5 +1,5 @@
-import {Color} from 'three'
-import {IfcViewerAPIExtended} from '../Infrastructure/IfcViewerAPIExtended'
+import { Color } from 'three'
+import { IfcViewerAPIExtended } from '../Infrastructure/IfcViewerAPIExtended'
 
 
 /**

@@ -1,5 +1,5 @@
-import {getDownloadUrl} from '../net/github/Files'
-import {parseGitHubRepositoryUrl} from '../net/github/utils'
+import { getDownloadUrl } from '../net/github/Files'
+import { parseGitHubRepositoryUrl } from '../net/github/utils'
 
 
 /**

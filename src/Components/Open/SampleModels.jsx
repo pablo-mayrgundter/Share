@@ -1,5 +1,5 @@
-import React, {ReactElement, useState} from 'react'
-import {Grid, Chip, Typography} from '@mui/material'
+import React, { useState } from 'react'
+import { Grid, Chip, Typography } from '@mui/material'
 import AccessibilityIcon from '@mui/icons-material/AccessibilityOutlined'
 import Bplaza from '../../assets/icons/Bplaza.svg'
 import Gear from '../../assets/icons/Gear.svg'
@@ -13,11 +13,11 @@ import Sheenstock from '../../assets/icons/Sheenstock.svg'
 /**
  * @property {Function} setIsDialogDisplayed callback
  * @property {Function} navigate Callback from OpenModelDialog to change page url
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function SampleModels({navigate, setIsDialogDisplayed}) {
+export default function SampleModels({ navigate, setIsDialogDisplayed }) {
   const [, setSelected] = useState('')
-  const iconsStyle = {height: '1.6em'}
+  const iconsStyle = { height: '1.6em' }
   const modelPath = {
     Momentum: '/share/v/gh/Swiss-Property-AG/Momentum-Public/main/Momentum.ifc#c:-38.64,12.52,35.4,-5.29,0.94,0.86',
     Schneestock: '/share/v/gh/Swiss-Property-AG/Schneestock-Public/main/ZGRAGGEN.ifc#c:80.66,11.66,-94.06,6.32,2.93,-8.72',
@@ -42,7 +42,7 @@ export default function SampleModels({navigate, setIsDialogDisplayed}) {
 
   const handleSelect = (modelName, closeDialog) => {
     setSelected(modelName)
-    navigate({pathname: modelPath[modelName]})
+    navigate({ pathname: modelPath[modelName] })
     closeDialog()
   }
 
@@ -54,12 +54,12 @@ export default function SampleModels({navigate, setIsDialogDisplayed}) {
       alignItems='center'
     >
       {Object.keys(modelPath).map((model, i) => (
-        <Grid item xs={6} key={i} sx={{padding: '0.5em !important'}}>
+        <Grid item xs={6} key={i} sx={{ padding: '0.5em !important' }}>
           <Chip
             label={
               <>
                 {modelIcon[model]}
-                <Typography variant='caption' sx={{marginTop: '.5em'}}>{model}</Typography>
+                <Typography variant='caption' sx={{ marginTop: '.5em' }}>{model}</Typography>
               </>
             }
             variant='sampleModel'

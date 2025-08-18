@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import PricingTable from '../Components/Stripe/PricingTable'
 import './index.css'
@@ -28,7 +28,7 @@ function App() {
   }, [theme])
 
   return (
-    <div style={{backgroundColor: (theme === 'light') ? '#FFFFFF' : '#414141', minHeight: '100vh'}}>
+    <div style={{ backgroundColor: (theme === 'light') ? '#FFFFFF' : '#414141', minHeight: '100vh' }}>
       <PricingTable theme={theme} userEmail={userEmail}/>
     </div>
   )

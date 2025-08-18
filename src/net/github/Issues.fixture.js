@@ -261,4 +261,4 @@ export const createMockIssues = (org, repo, issuesInfo) => {
 }
 
 
-export const MOCK_ISSUES_EMPTY = {data: []}
+export const MOCK_ISSUES_EMPTY = { data: [] }

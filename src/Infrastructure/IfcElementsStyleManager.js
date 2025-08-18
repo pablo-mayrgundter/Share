@@ -1,6 +1,6 @@
 import IfcCustomViewSettings from './IfcCustomViewSettings'
-import {IFCPRODUCTDEFINITIONSHAPE} from 'web-ifc'
-import {compileViewRules} from './ViewRulesCompiler'
+import { IFCPRODUCTDEFINITIONSHAPE } from 'web-ifc'
+import { compileViewRules } from './ViewRulesCompiler'
 
 
 /* eslint-disable jsdoc/no-undefined-types */

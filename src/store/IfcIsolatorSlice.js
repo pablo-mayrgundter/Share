@@ -26,8 +26,8 @@ export default function createIsolatorSlice(set, get) {
       })),
 
 
-    setHiddenElements: (elements) => set(() => ({hiddenElements: elements})),
-    setIsolatedElements: (elements) => set(() => ({isolatedElements: elements})),
-    setIsTempIsolationModeOn: (isOn) => set(() => ({isTempIsolationModeOn: isOn})),
+    setHiddenElements: (elements) => set(() => ({ hiddenElements: elements })),
+    setIsolatedElements: (elements) => set(() => ({ isolatedElements: elements })),
+    setIsTempIsolationModeOn: (isOn) => set(() => ({ isTempIsolationModeOn: isOn })),
   }
 }

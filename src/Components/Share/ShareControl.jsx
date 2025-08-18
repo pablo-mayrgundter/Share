@@ -1,8 +1,8 @@
-import React, {ReactElement, createRef, useEffect, useState} from 'react'
-import {Helmet} from 'react-helmet-async'
+import React, { createRef, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import QRCode from 'react-qr-code'
-import {useLocation} from 'react-router'
-import {gtagEvent} from '../../privacy/analytics'
+import { useLocation } from 'react-router'
+import { gtagEvent } from '../../privacy/analytics'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -10,13 +10,13 @@ import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import useStore from '../../store/useStore'
-import {ControlButtonWithHashState} from '../Buttons'
-import {addCameraUrlParams} from '../Camera/CameraControl'
-import {removeCameraUrlParams} from '../Camera/hashState'
-import {addPlanesToHashState, removePlanesFromHashState} from '../CutPlane/hashState'
+import { ControlButtonWithHashState } from '../Buttons'
+import { addCameraUrlParams } from '../Camera/CameraControl'
+import { removeCameraUrlParams } from '../Camera/hashState'
+import { addPlanesToHashState, removePlanesFromHashState } from '../CutPlane/hashState'
 import Dialog from '../Dialog'
 import Toggle from '../Toggle'
-import {HASH_PREFIX_SHARE} from './hashState'
+import { HASH_PREFIX_SHARE } from './hashState'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import ShareIcon from '@mui/icons-material/ShareOutlined'
 
@@ -25,7 +25,7 @@ import ShareIcon from '@mui/icons-material/ShareOutlined'
  * This button hosts the ShareDialog component and toggles it open and
  * closed.
  *
- * @return {ReactElement} The button react component, with a hosted
+ * @return {React.ReactElement} The button react component, with a hosted
  *   ShareDialog component
  */
 export default function ShareControl() {
@@ -56,9 +56,9 @@ export default function ShareControl() {
  *
  * @property {boolean} isDialogDisplayed Passed to Dialog to be controlled
  * @property {Function} setIsDialogDisplayed Passed to Dialog to be controlled
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-function ShareDialog({isDialogDisplayed, setIsDialogDisplayed}) {
+function ShareDialog({ isDialogDisplayed, setIsDialogDisplayed }) {
   const model = useStore((state) => state.model)
   const viewer = useStore((state) => state.viewer)
   const cameraControls = useStore((state) => state.cameraControls)
@@ -171,7 +171,7 @@ function ShareDialog({isDialogDisplayed, setIsDialogDisplayed}) {
                   edge='end'
                   size='small'
                 >
-                  <ContentCopyIcon size='inherit' sx={{width: '16px', height: '16px'}}/>
+                  <ContentCopyIcon size='inherit' sx={{ width: '16px', height: '16px' }}/>
                 </IconButton>
               </InputAdornment>
             ),

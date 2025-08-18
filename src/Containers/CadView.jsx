@@ -1,30 +1,30 @@
-import React, {ReactElement, useEffect, useState} from 'react'
-import {useNavigate, useSearchParams, useLocation} from 'react-router-dom'
-import {MeshLambertMaterial} from 'three'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom'
+import { MeshLambertMaterial } from 'three'
 import Box from '@mui/material/Box'
-import {useTheme} from '@mui/material/styles'
-import {filetypeRegex} from '../Filetype'
-import {useAuth0} from '../Auth0/Auth0Proxy'
-import {onHash} from '../Components/Camera/CameraControl'
-import {gtagEvent} from '../privacy/analytics'
-import {resetState as resetCutPlaneState} from '../Components/CutPlane/CutPlaneMenu'
-import {useIsMobile} from '../Components/Hooks'
-import {load} from '../loader/Loader'
+import { useTheme } from '@mui/material/styles'
+import { filetypeRegex } from '../Filetype'
+import { useAuth0 } from '../Auth0/Auth0Proxy'
+import { onHash } from '../Components/Camera/CameraControl'
+import { gtagEvent } from '../privacy/analytics'
+import { resetState as resetCutPlaneState } from '../Components/CutPlane/CutPlaneMenu'
+import { useIsMobile } from '../Components/Hooks'
+import { load } from '../loader/Loader'
 import useStore from '../store/useStore'
-import {getParentPathIdsForElement, setupLookupAndParentLinks} from '../utils/TreeUtils'
-import {areDefinedAndNotNull, assertDefined} from '../utils/assert'
+import { getParentPathIdsForElement, setupLookupAndParentLinks } from '../utils/TreeUtils'
+import { areDefinedAndNotNull, assertDefined } from '../utils/assert'
 import debug from '../utils/debug'
-import {disablePageReloadApprovalCheck} from '../utils/event'
-import {groupElementsByTypes} from '../utils/ifc'
-import {navWith} from '../utils/navigate'
-import {addProperties} from '../utils/objects'
-import {setKeydownListeners} from '../utils/shortcutKeys'
+import { disablePageReloadApprovalCheck } from '../utils/event'
+import { groupElementsByTypes } from '../utils/ifc'
+import { navWith } from '../utils/navigate'
+import { addProperties } from '../utils/objects'
+import { setKeydownListeners } from '../utils/shortcutKeys'
 import Picker from '../view/Picker'
 import RootLandscape from './RootLandscape'
 import ViewerContainer from './ViewerContainer'
-import {elementSelection} from './selection'
-import {partsToPath} from './urls'
-import {initViewer} from './viewer'
+import { elementSelection } from './selection'
+import { partsToPath } from './urls'
+import { initViewer } from './viewer'
 
 
 let count = 0
@@ -32,7 +32,7 @@ let count = 0
 /**
  * Only container for the app.  Hosts the IfcViewer as well as nav components.
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function CadView({
   installPrefix,
@@ -112,7 +112,7 @@ export default function CadView({
   const isMobile = useIsMobile()
   const location = useLocation()
   // Auth
-  const {isLoading: isAuthLoading, isAuthenticated} = useAuth0()
+  const { isLoading: isAuthLoading, isAuthenticated } = useAuth0()
   const setOpfsFile = useStore((state) => state.setOpfsFile)
   const navigate = useNavigate()
   // TODO(pablo): Removing this setter leads to a very strange stack overflow
@@ -340,7 +340,7 @@ export default function CadView({
     setKeydownListeners(viewer, selectItemsInScene)
     initSearch(m, rootElt)
     const tmpProps = await viewer.getProperties(0, rootElt.expressID)
-    const rootProps = tmpProps || {Name: {value: 'Model'}, LongName: {value: 'Model'}}
+    const rootProps = tmpProps || { Name: { value: 'Model' }, LongName: { value: 'Model' } }
     rootElt.Name = rootProps.Name
     rootElt.LongName = rootProps.LongName
     setRootElement(rootElt)
@@ -395,7 +395,7 @@ export default function CadView({
     searchIndex.clearIndex()
     debug().log('CadView#initSearch: ', m, rootElt)
     debug().time('build searchIndex')
-    searchIndex.indexElement({properties: m}, rootElt)
+    searchIndex.indexElement({ properties: m }, rootElt)
     debug().timeEnd('build searchIndex')
     onSearchParams()
   }
@@ -460,7 +460,7 @@ export default function CadView({
     resetState()
     const repoFilePath = modelPath.gitpath ? modelPath.getRepoPath() : modelPath.filepath
     disablePageReloadApprovalCheck()
-    navWith(navigate, `${pathPrefix}${repoFilePath}`, {search: '', hash: ''})
+    navWith(navigate, `${pathPrefix}${repoFilePath}`, { search: '', hash: '' })
   }
 
 
@@ -541,7 +541,7 @@ export default function CadView({
         },
       })
     } else if (githubRegex.test(modelUrlStr)) {
-      setLoadedFileInfo({source: 'github', info: {url: modelUrlStr}})
+      setLoadedFileInfo({ source: 'github', info: { url: modelUrlStr } })
     }
   }
 
@@ -673,12 +673,12 @@ export default function CadView({
   }, [])
 
 
-  const abs = {position: 'absolute'}
-  const absTop = {top: 0, ...abs}
+  const abs = { position: 'absolute' }
+  const absTop = { top: 0, ...abs }
   // TODO(pablo): need to set the height on the row stack below to keep them
   // from expanding
   return (
-    <Box sx={{...absTop, left: 0, width: '100vw', height: isMobile ? `${vh}px` : '100vh', m: 0, p: 0}}>
+    <Box sx={{ ...absTop, left: 0, width: '100vw', height: isMobile ? `${vh}px` : '100vh', m: 0, p: 0 }}>
       {<ViewerContainer
          data-testid='cadview-dropzone'
          data-model-ready={isModelReady}

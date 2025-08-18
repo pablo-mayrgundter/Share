@@ -2,7 +2,7 @@ import React from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import Stack from '@mui/material/Stack'
-import {assertDefined} from '../utils/assert'
+import { assertDefined } from '../utils/assert'
 
 /**
  * Input with autocomplete feature.
@@ -12,10 +12,10 @@ import {assertDefined} from '../utils/assert'
  * @property {string} size MUI size of the input component
  * @return {React.Component}
  */
-export default function InputAutocomplete({elements, placeholder, size = 'small'}) {
+export default function InputAutocomplete({ elements, placeholder, size = 'small' }) {
   assertDefined(elements, placeholder)
   return (
-    <Stack spacing={3} sx={{minWidth: '280px'}}>
+    <Stack spacing={3} sx={{ minWidth: '280px' }}>
       <Autocomplete
         multiple
         options={elements}

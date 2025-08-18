@@ -46,14 +46,14 @@ describe('bldrs inside iframe', () => {
   })
 
   it('should emit ready-messsage when page load completes', () => {
-    cy.get('@iframe').trigger('keydown', {keyCode: KEYCODE_ESC})
+    cy.get('@iframe').trigger('keydown', { keyCode: KEYCODE_ESC })
     cy.get('#cbxIsReady').should('exist').and('be.checked')
   })
 
   it('should load model when LoadModel-message emitted', () => {
     const model = 'Swiss-Property-AG/Momentum-Public/main/Momentum.ifc'
     const modelRootNodeName = 'Proxy with extruded box'
-    cy.get('@iframe').trigger('keydown', {keyCode: KEYCODE_ESC})
+    cy.get('@iframe').trigger('keydown', { keyCode: KEYCODE_ESC })
 
     // cy.get('@iframe').find('[data-ifc-model="1"]').should('exist')
     // cy.get('#messagesCount').contains('1') //First loaded message
@@ -63,10 +63,10 @@ describe('bldrs inside iframe', () => {
       githubIfcPath: model,
     }
 
-    cy.intercept('GET', REMOTE_IFC_URL, {fixture: REMOTE_IFC_FIXTURE}).as('loadModel')
+    cy.intercept('GET', REMOTE_IFC_URL, { fixture: REMOTE_IFC_FIXTURE }).as('loadModel')
 
     cy.get('#txtSendMessagePayload').clear()
-        .type(JSON.stringify(msg), {parseSpecialCharSequences: false})
+        .type(JSON.stringify(msg), { parseSpecialCharSequences: false })
     cy.get('#btnSendMessage').click()
     cy.wait('@loadModel').its('response.statusCode').should('eq', REQUEST_SUCCESS_CODE)
     // cy.get('@iframe').find('[data-ifc-model="1"]').should('exist')
@@ -77,7 +77,7 @@ describe('bldrs inside iframe', () => {
   })
 
   it('should select element when SelectElements-message emitted', () => {
-    cy.get('@iframe').trigger('keydown', {keyCode: KEYCODE_ESC})
+    cy.get('@iframe').trigger('keydown', { keyCode: KEYCODE_ESC })
     cy.get('#lastMessageReceivedAction').contains(/ModelLoaded/i)
     const globalId = '02uD5Qe8H3mek2PYnMWHk1'
     // cy.get('@iframe').find('[data-ifc-model="1"]').should('exist')
@@ -85,15 +85,15 @@ describe('bldrs inside iframe', () => {
     const msg = {
       globalIds: [globalId],
     }
-    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), {parseSpecialCharSequences: false})
+    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), { parseSpecialCharSequences: false })
     cy.get('#btnSendMessage').click()
-    cy.get('@iframe').findByRole('button', {name: /Properties/}).click()
+    cy.get('@iframe').findByRole('button', { name: /Properties/ }).click()
     cy.get('@iframe').contains('span', /621/).should('exist')
   })
 
   it('should emit SelectionChanged-message when element was selected through the menu and when cleared', () => {
     const targetElementId = '3vMqyUfHj3tgritpIZS4iG'
-    cy.get('@iframe').trigger('keydown', {keyCode: KEYCODE_ESC})
+    cy.get('@iframe').trigger('keydown', { keyCode: KEYCODE_ESC })
     cy.get('#lastMessageReceivedAction').contains(/ModelLoaded/i)
     cy.get('@iframe').find('[data-testid="control-button-navigation"]').click()
     cy.get('@iframe').findByText('Bldrs').click()
@@ -115,7 +115,7 @@ describe('bldrs inside iframe', () => {
     cy.get('@iframe').findAllByText(/together/i).last().click()
     cy.get('#lastMessageReceivedAction').contains(/SelectionChanged/i)
 
-    cy.get('@iframe').findByRole('button', {name: /Clear/}).click()
+    cy.get('@iframe').findByRole('button', { name: /Clear/ }).click()
 
     cy.get('#txtLastMsg').should(($txtLastMsg) => {
       const msg = JSON.parse($txtLastMsg.val())
@@ -129,20 +129,20 @@ describe('bldrs inside iframe', () => {
   })
 
   it.skip('should hide UI components when UIComponentsVisibility-message emitted', () => {
-    cy.get('@iframe').trigger('keydown', {keyCode: KEYCODE_ESC})
+    cy.get('@iframe').trigger('keydown', { keyCode: KEYCODE_ESC })
     cy.get('#txtSendMessageType').clear().type('ai.bldrs-share.UIComponentsVisibility')
     const msg = {
       navigationPanel: false,
       modelInteraction: false,
     }
-    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), {parseSpecialCharSequences: false})
+    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), { parseSpecialCharSequences: false })
     cy.get('#btnSendMessage').click()
 
-    cy.findByRole('tree', {label: 'IFC Navigator'}).should('not.exist')
-    cy.get('@iframe').findByRole('button', {name: /Notes/}).should('not.exist')
-    cy.get('@iframe').findByRole('button', {name: /Properties/}).should('not.exist')
-    cy.get('@iframe').findByRole('button', {name: /Section/}).should('not.exist')
-    cy.get('@iframe').findByRole('button', {name: /Clear/}).should('not.exist')
+    cy.findByRole('tree', { label: 'IFC Navigator' }).should('not.exist')
+    cy.get('@iframe').findByRole('button', { name: /Notes/ }).should('not.exist')
+    cy.get('@iframe').findByRole('button', { name: /Properties/ }).should('not.exist')
+    cy.get('@iframe').findByRole('button', { name: /Section/ }).should('not.exist')
+    cy.get('@iframe').findByRole('button', { name: /Clear/ }).should('not.exist')
   })
 
 
@@ -151,10 +151,10 @@ describe('bldrs inside iframe', () => {
     const msg = {
       isSuppressed: true,
     }
-    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), {parseSpecialCharSequences: false})
+    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), { parseSpecialCharSequences: false })
     cy.get('#btnSendMessage').click()
 
-    cy.get('@iframe').findByRole('dialog', {timeout: 300000}).should('not.exist')
+    cy.get('@iframe').findByRole('dialog', { timeout: 300000 }).should('not.exist')
   })
 
 
@@ -163,14 +163,14 @@ describe('bldrs inside iframe', () => {
     const msg = {
       isSuppressed: false,
     }
-    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), {parseSpecialCharSequences: false})
+    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), { parseSpecialCharSequences: false })
     cy.get('#btnSendMessage').click()
 
-    cy.get('@iframe').findByRole('dialog', {timeout: 300000}).should('exist')
+    cy.get('@iframe').findByRole('dialog', { timeout: 300000 }).should('exist')
   })
 
   it('should hide element when HideElements-message emitted', () => {
-    cy.get('@iframe').trigger('keydown', {keyCode: KEYCODE_ESC})
+    cy.get('@iframe').trigger('keydown', { keyCode: KEYCODE_ESC })
     cy.get('#lastMessageReceivedAction').contains(/ModelLoaded/i)
     const globalId = '02uD5Qe8H3mek2PYnMWHk1'
 
@@ -179,7 +179,7 @@ describe('bldrs inside iframe', () => {
     const msg = {
       globalIds: [globalId],
     }
-    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), {parseSpecialCharSequences: false})
+    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), { parseSpecialCharSequences: false })
     cy.get('#btnSendMessage').click()
 
     // trying to select the hidden element
@@ -191,7 +191,7 @@ describe('bldrs inside iframe', () => {
   })
 
   it('should unhide element when HideElements-message emitted', () => {
-    cy.get('@iframe').trigger('keydown', {keyCode: KEYCODE_ESC})
+    cy.get('@iframe').trigger('keydown', { keyCode: KEYCODE_ESC })
     cy.get('#lastMessageReceivedAction').contains(/ModelLoaded/i)
     const globalId = '02uD5Qe8H3mek2PYnMWHk1'
 
@@ -200,7 +200,7 @@ describe('bldrs inside iframe', () => {
     const msg = {
       globalIds: [globalId],
     }
-    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), {parseSpecialCharSequences: false})
+    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), { parseSpecialCharSequences: false })
     cy.get('#btnSendMessage').click()
 
     // Unhide the hidden element
@@ -225,7 +225,7 @@ describe('bldrs inside iframe', () => {
   })
 
   it('should unhide all elements when HideElements-message emitted with wildcard', () => {
-    cy.get('@iframe').trigger('keydown', {keyCode: KEYCODE_ESC})
+    cy.get('@iframe').trigger('keydown', { keyCode: KEYCODE_ESC })
     cy.get('#lastMessageReceivedAction').contains(/ModelLoaded/i)
     const globalId = '02uD5Qe8H3mek2PYnMWHk1'
 
@@ -234,7 +234,7 @@ describe('bldrs inside iframe', () => {
     const msg = {
       globalIds: [globalId],
     }
-    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), {parseSpecialCharSequences: false})
+    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), { parseSpecialCharSequences: false })
     cy.get('#btnSendMessage').click()
 
     // Unhide the hidden element
@@ -242,19 +242,19 @@ describe('bldrs inside iframe', () => {
     const hidemsg = {
       globalIds: '*',
     }
-    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(hidemsg), {parseSpecialCharSequences: false})
+    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(hidemsg), { parseSpecialCharSequences: false })
     cy.get('#btnSendMessage').click()
 
     // Can be selected again
     cy.get('#txtSendMessageType').clear().type('ai.bldrs-share.SelectElements')
-    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), {parseSpecialCharSequences: false})
+    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), { parseSpecialCharSequences: false })
     cy.get('#btnSendMessage').click()
     cy.get('#lastMessageReceivedAction').contains(/SelectionChanged/i)
   })
 
   it('should emit HiddenElments message when element is hidden', () => {
     const hiddenElementsCount = 10
-    cy.get('@iframe').trigger('keydown', {keyCode: KEYCODE_ESC})
+    cy.get('@iframe').trigger('keydown', { keyCode: KEYCODE_ESC })
     cy.get('#lastMessageReceivedAction').contains(/ModelLoaded/i)
 
     // send a hide elements message
@@ -286,7 +286,7 @@ describe('bldrs inside iframe', () => {
   })
 
   it('should set defaultColor to gray, and color one element blue by view settings', () => {
-    cy.get('@iframe').trigger('keydown', {keyCode: KEYCODE_ESC})
+    cy.get('@iframe').trigger('keydown', { keyCode: KEYCODE_ESC })
     cy.get('#lastMessageReceivedAction').contains(/ModelLoaded/i)
     const defaultGrayColor = {
       x: 0.85,
@@ -309,7 +309,7 @@ describe('bldrs inside iframe', () => {
         },
       },
     }
-    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), {parseSpecialCharSequences: false})
+    cy.get('#txtSendMessagePayload').clear().type(JSON.stringify(msg), { parseSpecialCharSequences: false })
     cy.get('#btnSendMessage').click()
   })
 })

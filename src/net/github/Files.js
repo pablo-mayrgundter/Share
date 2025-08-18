@@ -1,8 +1,8 @@
-import {assertDefined} from '../../utils/assert'
-import {HTTP_CREATED, HTTP_NOT_MODIFIED, HTTP_NOT_FOUND} from '../http'
-import {checkCache, updateCache} from './Cache'
-import {getGitHub, getGitHubResource} from './Http'
-import {octokit} from './OctokitExport'
+import { assertDefined } from '../../utils/assert'
+import { HTTP_CREATED, HTTP_NOT_MODIFIED, HTTP_NOT_FOUND } from '../http'
+import { checkCache, updateCache } from './Cache'
+import { getGitHub, getGitHubResource } from './Http'
+import { octokit } from './OctokitExport'
 
 
 /**
@@ -226,7 +226,7 @@ export async function deleteFile(owner, repo, path, message, branch, accessToken
   }
 
   // 1. Get the SHA of the latest commit on the branch
-  const {data: refData} = await octokit.rest.git.getRef({
+  const { data: refData } = await octokit.rest.git.getRef({
     owner,
     repo,
     ref: `heads/${branch}`,
@@ -235,7 +235,7 @@ export async function deleteFile(owner, repo, path, message, branch, accessToken
   const parentSha = refData.object.sha
 
   // 2. Get the SHA of the tree associated with the latest commit
-  const {data: commitData} = await octokit.rest.git.getCommit({
+  const { data: commitData } = await octokit.rest.git.getCommit({
     owner,
     repo,
     commit_sha: parentSha,
@@ -244,7 +244,7 @@ export async function deleteFile(owner, repo, path, message, branch, accessToken
   const baseTreeSha = commitData.tree.sha
 
   // 3. Create a new tree that omits the file (essentially, delete the file)
-  const {data: newTreeData} = await octokit.rest.git.createTree({
+  const { data: newTreeData } = await octokit.rest.git.createTree({
     owner,
     repo,
     base_tree: baseTreeSha,
@@ -259,7 +259,7 @@ export async function deleteFile(owner, repo, path, message, branch, accessToken
   const newTreeSha = newTreeData.sha
 
   // 4. Create a new commit pointing to the new tree
-  const {data: newCommitData} = await octokit.rest.git.createCommit({
+  const { data: newCommitData } = await octokit.rest.git.createCommit({
     owner,
     repo,
     message,
@@ -318,9 +318,9 @@ export async function getDownloadUrl(repository, path, ref = '', accessToken = '
  */
 export async function getPathContents(repository, path, useCache, ref = '', accessToken = '') {
   assertDefined(...arguments)
-  const args = {path, ref}
+  const args = { path, ref }
 
-  const {response, isCacheHit} = await getGitHubResource(
+  const { response, isCacheHit } = await getGitHubResource(
     repository,
     'contents/{path}?ref={ref}',
     args,
@@ -405,5 +405,5 @@ export async function getFilesAndFolders(repo, owner, subfolder = '', accessToke
     }
   })
 
-  return {files, directories}
+  return { files, directories }
 }

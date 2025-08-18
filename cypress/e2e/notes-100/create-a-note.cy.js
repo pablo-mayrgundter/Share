@@ -1,5 +1,5 @@
 import '@percy/cypress'
-import {TITLE_NOTE_ADD} from '../../../src/Components/Notes/component'
+import { TITLE_NOTE_ADD } from '../../../src/Components/Notes/component'
 import {
   auth0Login,
   homepageSetup,

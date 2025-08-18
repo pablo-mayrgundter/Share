@@ -1,9 +1,9 @@
-import React, {ReactElement, useEffect, useState, useCallback, useRef} from 'react'
-import {useDoubleTap} from 'use-double-tap'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
+import { useDoubleTap } from 'use-double-tap'
 import Box from '@mui/material/Box'
-import {useTheme} from '@mui/material/styles'
-import {disablePageTextSelect, reenablePageTextSelect} from '../../utils/event'
-import {isNumber} from '../../utils/strings'
+import { useTheme } from '@mui/material/styles'
+import { disablePageTextSelect, reenablePageTextSelect } from '../../utils/event'
+import { isNumber } from '../../utils/strings'
 
 
 /**
@@ -14,7 +14,7 @@ import {isNumber} from '../../utils/strings'
  * @property {number} thickness resizer thickness in pixels.
  * @property {boolean} isOnLeft resizer is on the left.
  * @property {string} drawerWidth drawer width (...px, ...vw).
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function HorizonResizerButton({
   drawerRef,
@@ -194,7 +194,7 @@ export default function HorizonResizerButton({
         onMouseDown={startResizing}
         {...onResizerDblTap}
       >
-        {Array.from({length: 3}).map((v, i) =>
+        {Array.from({ length: 3 }).map((v, i) =>
           <Box
             key={i}
             sx={{

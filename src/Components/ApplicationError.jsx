@@ -1,8 +1,8 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
-import {LogoB} from './Logo/Logo'
+import { LogoB } from './Logo/Logo'
 
 
 /**
@@ -10,7 +10,7 @@ import {LogoB} from './Logo/Logo'
  * Our fail whale.  It links the user back to the homepage to start
  * over.
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function ApplicationError() {
   return (
@@ -20,7 +20,7 @@ export default function ApplicationError() {
         padding: '20px',
       }}
     >
-      <Typography variant={'body1'} sx={{fontWeight: 600, pb: 2}}>
+      <Typography variant={'body1'} sx={{ fontWeight: 600, pb: 2 }}>
         Oh no!
       </Typography>
 
@@ -28,7 +28,7 @@ export default function ApplicationError() {
         We&apos;re not quite sure what went wrong.
       </Typography>
 
-      <Typography sx={{pb: 2}}>
+      <Typography sx={{ pb: 2 }}>
         Not to worry.<br/>
         You can <a href="/">click here to start a new session</a>.
       </Typography>

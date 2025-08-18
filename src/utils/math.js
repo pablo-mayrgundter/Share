@@ -1,4 +1,4 @@
-import {floatStrTrim} from './strings'
+import { floatStrTrim } from './strings'
 
 /**
  * @param {number|string} num Number to round

@@ -1,10 +1,10 @@
-import React, {ReactElement, useEffect, useState, useCallback, useRef} from 'react'
-import {useDoubleTap} from 'use-double-tap'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
+import { useDoubleTap } from 'use-double-tap'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
-import {useTheme} from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 import useStore from '../../store/useStore'
-import {isNumber} from '../../utils/strings'
+import { isNumber } from '../../utils/strings'
 
 
 /**
@@ -13,7 +13,7 @@ import {isNumber} from '../../utils/strings'
  * @property {useRef} drawerRef drawer ref object.
  * @property {number} thickness resizer thickness in pixels.
  * @property {boolean} isOnTop resizer is on the top.
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function VerticalResizerButton({
   drawerRef,
@@ -180,7 +180,7 @@ export default function VerticalResizerButton({
         }}
         data-testid={ID_RESIZE_HANDLE_Y}
       >
-        {Array.from({length: 3}).map((v, i) =>
+        {Array.from({ length: 3 }).map((v, i) =>
           <Box
             key={i}
             sx={{

@@ -1,8 +1,22 @@
+import { describe, it, expect, beforeEach, afterEach, mock } from 'bun:test'
 import {
   getLatestCommitHash,
 } from './Commits'
 
-import {initializeOctoKitAuthenticated, initializeOctoKitUnauthenticated} from './OctokitExport'
+import { initializeOctoKitAuthenticated, initializeOctoKitUnauthenticated } from './OctokitExport'
+
+// Mock HTTP module for Commits
+mock.module('./Http', () => ({
+  getGitHub: mock((repo, path, args) => {
+    // Return different responses based on repo orgName (passed in repo object)
+    if (repo.orgName === 'failurecaseowner') {
+      throw new Error('Unknown error: {"sha":"error"}')
+    }
+    return {
+      data: [{ sha: 'testsha1testsha1testsha1testsha1testsha1' }],
+    }
+  }),
+}))
 
 
 describe('net/github/Commits', () => {

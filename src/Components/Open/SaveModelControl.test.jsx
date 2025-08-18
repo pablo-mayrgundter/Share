@@ -1,32 +1,54 @@
+import { describe, it, expect, beforeEach, mock } from 'bun:test'
 import React from 'react'
-import {act, fireEvent, render, renderHook, waitFor} from '@testing-library/react'
-import {getOrganizations} from '../../net/github/Organizations'
-import {getBranches} from '../../net/github/Branches'
+import { act, fireEvent, render, renderHook, waitFor } from '@testing-library/react'
 import useStore from '../../store/useStore'
-import {
-  mockedUseAuth0,
-  mockedUserLoggedIn,
-  mockedUserLoggedOut,
-} from '../../__mocks__/authentication'
-import {SaveModelControlFixture} from './SaveModelControl.fixture'
-import {MOCK_ORGANIZATIONS} from '../../net/github/Organizations.fixture'
+import { SaveModelControlFixture } from './SaveModelControl.fixture'
+import { MOCK_ORGANIZATIONS } from '../../net/github/Organizations.fixture'
 
+// Mock GitHub API modules for bun
+const mockGetOrganizations = mock(() => Promise.resolve(MOCK_ORGANIZATIONS.data))
+const mockGetBranches = mock(() => Promise.resolve([{ name: 'main' }, { name: 'dev' }]))
 
-jest.mock('../../net/github/Organizations', () => ({
-  getOrganizations: jest.fn(),
+mock.module('../../net/github/Organizations', () => ({
+  getOrganizations: mockGetOrganizations,
 }))
-jest.mock('../../net/github/Branches', () => ({
-  getBranches: jest.fn(),
+mock.module('../../net/github/Branches', () => ({
+  getBranches: mockGetBranches,
+}))
+
+// Create test-specific Auth0 mocks
+const mockUserLoggedOut = {
+  user: null,
+  isAuthenticated: false,
+  isLoading: false,
+  getAccessTokenSilently: mock(),
+  loginWithRedirect: mock(),
+  logout: mock(),
+}
+
+const mockUserLoggedIn = {
+  user: { nickname: 'testing', email: 'test@example.com' },
+  isAuthenticated: true,
+  isLoading: false,
+  getAccessTokenSilently: mock(() => Promise.resolve('mock_token')),
+  loginWithRedirect: mock(),
+  logout: mock(),
+}
+
+// Create flexible auth mock for this test file
+const testAuth0Mock = mock(() => mockUserLoggedOut)
+mock.module('../../Auth0/Auth0Proxy', () => ({
+  useAuth0: testAuth0Mock,
 }))
 
 
 describe('SaveModelControl', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    getBranches.mockResolvedValue([{name: 'main'}, {name: 'dev'}])
-    getOrganizations.mockResolvedValue(MOCK_ORGANIZATIONS.data)
+    // Reset mock call counts
+    mockGetOrganizations.mockClear()
+    mockGetBranches.mockClear()
     // Reset store state
-    const {result} = renderHook(() => useStore((state) => state))
+    const { result } = renderHook(() => useStore((state) => state))
     act(() => {
       result.current.setIsSaveModelVisible(false)
       result.current.setAccessToken(null)
@@ -35,8 +57,8 @@ describe('SaveModelControl', () => {
   })
 
   it('Renders a login message if the user is not logged in', async () => {
-    mockedUseAuth0.mockReturnValue(mockedUserLoggedOut)
-    const {getByTestId, getByText, getByRole} = render(<SaveModelControlFixture/>)
+    testAuth0Mock.mockReturnValue(mockUserLoggedOut)
+    const { getByTestId, getByText, getByRole } = render(<SaveModelControlFixture/>)
     const saveControlButton = getByTestId('control-button-save')
     fireEvent.click(saveControlButton)
 
@@ -56,15 +78,15 @@ describe('SaveModelControl', () => {
   })
 
   it('Renders branch selector after selecting a repository', async () => {
-    mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
+    testAuth0Mock.mockReturnValue(mockUserLoggedIn)
     // Set up store state using renderHook and act
-    const {result} = renderHook(() => useStore((state) => state))
+    const { result } = renderHook(() => useStore((state) => state))
     await act(() => {
       result.current.setAccessToken('test-token')
-      result.current.setOpfsFile(new File(['test'], 'test.ifc', {type: 'application/octet-stream'}))
+      result.current.setOpfsFile(new File(['test'], 'test.ifc', { type: 'application/octet-stream' }))
     })
 
-    const {getByTestId, getByRole} = render(<SaveModelControlFixture/>)
+    const { getByTestId, getByRole } = render(<SaveModelControlFixture/>)
     const saveControlButton = getByTestId('control-button-save')
     fireEvent.click(saveControlButton)
 
@@ -87,19 +109,19 @@ describe('SaveModelControl', () => {
   })
 
   it('Does not fetch repo info on initial render when isSaveModelVisible=false in zustand', async () => {
-    mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    getOrganizations.mockResolvedValue({})
+    testAuth0Mock.mockReturnValue(mockUserLoggedIn)
+    mockGetOrganizations.mockResolvedValue({})
     // eslint-disable-next-line require-await
     await act(async () => {
       render(<SaveModelControlFixture/>)
     })
-    expect(getOrganizations).not.toHaveBeenCalled()
+    expect(mockGetOrganizations).not.toHaveBeenCalled()
   })
 
   it('Fetches repo info on initial render when isSaveModelVisible in zustand', async () => {
-    mockedUseAuth0.mockReturnValue(mockedUserLoggedIn)
-    getOrganizations.mockResolvedValue({})
-    const {result} = renderHook(() => useStore((state) => state))
+    testAuth0Mock.mockReturnValue(mockUserLoggedIn)
+    mockGetOrganizations.mockResolvedValue({})
+    const { result } = renderHook(() => useStore((state) => state))
     // eslint-disable-next-line require-await
     await act(async () => {
       result.current.setAccessToken('foo')
@@ -109,6 +131,6 @@ describe('SaveModelControl', () => {
     await act(async () => {
       render(<SaveModelControlFixture/>)
     })
-    expect(getOrganizations).toHaveBeenCalled()
+    expect(mockGetOrganizations).toHaveBeenCalled()
   })
 })

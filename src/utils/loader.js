@@ -2,7 +2,7 @@ import {
   initializeWorker,
   opfsWriteModel,
 } from '../OPFS/OPFSService.js'
-import {assertDefined} from '../utils/assert'
+import { assertDefined } from '../utils/assert'
 import debug from '../utils/debug'
 
 

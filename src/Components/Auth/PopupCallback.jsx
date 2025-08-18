@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react'
-import {useAuth0} from '../../Auth0/Auth0Proxy'
+import React, { useEffect } from 'react'
+import { useAuth0 } from '../../Auth0/Auth0Proxy'
 
 
 /**
  *  @return {React.Component}
  */
 function PopupCallback() {
-  const {handleRedirectCallback, getIdTokenClaims} = useAuth0()
+  const { handleRedirectCallback, getIdTokenClaims } = useAuth0()
 
   useEffect(() => {
     /**

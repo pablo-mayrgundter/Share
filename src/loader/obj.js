@@ -1,5 +1,5 @@
-import {BufferGeometry, Mesh} from 'three'
-import {mergeVertices} from 'three/examples/jsm/utils/BufferGeometryUtils'
+import { BufferGeometry, Mesh } from 'three'
+import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils'
 
 
 /**

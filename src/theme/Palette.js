@@ -1,4 +1,4 @@
-import {getColors} from './Colors'
+import { getColors } from './Colors'
 
 
 const colors = getColors()

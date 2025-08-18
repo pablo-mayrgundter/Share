@@ -1,6 +1,6 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Stack from '@mui/material/Stack'
-import {useAuth0} from '../Auth0/Auth0Proxy'
+import { useAuth0 } from '../Auth0/Auth0Proxy'
 import NavTreeControl from '../Components/NavTree/NavTreeControl'
 import OpenModelControl from '../Components/Open/OpenModelControl'
 import SaveModelControl from '../Components/Open/SaveModelControl'
@@ -13,7 +13,7 @@ import useStore from '../store/useStore'
 /**
  * Contains OpenModelControl, Navigate, Versions and Save
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function ControlsGroup() {
   const isNavTreeEnabled = useStore((state) => state.isNavTreeEnabled)
@@ -22,7 +22,7 @@ export default function ControlsGroup() {
   const isSearchEnabled = useStore((state) => state.isSearchEnabled)
   const isSearchBarVisible = useStore((state) => state.isSearchBarVisible)
   const setIsSearchBarVisible = useStore((state) => state.setIsSearchBarVisible)
-  const {isAuthenticated} = useAuth0()
+  const { isAuthenticated } = useAuth0()
   return (
     <Stack>
       <Stack direction='row'>

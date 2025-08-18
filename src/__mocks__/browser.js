@@ -1,5 +1,5 @@
-import {setupWorker} from 'msw'
-import {initHandlers} from './api-handlers'
+import { setupWorker } from 'msw'
+import { initHandlers } from './api-handlers'
 
 
 /**

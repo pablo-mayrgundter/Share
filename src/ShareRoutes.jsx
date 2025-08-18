@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import {
   Outlet,
   Routes,
@@ -7,7 +7,7 @@ import {
   useNavigate,
 } from 'react-router-dom'
 import debug from './utils/debug'
-import {disablePageReloadApprovalCheck} from './utils/event'
+import { disablePageReloadApprovalCheck } from './utils/event'
 import About from './pages/share/About'
 import Conway from './pages/share/Conway'
 import Share from './Share'
@@ -39,7 +39,7 @@ import Share from './Share'
  * @see https://github.com/bldrs-ai/Share/wiki/Design#ifc-scene-load
  * @return {object}
  */
-export default function ShareRoutes({installPrefix, appPrefix}) {
+export default function ShareRoutes({ installPrefix, appPrefix }) {
   return (
     <Routes>
       <Route path='/' element={<Forward appPrefix={appPrefix}/>}>
@@ -98,7 +98,7 @@ export default function ShareRoutes({installPrefix, appPrefix}) {
  * @param {string} appPrefix The install prefix, e.g. /share.
  * @return {object}
  */
-function Forward({appPrefix}) {
+function Forward({ appPrefix }) {
   const location = useLocation()
   const navigate = useNavigate()
 

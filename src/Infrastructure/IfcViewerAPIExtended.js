@@ -1,11 +1,11 @@
-import {IfcViewerAPI} from 'web-ifc-viewer'
+import { IfcViewerAPI } from 'web-ifc-viewer'
 import IfcHighlighter from './IfcHighlighter'
 import IfcIsolator from './IfcIsolator'
 import IfcViewsManager from './IfcElementsStyleManager'
 import IfcCustomViewSettings from './IfcCustomViewSettings'
 import CustomPostProcessor from './CustomPostProcessor'
 import debug from '../utils/debug'
-import {areDefinedAndNotNull} from '../utils/assert'
+import { areDefinedAndNotNull } from '../utils/assert'
 
 
 const viewParameter = (new URLSearchParams(window.location.search)).get('view')?.toLowerCase() ?? 'default'
@@ -84,7 +84,7 @@ export class IfcViewerAPIExtended extends IfcViewerAPI {
       return null
     }
     const id = this.getPickedItemId(found)
-    return {modelID: found.object.modelID, id}
+    return { modelID: found.object.modelID, id }
   }
 
   /**

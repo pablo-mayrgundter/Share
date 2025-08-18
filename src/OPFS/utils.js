@@ -11,7 +11,7 @@ import {
   opfsClearCache,
   opfsWriteBase64Model,
 } from '../OPFS/OPFSService.js'
-import {assertDefined} from '../utils/assert'
+import { assertDefined } from '../utils/assert'
 import debug from '../utils/debug'
 
 

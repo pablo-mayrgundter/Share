@@ -1,6 +1,6 @@
 import React from 'react'
-import {ThemeCtx} from '../theme/Theme.fixture'
-import {TooltipIconButton} from './Buttons'
+import { ThemeCtx } from '../theme/Theme.fixture'
+import { TooltipIconButton } from './Buttons'
 import ShareIcon from '../assets/icons/Share.svg'
 
 

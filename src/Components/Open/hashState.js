@@ -1,4 +1,4 @@
-import {hasParams} from '../../utils/location'
+import { hasParams } from '../../utils/location'
 
 
 /** @return {boolean} */

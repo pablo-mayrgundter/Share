@@ -6,8 +6,8 @@ import {
   stripHashParams,
   removeParamsFromHash as utilsRemoveParamsFromHash,
 } from '../../utils/location'
-import {findMarkdownUrls} from '../../utils/strings'
-import {removeParamsFromHash as removeCameraParamsFromHash} from '../Camera/hashState'
+import { findMarkdownUrls } from '../../utils/strings'
+import { removeParamsFromHash as removeCameraParamsFromHash } from '../Camera/hashState'
 import {
   removeCommentParamsFromHash,
   removeNotesParamsFromHash,
@@ -48,10 +48,10 @@ export function modifyPlaceMarkHash(hash, _issueID, _commentID) {
     if (newHash) {
       newHash = removeNotesParamsFromHash(newHash)
       newHash = removeCommentParamsFromHash(newHash)
-      newHash = setNotesParamsToHash(newHash, {_issueID})
+      newHash = setNotesParamsToHash(newHash, { _issueID })
 
       if (_commentID) {
-        newHash = setCommentParamsToHash(newHash, {_commentID})
+        newHash = setCommentParamsToHash(newHash, { _commentID })
       }
     }
 

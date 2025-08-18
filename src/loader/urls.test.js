@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, afterAll } from 'bun:test'
 import {
   SOURCE_TYPE,
   dereferenceAndProxyDownloadContents,
@@ -21,7 +22,7 @@ describe('parseUrl', () => {
           ref: 'main',
           url: converted,
         },
-        params: {c: '-133.022,131.828,161.85,-38.078,22.64,-2.314'},
+        params: { c: '-133.022,131.828,161.85,-38.078,22.64,-2.314' },
       })
   })
 
@@ -40,7 +41,7 @@ describe('parseUrl', () => {
           ref: 'main',
           url: converted,
         },
-        params: {c: '-38.64,12.52,35.4,-5.29,0.94,0.86'},
+        params: { c: '-38.64,12.52,35.4,-5.29,0.94,0.86' },
       })
   })
 
@@ -90,8 +91,8 @@ describe('With environment variables', () => {
 
 
   beforeEach(() => {
-    jest.resetModules()
-    process.env = {...OLD_ENV}
+    // Module reset not needed in bun
+    process.env = { ...OLD_ENV }
   })
 
 

@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Dialog from './Dialog'
-import {useIsMobile} from './Hooks'
-import {ControlButton} from './Buttons'
+import { useIsMobile } from './Hooks'
+import { ControlButton } from './Buttons'
 import KnowledgeIcon from '../assets/icons/Knowledge.svg'
 
 
@@ -37,7 +37,7 @@ export default function ShortcutsControl() {
  * @param {Function} setIsDialogDisplayed
  * @return {object} React component
  */
-function ShortcutsDialog({isDialogDisplayed, setIsDialogDisplayed}) {
+function ShortcutsDialog({ isDialogDisplayed, setIsDialogDisplayed }) {
   const isMobile = useIsMobile()
 
 
@@ -66,7 +66,7 @@ function ShortcutsDialog({isDialogDisplayed, setIsDialogDisplayed}) {
         </>
       ) : (
         <>
-          <Box sx={{textAlign: 'left'}}>
+          <Box sx={{ textAlign: 'left' }}>
             <Box component='p'>To attach a section plane:</Box>
             <Box component='li'>Hover over an element</Box>
             <Box component='li'>Press <strong>Q to attach a section plane</strong></Box>

@@ -1,16 +1,16 @@
-import React, {ReactElement, useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import IconButton from '@mui/material/IconButton'
 import Snackbar from '@mui/material/Snackbar'
 import Typography from '@mui/material/Typography'
 import AlertDialog from '../Components/AlertDialog'
-import {navToDefault} from '../Share'
+import { navToDefault } from '../Share'
 import useStore from '../store/useStore'
-import {assert} from '../utils/assert'
+import { assert } from '../utils/assert'
 import CloseIcon from '@mui/icons-material/Close'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function AlertAndSnackbar() {
   const appPrefix = useStore((state) => state.appPrefix)
 
@@ -54,16 +54,16 @@ export default function AlertAndSnackbar() {
         }}
       />
       <Snackbar
-        anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         autoHideDuration={duration}
-        sx={{marginBottom: '-.3em'}}
+        sx={{ marginBottom: '-.3em' }}
         open={isSnackOpen}
         onClose={(event, reason) => setIsSnackOpen(false)}
         action={
           <IconButton
             onClick={() => setIsSnackOpen(false)}
             size='small'
-            sx={{marginRight: '-.5em'}}
+            sx={{ marginRight: '-.5em' }}
           >
             <CloseIcon color='primary' fontSize='inherit'/>
           </IconButton>

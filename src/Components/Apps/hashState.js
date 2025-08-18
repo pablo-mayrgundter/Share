@@ -1,4 +1,4 @@
-import {hasParams, removeParams} from '../../utils/location'
+import { hasParams, removeParams } from '../../utils/location'
 
 
 /** The prefix to use for the apps state token */

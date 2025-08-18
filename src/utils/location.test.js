@@ -1,3 +1,4 @@
+import { describe, it, expect, mock } from 'bun:test'
 import {
   addHashParams,
   getHashParams,
@@ -35,9 +36,8 @@ const newTestLocation = () => ({
   protocol: 'http:',
   ancestorOrigins: /** @type {DOMStringList} */ {
     length: 0,
-    contains: jest.fn(),
-    item: jest.fn(),
-    [Symbol.iterator]: jest.fn(),
+    contains: mock(() => false),
+    item: mock(() => null),
   },
   hash: '',
   href: 'http://localhost/#',
@@ -46,58 +46,59 @@ const newTestLocation = () => ({
   pathname: '/',
   port: '',
   search: '',
-  assign: jest.fn(),
-  reload: jest.fn(),
-  replace: jest.fn(),
+  assign: mock(() => {}),
+  reload: mock(() => {}),
+  replace: mock(() => {}),
 })
 
 
-test('addHashParams', () => {
+describe('location', () => {
+  it('addHashParams', () => {
   /** @type {Location} */
   const loc = newTestLocation()
   loc.hash = ''
-  addHashParams(loc, 'test', {a: 1})
+  addHashParams(loc, 'test', { a: 1 })
   expect(loc.hash).toBe('test:1')
 
   loc.hash = '#'
-  addHashParams(loc, 'test', {a: 1})
+  addHashParams(loc, 'test', { a: 1 })
   expect(loc.hash).toBe('test:1')
 
   loc.hash = '#'
-  addHashParams(loc, 'test', {a: 1}, true) // true: includeNames
+  addHashParams(loc, 'test', { a: 1 }, true) // true: includeNames
   expect(loc.hash).toBe('test:a=1')
 
   loc.hash = '#test:a=0'
-  addHashParams(loc, 'test', {a: 1}, true)
+  addHashParams(loc, 'test', { a: 1 }, true)
   expect(loc.hash).toBe('test:a=1')
 
   loc.hash = '#test:b=0'
-  addHashParams(loc, 'test', {a: 1}, true)
+  addHashParams(loc, 'test', { a: 1 }, true)
   expect(loc.hash).toBe('test:b=0,a=1')
 })
 
 
-test('addHashParamsMultiple', () => {
+  it('addHashParamsMultiple', () => {
   const loc = newTestLocation()
   loc.hash = `#other:a=0${FEATURE_SEP_TEST}otter:b=3`
-  addHashParams(loc, 'test', {a: 1}, true)
+  addHashParams(loc, 'test', { a: 1 }, true)
   expect(loc.hash).toBe(`other:a=0${FEATURE_SEP_TEST}otter:b=3${FEATURE_SEP_TEST}test:a=1`)
 
   loc.hash = `#other:a=0${FEATURE_SEP_TEST}test:a=0${FEATURE_SEP_TEST}otter:b=3`
-  addHashParams(loc, 'test', {a: 1}, true)
+  addHashParams(loc, 'test', { a: 1 }, true)
   expect(loc.hash).toBe(`other:a=0${FEATURE_SEP_TEST}test:a=1${FEATURE_SEP_TEST}otter:b=3`)
 })
 
 
-test('addHashParams with tilde', () => {
+  it('addHashParams with tilde', () => {
   const loc = newTestLocation()
   loc.hash = `#other:a=0${FEATURE_SEP_TEST}otter:b=3`
-  addHashParams(loc, 'test', {a: 1}, true)
+  addHashParams(loc, 'test', { a: 1 }, true)
   expect(loc.hash).toBe(`other:a=0${FEATURE_SEP_TEST}otter:b=3${FEATURE_SEP_TEST}test:a=1`)
 })
 
 
-test('getHashParams', () => {
+  it('getHashParams', () => {
   const loc = newTestLocation()
 
   expect(getHashParams(loc, 'a')).toBeUndefined()
@@ -112,11 +113,11 @@ test('getHashParams', () => {
   loc.hash = `#a:1${FEATURE_SEP_TEST}b:2`
   expect(getHashParams(loc, 'a')).toBe('a:1')
   expect(getHashParams(loc, 'b')).toBe('b:2')
-  expect(getHashParams(loc, 'c')).toBe(undefined)
+  expect(getHashParams(loc, 'c')).toBeUndefined()
 })
 
 
-test('removeHashParams', () => {
+  it('removeHashParams', () => {
   const loc = newTestLocation()
 
   loc.hash = '#'
@@ -144,15 +145,15 @@ test('removeHashParams', () => {
   expect(loc.hash).toBe('p:x=1')
 })
 
-test('getEncodedParam', () => {
-  const objectParams = {x: 1, y: 2, z: 3}
+  it('getEncodedParam', () => {
+  const objectParams = { x: 1, y: 2, z: 3 }
   const withNames = getEncodedParam(objectParams, true)
   expect(withNames).toBe('x=1,y=2,z=3')
   const withoutNames = getEncodedParam(objectParams)
   expect(withoutNames).toBe('1,2,3')
 })
 
-test('parseGithubPath', () => {
+  it('parseGithubPath', () => {
   const result = parseGitHubPath('/spaced owner/spaced repo/spaced ref/spaced ifc.ifc')
 
   // @ts-ignore
@@ -165,4 +166,5 @@ test('parseGithubPath', () => {
   expect(result.branch).toEqual('spaced ref')
   // @ts-ignore
   expect(result.filePath).toEqual('spaced ifc.ifc')
+  })
 })

@@ -53,7 +53,7 @@ describe('Filetype', () => {
 
   it('splitAroundExtension', () => {
     for (const ext of supportedTypes) {
-      const {parts, extension} = splitAroundExtension(`asdf.${ext}/blah`)
+      const { parts, extension } = splitAroundExtension(`asdf.${ext}/blah`)
       expect(parts).toStrictEqual(['asdf', '/blah'])
       expect(extension).toStrictEqual(`.${ext}`)
     }

@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -6,9 +6,9 @@ import ListItemText from '@mui/material/ListItemText'
 import SvgIcon from '@mui/material/SvgIcon'
 import Stack from '@mui/material/Stack'
 import useStore from '../../store/useStore'
-import {ControlButtonWithHashState, TooltipIconButton} from '../Buttons'
+import { ControlButtonWithHashState, TooltipIconButton } from '../Buttons'
 import Dialog from '../Dialog'
-import {HASH_PREFIX_HELP} from './hashState'
+import { HASH_PREFIX_HELP } from './hashState'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined'
@@ -33,7 +33,7 @@ import TreeIcon from '../../assets/icons/Tree.svg'
 /**
  * ControlButton that toggles HelpDialog, with nav state
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function HelpControl() {
   const isHelpVisible = useStore((state) => state.isHelpVisible)
@@ -69,9 +69,9 @@ export default function HelpControl() {
  *
  * @property {boolean} isDialogDisplayed Determines if the dialog is displayed
  * @property {Function} setIsDialogDisplayed Callback to set the dialog display state
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export function HelpDialog({isDialogDisplayed, setIsDialogDisplayed}) {
+export function HelpDialog({ isDialogDisplayed, setIsDialogDisplayed }) {
   const [pageIndex, setPageIndex] = useState(0)
   const totalPages = 4
   return (
@@ -88,7 +88,7 @@ export function HelpDialog({isDialogDisplayed, setIsDialogDisplayed}) {
             variant='noBackground'
             icon={
               <ArrowBackIcon
-                sx={{cursor: pageIndex > 0 ? 'pointer' : 'not-allowed'}}
+                sx={{ cursor: pageIndex > 0 ? 'pointer' : 'not-allowed' }}
               />}
             onClick={() => pageIndex > 0 && setPageIndex(pageIndex - 1)}
           />
@@ -96,7 +96,7 @@ export function HelpDialog({isDialogDisplayed, setIsDialogDisplayed}) {
             title='Next'
             icon={
               <ArrowForwardIcon
-                sx={{cursor: pageIndex < totalPages - 1 ? 'pointer' : 'not-allowed'}}
+                sx={{ cursor: pageIndex < totalPages - 1 ? 'pointer' : 'not-allowed' }}
               />}
             onClick={() => pageIndex < totalPages - 1 && setPageIndex(pageIndex + 1)}
             placement='right'
@@ -117,9 +117,9 @@ export function HelpDialog({isDialogDisplayed, setIsDialogDisplayed}) {
  * Represents a list of help entries, paginated.
  *
  * @property {number} pageIndex Index of the current displayed page
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-const HelpList = ({pageIndex}) => {
+const HelpList = ({ pageIndex }) => {
   const helpContent = [
     <ListItem key='1'>
       <ListItemIcon><TouchAppOutlinedIcon className='icon-share' variant='success'/></ListItemIcon>

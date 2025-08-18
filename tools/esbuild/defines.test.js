@@ -1,4 +1,4 @@
-import {parse, zipEnvWithConfig} from './defines.js'
+import { parse, zipEnvWithConfig } from './defines.js'
 
 
 describe('defines', () => {

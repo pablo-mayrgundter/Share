@@ -1,19 +1,19 @@
-import React, {ReactElement, useEffect, useRef} from 'react'
+import React, { useEffect, useRef } from 'react'
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined'
-import {getIssues} from '../../net/github/Issues'
+import { getIssues } from '../../net/github/Issues'
 import useStore from '../../store/useStore'
 import debug from '../../utils/debug'
-import {getHashParams, getObjectParams} from '../../utils/location'
-import {ControlButtonWithHashState} from '../Buttons'
-import {MARKER_COLOR_ACTIVE, MARKER_COLOR_INACTIVE} from '../Markers/component'
-import {parsePlacemarkFromIssue, getActivePlaceMarkHash, parsePlacemarkFromURL} from '../Markers/hashState'
-import {HASH_PREFIX_NOTES, HASH_PREFIX_COMMENT} from './hashState'
+import { getHashParams, getObjectParams } from '../../utils/location'
+import { ControlButtonWithHashState } from '../Buttons'
+import { MARKER_COLOR_ACTIVE, MARKER_COLOR_INACTIVE } from '../Markers/component'
+import { parsePlacemarkFromIssue, getActivePlaceMarkHash, parsePlacemarkFromURL } from '../Markers/hashState'
+import { HASH_PREFIX_NOTES, HASH_PREFIX_COMMENT } from './hashState'
 
 
 /**
  * Toggles the visibility of Notes and sets/removes its URL state token
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function NotesControl() {
   const accessToken = useStore((state) => state.accessToken)
@@ -88,7 +88,7 @@ export default function NotesControl() {
           writeMarkers(tempMarker ? [tempMarker, ...allMarkers] : allMarkers)
           toggleIsLoadingNotes()
         } catch (e) {
-          setSnackMessage({text: 'Notes: Cannot fetch from GitHub', autoDismiss: true})
+          setSnackMessage({ text: 'Notes: Cannot fetch from GitHub', autoDismiss: true })
         }
       })()
     }
@@ -196,7 +196,7 @@ export default function NotesControl() {
   function scrollToComment(commentId) {
       const commentElement = document.querySelector(`[data-comment-id="${commentId}"]`)
       if (commentElement) {
-          commentElement.scrollIntoView({behavior: 'smooth', block: 'center'})
+          commentElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
           // Uncomment the following if camera position setting is required
           // setCameraFromParams(firstCamera, cameraControls);
       }
@@ -210,7 +210,7 @@ export default function NotesControl() {
   function scrollToNote(noteId = -1) {
     const noteElement = document.querySelector(`[data-note-id="${noteId === -1 ? selectedNoteId : noteId}"]`)
     if (noteElement) {
-      noteElement.scrollIntoView({behavior: 'smooth', block: 'start'})
+      noteElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
       // setCameraFromParams(firstCamera, cameraControls); // Set camera position if required
     }
   }

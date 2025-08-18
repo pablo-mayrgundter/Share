@@ -1,11 +1,12 @@
+import { describe, it, expect } from 'bun:test'
 import React from 'react'
-import {render} from '@testing-library/react'
+import { render } from '@testing-library/react'
 import Toast from './Toast'
 
 
 describe('Toast', () => {
   it('should open by default if the visible attribute value is NOT specified', () => {
-    const {queryByText} = render(
+    const { queryByText } = render(
         <Toast>This is a test toast notification.</Toast>,
     )
 
@@ -13,7 +14,7 @@ describe('Toast', () => {
   })
 
   it('should open if visible attribute is true', () => {
-    const {queryByText} = render(
+    const { queryByText } = render(
         <Toast visible={true}>This is a test toast notification.</Toast>,
     )
 
@@ -21,7 +22,7 @@ describe('Toast', () => {
   })
 
   it('should NOT open if visible attribute is NOT true', () => {
-    const {queryByText} = render(
+    const { queryByText } = render(
         <Toast visible={false}>This is a test toast notification.</Toast>,
     )
 
@@ -29,7 +30,7 @@ describe('Toast', () => {
   })
 
   it('should render a title if provided', () => {
-    const {container} = render(
+    const { container } = render(
         <Toast title={'A test title!'}>This is a test notification.</Toast>,
     )
 

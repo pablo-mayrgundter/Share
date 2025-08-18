@@ -1,5 +1,5 @@
 import '@percy/cypress'
-import {homepageSetup, returningUserVisitsHomepageWaitForModel, auth0Login} from '../../support/utils'
+import { homepageSetup, returningUserVisitsHomepageWaitForModel, auth0Login } from '../../support/utils'
 
 /** {@link https://github.com/bldrs-ai/Share/issues/1058} */
 describe('edit a note', () => {

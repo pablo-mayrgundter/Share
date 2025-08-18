@@ -1,4 +1,4 @@
-import {getParams, hasParams, removeParams} from '../../utils/location'
+import { getParams, hasParams, removeParams } from '../../utils/location'
 
 
 /** The prefix to use for the Properties state token */

@@ -1,4 +1,4 @@
-import {isVisibleInitially} from '../Components/NavTree/hashState'
+import { isVisibleInitially } from '../Components/NavTree/hashState'
 
 
 /**
@@ -11,29 +11,29 @@ import {isVisibleInitially} from '../Components/NavTree/hashState'
 export default function createNavTreeSlice(set, get) {
   return {
     isNavTreeEnabled: true,
-    setNavTreeEnabled: (isEnabled) => set(() => ({isNavTreeEnabled: isEnabled})),
+    setNavTreeEnabled: (isEnabled) => set(() => ({ isNavTreeEnabled: isEnabled })),
 
     defaultExpandedElements: [],
-    setDefaultExpandedElements: (elts) => set(() => ({defaultExpandedElements: elts})),
+    setDefaultExpandedElements: (elts) => set(() => ({ defaultExpandedElements: elts })),
 
     defaultExpandedTypes: [],
-    setDefaultExpandedTypes: (types) => set(() => ({defaultExpandedTypes: types})),
+    setDefaultExpandedTypes: (types) => set(() => ({ defaultExpandedTypes: types })),
 
     expandedElements: [],
-    setExpandedElements: (elts) => set(() => ({expandedElements: elts})),
+    setExpandedElements: (elts) => set(() => ({ expandedElements: elts })),
 
     expandedTypes: [],
-    setExpandedTypes: (types) => set(() => ({expandedTypes: types})),
+    setExpandedTypes: (types) => set(() => ({ expandedTypes: types })),
 
     isNavTreeVisible: isVisibleInitially(),
-    setIsNavTreeVisible: (isVisible) => set(() => ({isNavTreeVisible: isVisible})),
+    setIsNavTreeVisible: (isVisible) => set(() => ({ isNavTreeVisible: isVisible })),
     toggleIsNavTreeVisible: () =>
-      set((state) => ({isNavTreeVisible: !state.isNavTreeVisible})),
+      set((state) => ({ isNavTreeVisible: !state.isNavTreeVisible })),
 
     selectedElement: null,
-    setSelectedElement: (elt) => set(() => ({selectedElement: elt})),
+    setSelectedElement: (elt) => set(() => ({ selectedElement: elt })),
 
     selectedElements: [],
-    setSelectedElements: (elts) => set(() => ({selectedElements: elts})),
+    setSelectedElements: (elts) => set(() => ({ selectedElements: elts })),
   }
 }

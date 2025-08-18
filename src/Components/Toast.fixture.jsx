@@ -1,6 +1,6 @@
 import React from 'react'
-import {useSelect, useValue} from 'react-cosmos/client'
-import {ThemeCtx} from '../theme/Theme.fixture'
+import { useSelect, useValue } from 'react-cosmos/client'
+import { ThemeCtx } from '../theme/Theme.fixture'
 import Toast from './Toast'
 
 

@@ -12,6 +12,7 @@
     "../src/utils/strings.test.js",
   ],
   "compilerOptions": {
+    "types": ["bun-types", "node"],
     "allowJs": true,
     "checkJs": true,
     "target": "ES2021",

@@ -1,7 +1,7 @@
-import {Object3D} from 'three'
-import {assertDefined} from '../utils/assert'
+import { Object3D } from 'three'
+import { assertDefined } from '../utils/assert'
 import debug from '../utils/debug'
-import {load} from './Loader'
+import { load } from './Loader'
 
 
 /** Similar to https://github.com/mrdoob/three.js/wiki/JSON-Object-Scene-format-4 */

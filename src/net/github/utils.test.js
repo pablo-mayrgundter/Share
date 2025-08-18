@@ -1,4 +1,4 @@
-import {supportedTypes} from '../../Filetype'
+import { supportedTypes } from '../../Filetype'
 import {
   githubUrlOrPathToSharePath,
   looksLikeLink,
@@ -44,24 +44,24 @@ describe('net/github/utils', () => {
     const pathBlob = '/org/repo/blob/branch/file.ifc'
     const pathBlobAbc = '/org/repo/blob/branch/a/b/c/file.ifc'
     const testTemplates = [
-      {s: 'http://www.github.com/org/repo/blob/branch/file.ifc', out: pathBlob},
-      {s: 'http://github.com/org/repo/blob/branch/file.ifc', out: pathBlob},
-      {s: 'http://www.github.com/org/repo/blob/branch/a/b/c/file.ifc', out: pathBlobAbc},
-      {s: 'http://github.com/org/repo/blob/branch/a/b/c/file.ifc', out: pathBlobAbc},
-      {s: 'https://www.github.com/org/repo/blob/branch/file.ifc', out: pathBlob},
-      {s: 'https://github.com/org/repo/blob/branch/file.ifc', out: pathBlob},
-      {s: 'github.com/org/repo/blob/branch/file.ifc', out: pathBlob},
-      {s: 'githubcom/org/repo/blob/branch/file.ifc', out: pathBlob},
-      {s: 'localhost:8080/share/v/gh/org/repo/branch/file.ifc', out: path},
-      {s: 'bldrs.ai/share/v/gh/org/repo/branch/file.ifc', out: path},
-      {s: 'http://localhost:8080/share/v/gh/org/repo/branch/file.ifc', out: path},
-      {s: 'http://bldrs.ai/share/v/gh/org/repo/branch/file.ifc', out: path},
-      {s: 'https://localhost:8080/share/v/gh/org/repo/branch/file.ifc', out: path},
-      {s: 'https://bldrs.ai/share/v/gh/org/repo/branch/file.ifc', out: path},
-      {s: '/org/repo/blob/branch/file.ifc', out: pathBlob},
-      {s: '/org/repo/branch/file.ifc', out: path},
-      {s: '/org/repo/blob/branch/a/b/c/file.ifc', out: pathBlobAbc},
-      {s: '/org/repo/branch/a/b/c/file.ifc', out: pathAbc},
+      { s: 'http://www.github.com/org/repo/blob/branch/file.ifc', out: pathBlob },
+      { s: 'http://github.com/org/repo/blob/branch/file.ifc', out: pathBlob },
+      { s: 'http://www.github.com/org/repo/blob/branch/a/b/c/file.ifc', out: pathBlobAbc },
+      { s: 'http://github.com/org/repo/blob/branch/a/b/c/file.ifc', out: pathBlobAbc },
+      { s: 'https://www.github.com/org/repo/blob/branch/file.ifc', out: pathBlob },
+      { s: 'https://github.com/org/repo/blob/branch/file.ifc', out: pathBlob },
+      { s: 'github.com/org/repo/blob/branch/file.ifc', out: pathBlob },
+      { s: 'githubcom/org/repo/blob/branch/file.ifc', out: pathBlob },
+      { s: 'localhost:8080/share/v/gh/org/repo/branch/file.ifc', out: path },
+      { s: 'bldrs.ai/share/v/gh/org/repo/branch/file.ifc', out: path },
+      { s: 'http://localhost:8080/share/v/gh/org/repo/branch/file.ifc', out: path },
+      { s: 'http://bldrs.ai/share/v/gh/org/repo/branch/file.ifc', out: path },
+      { s: 'https://localhost:8080/share/v/gh/org/repo/branch/file.ifc', out: path },
+      { s: 'https://bldrs.ai/share/v/gh/org/repo/branch/file.ifc', out: path },
+      { s: '/org/repo/blob/branch/file.ifc', out: pathBlob },
+      { s: '/org/repo/branch/file.ifc', out: path },
+      { s: '/org/repo/blob/branch/a/b/c/file.ifc', out: pathBlobAbc },
+      { s: '/org/repo/branch/a/b/c/file.ifc', out: pathAbc },
     ]
 
 
@@ -77,7 +77,7 @@ describe('net/github/utils', () => {
         for (const ext of supportedTypes) {
           const subIn = test.s.replace(/.ifc/, `.${ext}`)
           const subOut = test.out.replace(/.ifc/, `.${ext}`)
-          replaced.push({s: subIn, out: subOut})
+          replaced.push({ s: subIn, out: subOut })
         }
       }
       // .ifc is one of the supported types, so don't need append original array
@@ -98,8 +98,8 @@ describe('net/github/utils', () => {
 
     it('trimToPath', () => {
       [
-        {s: '', err: 'Expected at least one slash for file path: '},
-        {s: 'window', err: 'Expected at least one slash for file path: window'},
+        { s: '', err: 'Expected at least one slash for file path: ' },
+        { s: 'window', err: 'Expected at least one slash for file path: window' },
       ].concat(tests).forEach((pair) => {
         if (pair.out !== undefined) {
           expect(trimToPath(pair.s), `With input ${pair.s}`).toBe(pair.out)
@@ -120,10 +120,10 @@ describe('net/github/utils', () => {
       const errPrefix = 'Expected a multi-part file path: '
       const errPrefix2 = 'Expected at least one slash for file path: ';
       [
-        {s: 'a/b/c', err: `${errPrefix }/b/c`},
-        {s: 'www.google.com', err: `${errPrefix2 }www.google.com`},
-        {s: 'http://www.google.com', err: `${errPrefix2 }http://www.google.com`},
-        {s: 'http://www.google.com/', err: `${errPrefix }/`},
+        { s: 'a/b/c', err: `${errPrefix }/b/c` },
+        { s: 'www.google.com', err: `${errPrefix2 }www.google.com` },
+        { s: 'http://www.google.com', err: `${errPrefix2 }http://www.google.com` },
+        { s: 'http://www.google.com/', err: `${errPrefix }/` },
       ].concat(tests).forEach((pair) => {
         if (pair.out !== undefined) {
           const out = pair.out.replace(/blob\//, '')

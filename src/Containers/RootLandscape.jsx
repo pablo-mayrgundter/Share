@@ -1,9 +1,9 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
-import {useTheme} from '@mui/material/styles'
-import {useIsMobile} from '../Components/Hooks'
+import { useTheme } from '@mui/material/styles'
+import { useIsMobile } from '../Components/Hooks'
 import LoadingBackdrop from '../Components/LoadingBackdrop'
 import AlertDialogAndSnackbar from './AlertDialogAndSnackbar'
 import BottomBar from './BottomBar'
@@ -20,9 +20,9 @@ import useStore from '../store/useStore'
  * @property {string} branch For version
  * @property {Function} selectWithShiftClickEvents For multi-select by NavTree
  * @property {Function} deselectItems deselects currently selected element
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function RootLandscape({pathPrefix, branch, selectWithShiftClickEvents, deselectItems}) {
+export default function RootLandscape({ pathPrefix, branch, selectWithShiftClickEvents, deselectItems }) {
   const isMobile = useIsMobile()
   const theme = useTheme()
   const vh = useStore((state) => state.vh)
@@ -32,7 +32,7 @@ export default function RootLandscape({pathPrefix, branch, selectWithShiftClickE
       direction='row'
       justifyContent='space-between'
       alignItems='center'
-      sx={{width: '100%', height: isMobile ? `${vh}px` : '100vh'}}
+      sx={{ width: '100%', height: isMobile ? `${vh}px` : '100vh' }}
       data-testid='RootLandscape-RootStack'
     >
       {!isMobile &&
@@ -51,10 +51,10 @@ export default function RootLandscape({pathPrefix, branch, selectWithShiftClickE
       }
       <Stack
         justifyContent='space-between'
-        sx={{width: '100%', height: '100%'}}
+        sx={{ width: '100%', height: '100%' }}
         data-testid='CenterPane'
       >
-         <Box sx={{opacity: 0.5}}>
+         <Box sx={{ opacity: 0.5 }}>
            <Paper
              elevation={0}
              sx={{
@@ -73,7 +73,7 @@ export default function RootLandscape({pathPrefix, branch, selectWithShiftClickE
           justifyContent='space-between'
           // This pushes bottom bar down
           flexGrow={1}
-          sx={{width: '100%'}}
+          sx={{ width: '100%' }}
           data-testid='RootLandscape-CenterPaneTopStack'
         >
           <ControlsGroup/>

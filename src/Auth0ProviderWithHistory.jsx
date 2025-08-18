@@ -1,13 +1,13 @@
 import React from 'react'
-import {useNavigate} from 'react-router-dom'
-import {Auth0Provider} from './Auth0/Auth0ProviderProxy'
+import { useNavigate } from 'react-router-dom'
+import { Auth0Provider } from './Auth0/Auth0ProviderProxy'
 
 
 /** @return {React.ReactContext} */
-export default function Auth0ProviderWithHistory({children}) {
+export default function Auth0ProviderWithHistory({ children }) {
   const navigate = useNavigate()
   const onRedirect = (state) => {
-    navigate(state && state.returnTo ? state.returnTo : 'popup-callback', {replace: true})
+    navigate(state && state.returnTo ? state.returnTo : 'popup-callback', { replace: true })
     // navigate(0)
   }
   return (

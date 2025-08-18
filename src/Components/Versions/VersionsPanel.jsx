@@ -1,12 +1,12 @@
-import React, {ReactElement} from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, {} from 'react'
+import { useNavigate } from 'react-router-dom'
 import useStore from '../../store/useStore'
-import {assertDefined} from '../../utils/assert'
-import {navigateBaseOnModelPath} from '../../utils/location'
-import {TooltipIconButton} from '../Buttons'
+import { assertDefined } from '../../utils/assert'
+import { navigateBaseOnModelPath } from '../../utils/location'
+import { TooltipIconButton } from '../Buttons'
 import Panel from '../SideDrawer/Panel'
 import VersionsTimeline from './VersionsTimeline'
-import {VERSIONS_TITLE} from './component'
+import { VERSIONS_TITLE } from './component'
 import useVersions from './useVersions'
 import RestartAltIcon from '@mui/icons-material/RestartAlt'
 
@@ -18,16 +18,16 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt'
  *
  * @property {string} filePath The file for which commits are fetched
  * @property {string} current The current branch or sha, to indicate is active in UI
- * @return {ReactElement} A timeline panel of versions
+ * @return {React.ReactElement} A timeline panel of versions
  */
-export default function VersionsPanel({filePath, currentRef}) {
+export default function VersionsPanel({ filePath, currentRef }) {
   assertDefined(filePath, currentRef)
   const navigate = useNavigate()
   const accessToken = useStore((state) => state.accessToken)
   const repository = useStore((state) => state.repository)
   const modelPath = useStore((state) => state.modelPath)
   const setIsVersionsVisible = useStore((state) => state.setIsVersionsVisible)
-  const {commits, loading, error} = useVersions({accessToken, repository, filePath})
+  const { commits, loading, error } = useVersions({ accessToken, repository, filePath })
 
 
   /**
@@ -40,7 +40,7 @@ export default function VersionsPanel({filePath, currentRef}) {
     if (modelPath) {
       const commitPath =
             navigateBaseOnModelPath(modelPath.org, modelPath.repo, sha, modelPath.filepath)
-      navigate({pathname: commitPath})
+      navigate({ pathname: commitPath })
     }
   }
 
@@ -51,7 +51,7 @@ export default function VersionsPanel({filePath, currentRef}) {
       // TODO(pablo): should not hardcode to 'main'
       const mainPath =
             navigateBaseOnModelPath(modelPath.org, modelPath.repo, 'main', modelPath.filepath)
-      navigate({pathname: mainPath})
+      navigate({ pathname: mainPath })
     }
   }
 

@@ -1,7 +1,7 @@
 import IfcColor from './IfcColor'
 import IfcCustomViewSettings from './IfcCustomViewSettings'
-import {IFCPROPERTYSET, IFCRELDEFINESBYPROPERTIES} from 'web-ifc'
-import {interpolateColors, parseColor} from './ColorHelperFunctions'
+import { IFCPROPERTYSET, IFCRELDEFINESBYPROPERTIES } from 'web-ifc'
+import { interpolateColors, parseColor } from './ColorHelperFunctions'
 
 
 /**
@@ -36,10 +36,10 @@ export async function compileViewRules(api, modelID, rules) {
   const psetObjects = allPropObjects.filter((x) => x.RelatingPropertyDefinition.type === IFCPROPERTYSET)
   // Get only sets containing PSet_vyzn.Verlust
   const objectsAndPropVal = psetObjects.map((a) =>
-    ({o: a.RelatedObjects[0]?.expressID,
+    ({ o: a.RelatedObjects[0]?.expressID,
       p: a.RelatingPropertyDefinition.HasProperties?.find(
           (s) => s.Name.value === 'Verlust' ||
-            s.Name.value === 'SIA380-1.TransmissionHeatLoss')?.NominalValue?.value * 1})).filter((x) => x.p)
+            s.Name.value === 'SIA380-1.TransmissionHeatLoss')?.NominalValue?.value * 1 })).filter((x) => x.p)
 
   const valArr = objectsAndPropVal.map((a) => a.p)
   const min = Math.min(valArr)

@@ -1,7 +1,7 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function AboutLayout() {
   return (<div>Hello About Layout!</div>)
 }

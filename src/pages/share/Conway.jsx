@@ -1,11 +1,11 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import TitledLayout from '../../layouts/TitledLayout'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function Conway() {
   return (
     <TitledLayout title='Conway IFC & STEP Engine: Performance Meets Precision'>

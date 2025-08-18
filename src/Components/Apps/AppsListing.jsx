@@ -1,11 +1,11 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Grid from '@mui/material/Unstable_Grid2'
 import useStore from '../../store/useStore'
 import AppEntry from './AppEntry'
 import AppsRegistry from './AppsRegistry.json'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function AppsListing() {
   const setSelectedApp = useStore((state) => state.setSelectedApp)
   return (

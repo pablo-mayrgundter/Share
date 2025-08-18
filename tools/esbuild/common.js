@@ -1,9 +1,9 @@
 import * as path from 'node:path'
 import * as process from 'node:process'
-import {fileURLToPath} from 'url'
+import { fileURLToPath } from 'url'
 import defines from './defines.js'
 import makePlugins from './plugins.js'
-import {log} from './utils.js'
+import { log } from './utils.js'
 
 
 const repoRoot = path.resolve(fileURLToPath(import.meta.url), '../../../')

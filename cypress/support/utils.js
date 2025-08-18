@@ -15,7 +15,7 @@ export function clearState() {
  * /share/v/p/index.ifc virtual path
  */
 export function interceptIndex() {
-  cy.intercept('GET', '/index.ifc', {fixture: 'index.ifc'}).as('loadModel')
+  cy.intercept('GET', '/index.ifc', { fixture: 'index.ifc' }).as('loadModel')
 }
 
 
@@ -24,10 +24,10 @@ export function interceptIndex() {
  * page.  Also registers @bounce event for wait
  */
 export function interceptBounce() {
-  cy.intercept('GET', '/share/v/p/index.ifc', {fixture: '404.html'}).as('bounce')
+  cy.intercept('GET', '/share/v/p/index.ifc', { fixture: '404.html' }).as('bounce')
   // For view-100/synchronized-view-and-navtree.cy.js
-  cy.intercept('GET', '/share/v/p/index.ifc/*', {fixture: '404.html'}).as('bounceEltSelect')
-  cy.intercept('GET', '/share/v/p/index.ifc?*', {fixture: '404.html'}).as('bounceSearch')
+  cy.intercept('GET', '/share/v/p/index.ifc/*', { fixture: '404.html' }).as('bounceEltSelect')
+  cy.intercept('GET', '/share/v/p/index.ifc?*', { fixture: '404.html' }).as('bounceSearch')
 }
 
 
@@ -91,7 +91,7 @@ export function waitForModel() {
   cy.wait('@loadModel').its('response.statusCode').should((statusCode) => {
     expect([HTTP_OK, HTTP_NOT_MODIFIED]).to.include(statusCode)
   })
-  cy.get('[data-model-ready="true"]').should('exist', {timeout: 1000})
+  cy.get('[data-model-ready="true"]').should('exist', { timeout: 1000 })
   const animWaitTimeMs = 1000
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(animWaitTimeMs)

@@ -6,7 +6,7 @@ describe('Note screenshot', () => {
     })
 
     it.skip('should not show screenshot button when url param not present', () => {
-      cy.findByRole('button', {name: /Take Screenshot/}).should('not.exist')
+      cy.findByRole('button', { name: /Take Screenshot/ }).should('not.exist')
     })
 
     it.skip('should show screenshot when url param present', () => {

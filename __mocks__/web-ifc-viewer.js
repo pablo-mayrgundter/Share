@@ -1,21 +1,25 @@
-jest.mock('three')
-jest.mock('../src/Infrastructure/IfcHighlighter')
-jest.mock('../src/Infrastructure/IfcIsolator')
-jest.mock('../src/Infrastructure/CustomPostProcessor')
-const ifcjsMock = jest.createMockFromModule('web-ifc-viewer')
+import { mock } from 'bun:test'
+
+// Mock dependencies for bun
+mock.module('three', () => ({}))
+mock.module('../src/Infrastructure/IfcHighlighter', () => ({}))
+mock.module('../src/Infrastructure/IfcIsolator', () => ({}))
+mock.module('../src/Infrastructure/CustomPostProcessor', () => ({}))
+
+const ifcjsMock = {}
 
 
 // Not sure why this is required, but otherwise these internal fields
 // are not present in the instantiated IfcViewerAPIExtended.
 const loadedModel = {
   ifcManager: {
-    getSpatialStructure: jest.fn(),
-    getProperties: jest.fn((eltId) => ({})),
+    getSpatialStructure: mock(),
+    getProperties: mock((eltId) => ({})),
   },
-  getIfcType: jest.fn(),
+  getIfcType: mock(),
   geometry: {
     boundingBox: {
-      getCenter: jest.fn(),
+      getCenter: mock(),
     },
     attributes: {
       expressID: 123,
@@ -28,41 +32,41 @@ const impl = {
   _isMock: true,
   _loadedModel: loadedModel,
   IFC: {
-    addIfcModel: jest.fn(),
+    addIfcModel: mock(),
     context: {
-      fitToFrame: jest.fn(),
-      getCamera: jest.fn(),
-      getRenderer: jest.fn(),
-      getScene: jest.fn(),
+      fitToFrame: mock(),
+      getCamera: mock(),
+      getRenderer: mock(),
+      getScene: mock(),
       ifcCamera: {
         cameraControls: {
-          addEventListener: jest.fn(),
-          setPosition: jest.fn((x, y, z) => {
+          addEventListener: mock(),
+          setPosition: mock((x, y, z) => {
             return {}
           }),
-          getPosition: jest.fn((x, y, z) => {
+          getPosition: mock((x, y, z) => {
             const position = [0, 0, 0]
             return position
           }),
-          setTarget: jest.fn((x, y, z) => {
+          setTarget: mock((x, y, z) => {
             return {}
           }),
-          getTarget: jest.fn((x, y, z) => {
+          getTarget: mock((x, y, z) => {
             const target = [0, 0, 0]
             return target
           }),
         },
         currentNavMode: {
-          fitModelToFrame: jest.fn(),
+          fitModelToFrame: mock(),
         },
       },
       items: {
         ifcModels: [],
       },
     },
-    setWasmPath: jest.fn(),
+    setWasmPath: mock(),
     selector: {
-      unpickIfcItems: jest.fn(),
+      unpickIfcItems: mock(),
       selection: {
         meshes: [],
         material: null,
@@ -73,44 +77,44 @@ const impl = {
     },
     loader: {
       ifcManager: {
-        applyWebIfcConfig: jest.fn(),
+        applyWebIfcConfig: mock(),
         ifcAPI: {
-          GetCoordinationMatrix: jest.fn(),
-          getConwayVersion: jest.fn(),
-          getStatistics: jest.fn(() => {
+          GetCoordinationMatrix: mock(),
+          getConwayVersion: mock(),
+          getStatistics: mock(() => {
             return {
-              getGeometryMemory: jest.fn(),
-              getGeometryTime: jest.fn(),
-              getLoadStatus: jest.fn(),
-              getOriginatingSystem: jest.fn(),
-              getParseTime: jest.fn(),
-              getPreprocessorVersion: jest.fn(),
-              getTotalTime: jest.fn(),
-              getVersion: jest.fn(),
+              getGeometryMemory: mock(),
+              getGeometryTime: mock(),
+              getLoadStatus: mock(),
+              getOriginatingSystem: mock(),
+              getParseTime: mock(),
+              getPreprocessorVersion: mock(),
+              getTotalTime: mock(),
+              getVersion: mock(),
             }
           }),
         },
         parser: {},
-        setupCoordinationMatrix: jest.fn(),
+        setupCoordinationMatrix: mock(),
         state: {},
       },
-      parse: jest.fn(() => loadedModel),
+      parse: mock(() => loadedModel),
     },
   },
   clipper: {
     active: false,
-    deleteAllPlanes: jest.fn(() => {
+    deleteAllPlanes: mock(() => {
       return 'cutPlane'
     }),
     context: {
       clippingPlanes: [],
     },
-    createFromNormalAndCoplanarPoint: jest.fn(() => {
+    createFromNormalAndCoplanarPoint: mock(() => {
       return 'createFromNormalAndCoplanarPoint'
     }),
     planes: [{
       plane: {
-        normal: jest.fn(),
+        normal: mock(),
         constant: 10,
       },
     }],
@@ -119,40 +123,39 @@ const impl = {
     style: {},
   },
   context: {
-    getRenderer: jest.fn(),
-    getScene: jest.fn(() => {
+    getRenderer: mock(),
+    getScene: mock(() => {
       return {
-        add: jest.fn(),
+        add: mock(),
       }
     }),
-    getCamera: jest.fn(() => {
+    getCamera: mock(() => {
       return {
         currentNavMode: {
-          fitModelToFrame: jest.fn(),
+          fitModelToFrame: mock(),
         },
       }
     }),
-    getClippingPlanes: jest.fn(() => {
+    getClippingPlanes: mock(() => {
       return []
     }),
     renderer: {
-      newScreenshot: jest.fn(),
+      newScreenshot: mock(),
     },
-    resize: jest.fn(),
+    resize: mock(),
   },
-  loadIfcUrl: jest.fn(jest.fn(() => loadedModel)),
-  loadIfcFile: jest.fn(jest.fn(() => loadedModel)),
-  getProperties: jest.fn((modelId, eltId) => {
+  loadIfcUrl: mock(() => loadedModel),
+  loadIfcFile: mock(() => loadedModel),
+  getProperties: mock((modelId, eltId) => {
     return loadedModel.ifcManager.getProperties(eltId)
   }),
-  pickIfcItemsByID: jest.fn(),
-  preselectElementsByIds: jest.fn(),
-  setSelection: jest.fn(),
-  setCustomViewSettings: jest.fn(),
-  takeScreenshot: jest.fn(),
+  pickIfcItemsByID: mock(),
+  preselectElementsByIds: mock(),
+  setSelection: mock(),
+  setCustomViewSettings: mock(),
+  takeScreenshot: mock(),
 }
-const constructorMock = ifcjsMock.IfcViewerAPI
-constructorMock.mockImplementation(() => impl)
+const constructorMock = mock(() => impl)
 
 
 /**
@@ -166,5 +169,5 @@ function __getIfcViewerAPIExtendedMockSingleton() {
 export {
   ifcjsMock as default,
   constructorMock as IfcViewerAPI,
-  __getIfcViewerAPIExtendedMockSingleton as __getIfcViewerAPIExtendedMockSingleton,
+  __getIfcViewerAPIExtendedMockSingleton,
 }

@@ -16,7 +16,7 @@ describe('Open 200: Open Models in multiple formats', () => {
    * @property {string} filePath Actual fixture to use
    * @property {string} debugTag debugging name for intercept
    */
-  function doTest({urlPath, filePath, debugTag}) {
+  function doTest({ urlPath, filePath, debugTag }) {
     setupVirtualPathIntercept(urlPath, filePath, debugTag)
     cy.visit(urlPath)
     waitForModelReady(debugTag)

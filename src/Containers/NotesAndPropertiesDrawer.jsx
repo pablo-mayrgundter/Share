@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Box from '@mui/material/Box'
 import useStore from '../store/useStore'
 import NotesPanel from '../Components/Notes/NotesPanel'
@@ -9,15 +9,16 @@ import SideDrawer from '../Components/SideDrawer/SideDrawer'
 /**
  * Drawer for Notes and Properties
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function NotesAndPropertiesDrawer({setDrawerWidth}) {
+export default function NotesAndPropertiesDrawer({ setDrawerWidth }) {
   const isNotesEnabled = useStore((state) => state.isNotesEnabled)
   const isNotesVisible = useStore((state) => state.isNotesVisible)
   const isPropertiesEnabled = useStore((state) => state.isPropertiesEnabled)
   const isPropertiesVisible = useStore((state) => state.isPropertiesVisible)
   const rightDrawerWidth = useStore((state) => state.rightDrawerWidth)
   const rightDrawerWidthInitial = useStore((state) => state.rightDrawerWidthInitial)
+
 
   const isDrawerVisible = isNotesVisible || isPropertiesVisible
 

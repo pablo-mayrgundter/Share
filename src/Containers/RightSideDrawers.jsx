@@ -1,5 +1,5 @@
-import React, {useEffect, ReactElement} from 'react'
-import {Stack} from '@mui/material'
+import React, { useEffect } from 'react'
+import { Stack } from '@mui/material'
 import useStore from '../store/useStore'
 import NotesAndPropertiesDrawer from './NotesAndPropertiesDrawer'
 import AppsSideDrawer from './AppsSideDrawer'
@@ -8,7 +8,7 @@ import AppsSideDrawer from './AppsSideDrawer'
 /**
  * Right side drawer component, houses Notes and Apps panels.
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function RightSideDrawers() {
   const isNotesVisible = useStore((state) => state.isNotesVisible)
@@ -93,7 +93,7 @@ export default function RightSideDrawers() {
   const availableWidth = 1200
 
   return (
-    <Stack direction='row' sx={{flexShrink: 0, overflow: 'hidden'}}>
+    <Stack direction='row' sx={{ flexShrink: 0, overflow: 'hidden' }}>
       <NotesAndPropertiesDrawer
         setDrawerWidth={handleSetRightDrawerWidth}
       />

@@ -1,21 +1,21 @@
 import axios from 'axios'
-import {BufferAttribute, Matrix4, Mesh, Object3D} from 'three'
-import {DRACOLoader} from 'three/examples/jsm/loaders/DRACOLoader'
-import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
-import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader'
-import {PDBLoader} from 'three/examples/jsm/loaders/PDBLoader'
-import {STLLoader} from 'three/examples/jsm/loaders/STLLoader'
-import {XYZLoader} from 'three/examples/jsm/loaders/XYZLoader'
+import { BufferAttribute, Matrix4, Mesh, Object3D } from 'three'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
+import { PDBLoader } from 'three/examples/jsm/loaders/PDBLoader'
+import { STLLoader } from 'three/examples/jsm/loaders/STLLoader'
+import { XYZLoader } from 'three/examples/jsm/loaders/XYZLoader'
 import * as Filetype from '../Filetype'
-import {getModelFromOPFS, downloadToOPFS, downloadModel, doesFileExistInOPFS, writeBase64Model} from '../OPFS/utils'
-import {HTTP_NOT_FOUND} from '../net/http'
-import {assertDefined} from '../utils/assert'
-import {enablePageReloadApprovalCheck} from '../utils/event'
+import { getModelFromOPFS, downloadToOPFS, downloadModel, doesFileExistInOPFS, writeBase64Model } from '../OPFS/utils'
+import { HTTP_NOT_FOUND } from '../net/http'
+import { assertDefined } from '../utils/assert'
+import { enablePageReloadApprovalCheck } from '../utils/event'
 import debug from '../utils/debug'
-import {parseGitHubPath} from '../utils/location'
-import {testUuid} from '../utils/strings'
-import {dereferenceAndProxyDownloadContents} from './urls'
+import { parseGitHubPath } from '../utils/location'
+import { testUuid } from '../utils/strings'
+import { dereferenceAndProxyDownloadContents } from './urls'
 import BLDLoader from './BLDLoader'
 import glbToThree from './glb'
 import objToThree from './obj'
@@ -115,7 +115,7 @@ export async function load(
       }
       if (pathUrl.host === 'github.com') {
         // TODO: path was gitpath originally
-        const {owner, repo, branch, filePath} = parseGitHubPath(pathUrl.pathname)
+        const { owner, repo, branch, filePath } = parseGitHubPath(pathUrl.pathname)
 
 
         // if we got a cache hit and the file doesn't exist in OPFS, query with no cache
@@ -254,8 +254,8 @@ function convertToShareModel(model, viewer) {
   function recursiveDecorate(obj3d) {
     // Next, setup IFC props
     obj3d.type = obj3d.type || 'IFCOBJECT'
-    obj3d.Name = obj3d.Name || {value: 'Object'}
-    obj3d.LongName = obj3d.LongName || {value: 'Object'}
+    obj3d.Name = obj3d.Name || { value: 'Object' }
+    obj3d.LongName = obj3d.LongName || { value: 'Object' }
     const id = objIdSerial++
     obj3d.expressID = Number.isSafeInteger(obj3d.expressID) ? obj3d.expressID : id
     if (obj3d.geometry) {
@@ -293,8 +293,8 @@ function convertToShareModel(model, viewer) {
   // Override for root
   debug().log('Overriding project root name')
   model.type = model.type || 'IFCPROJECT'
-  model.Name = model.Name || {value: 'Model'}
-  model.LongName = model.LongName || {value: 'Model'}
+  model.Name = model.Name || { value: 'Model' }
+  model.LongName = model.LongName || { value: 'Model' }
   // model.ifcManager = viewer.IFC
   model.ifcManager = viewer.IFC.loader.ifcManager
   model.ifcManager.getSpatialStructure = (modelId, flatten) => {

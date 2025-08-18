@@ -1,5 +1,5 @@
-import {assertDefined} from '../../utils/assert'
-import {getGitHub, postGitHub, patchGitHub} from './Http'
+import { assertDefined } from '../../utils/assert'
+import { getGitHub, postGitHub, patchGitHub } from './Http'
 
 
 /**
@@ -38,7 +38,7 @@ export async function closeIssue(repository, issueNumber, accessToken = '') {
  */
 export async function getIssue(repository, issueNumber, accessToken = '') {
   assertDefined(...arguments)
-  return await getGitHub(repository, 'issues/{issueNumber}', {issueNumber}, accessToken)
+  return await getGitHub(repository, 'issues/{issueNumber}', { issueNumber }, accessToken)
 }
 
 
@@ -64,7 +64,7 @@ export async function getIssues(repository, accessToken = '') {
  */
 export async function getIssueComments(repository, issueNumber, accessToken = '') {
   assertDefined(...arguments)
-  const res = await getGitHub(repository, 'issues/{issueNumber}/comments', {issueNumber}, accessToken)
+  const res = await getGitHub(repository, 'issues/{issueNumber}/comments', { issueNumber }, accessToken)
   return res.data
 }
 

@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Box from '@mui/material/Box'
 import AppsPanel from '../Components/Apps/AppsPanel'
 import AppPanel from '../Components/Apps/AppPanel'
@@ -6,8 +6,8 @@ import SideDrawer from '../Components/SideDrawer/SideDrawer'
 import useStore from '../store/useStore'
 
 
-/** @return {ReactElement} */
-export default function AppsSideDrawer({setDrawerWidth}) {
+/** @return {React.ReactElement} */
+export default function AppsSideDrawer({ setDrawerWidth }) {
   const isAppsVisible = useStore((state) => state.isAppsVisible)
   const appsDrawerWidth = useStore((state) => state.appsDrawerWidth)
   const appsDrawerWidthInitial = useStore((state) => state.appsDrawerWidthInitial)

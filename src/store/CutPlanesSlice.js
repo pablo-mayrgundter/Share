@@ -5,21 +5,21 @@
  * @param {Function} get
  * @return {object} Zustand slice.
  */
-export default function createCutPlanesSlide(set, get) {
+export default function createCutPlanesSlice(set, get) {
   return {
     cutPlanes: [],
-    addCutPlaneDirection: ({direction, offset}) => set((state) => {
+    addCutPlaneDirection: ({ direction, offset }) => set((state) => {
       if (state.cutPlanes.findIndex((cutPlane) => cutPlane.direction === direction) === -1) {
-        state.cutPlanes.push({direction, offset})
+        state.cutPlanes.push({ direction, offset })
       }
       return state.cutPlanes
     }),
     removeCutPlaneDirection: (direction) => set((state) => {
       const filterPlanes = state.cutPlanes.filter((cutPlane) => cutPlane.direction !== direction)
-      return {cutPlanes: filterPlanes}
+      return { cutPlanes: filterPlanes }
     }),
-    setCutPlaneDirections: (directions) => set(() => ({cutPlanes: directions})),
+    setCutPlaneDirections: (directions) => set(() => ({ cutPlanes: directions })),
     isCutPlaneActive: false,
-    setIsCutPlaneActive: (is) => set(() => ({isCutPlaneActive: is})),
+    setIsCutPlaneActive: (is) => set(() => ({ isCutPlaneActive: is })),
   }
 }

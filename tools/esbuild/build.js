@@ -1,6 +1,6 @@
 import esbuild from 'esbuild'
 import fs from 'node:fs'
-import {join} from 'node:path'
+import { join } from 'node:path'
 import config from './common.js'
 
 

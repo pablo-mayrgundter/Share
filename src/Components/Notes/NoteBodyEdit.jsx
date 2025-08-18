@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import CardContent from '@mui/material/CardContent'
 import InputBase from '@mui/material/InputBase'
 import Stack from '@mui/material/Stack'
@@ -9,9 +9,9 @@ import Stack from '@mui/material/Stack'
  *
  * @property {Function} handleTextUpdate Called when content changes
  * @property {string} [value] The content of the note.  Default: empty string.
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function EditCardBody({handleTextUpdate, value = ''}) {
+export default function EditCardBody({ handleTextUpdate, value = '' }) {
   return (
     <CardContent>
       <Stack

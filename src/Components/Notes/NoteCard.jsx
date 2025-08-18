@@ -1,28 +1,28 @@
-import React, {ReactElement, useState, useEffect, useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import NoteBodyEdit from './NoteBodyEdit'
-import {useAuth0} from '../../Auth0/Auth0Proxy'
-import {updateComment} from '../../net/github/Comments'
+import { useAuth0 } from '../../Auth0/Auth0Proxy'
+import { updateComment } from '../../net/github/Comments'
 import {
   closeIssue,
   updateIssue,
   // TODO(pablo): deleteComment as deleteCommentGitHub,
 } from '../../net/github/Issues'
 import useStore from '../../store/useStore'
-import {assertDefined} from '../../utils/assert'
-import {getHashParamsFromHashStr, setHashParams} from '../../utils/location'
-import {findUrls} from '../../utils/strings'
-import {addCameraUrlParams, parseHashParams, setCameraFromParams} from '../Camera/CameraControl'
-import {removeCameraUrlParams} from '../Camera/hashState'
-import {HASH_PREFIX_CAMERA} from '../Camera/hashState'
+import { assertDefined } from '../../utils/assert'
+import { getHashParamsFromHashStr, setHashParams } from '../../utils/location'
+import { findUrls } from '../../utils/strings'
+import { addCameraUrlParams, parseHashParams, setCameraFromParams } from '../Camera/CameraControl'
+import { removeCameraUrlParams } from '../Camera/hashState'
+import { HASH_PREFIX_CAMERA } from '../Camera/hashState'
 import NoteBody from './NoteBody'
 import NoteContent from './NoteContent'
-import {HASH_PREFIX_NOTES, HASH_PREFIX_COMMENT} from './hashState'
+import { HASH_PREFIX_NOTES, HASH_PREFIX_COMMENT } from './hashState'
 import NoteFooter from './NoteFooter'
 import NoteMenu from './NoteMenu'
-import {deleteComment} from '../../net/github/Comments'
+import { deleteComment } from '../../net/github/Comments'
 
 
 /**
@@ -37,7 +37,7 @@ import {deleteComment} from '../../net/github/Comments'
  * @property {string} [title] Notes only
  * @property {string} [username] Author
  * @property {boolean} [isNote] Is note, or if not is comment. Default: true
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function NoteCard({
   id = null,
@@ -84,7 +84,7 @@ export default function NoteCard({
     setEditBodyGlobal(id, newBody) // Update global editBody state
   }
 
-  const {user} = useAuth0()
+  const { user } = useAuth0()
 
    // Reference to the NoteCard element for scrolling
    const noteCardRef = useRef(null)
@@ -146,7 +146,7 @@ export default function NoteCard({
     if (embeddedCameraParams) {
       setCameraFromParams(firstCamera)
     }
-    setHashParams(window.location, HASH_PREFIX_NOTES, {id: id})
+    setHashParams(window.location, HASH_PREFIX_NOTES, { id: id })
   }
 
 
@@ -163,7 +163,7 @@ export default function NoteCard({
   /** Copies location which contains the issue id, camera position and selected element path */
   function shareIssue() {
     navigator.clipboard.writeText(window.location.href)
-    setSnackMessage({text: 'The url path is copied to the clipboard', autoDismiss: true})
+    setSnackMessage({ text: 'The url path is copied to the clipboard', autoDismiss: true })
   }
 
 
@@ -220,10 +220,10 @@ export default function NoteCard({
     // Copy the updated URL to the clipboard
     navigator.clipboard.writeText(href.toString())
       .then(() => {
-        setSnackMessage({text: 'The URL path is copied to the clipboard', autoDismiss: true})
+        setSnackMessage({ text: 'The URL path is copied to the clipboard', autoDismiss: true })
       })
       .catch((err) => {
-        setSnackMessage({text: 'Failed to copy URL', autoDismiss: true})
+        setSnackMessage({ text: 'Failed to copy URL', autoDismiss: true })
       })
   }
 
@@ -312,7 +312,7 @@ export default function NoteCard({
        <CardHeader
          title={title}
          avatar={<Avatar alt={username} src={avatarUrl}/>}
-         sx={{alignItems: 'flex-start'}}
+         sx={{ alignItems: 'flex-start' }}
          subheader={<>{username}<br/>{dateParts[0]} {dateParts[1]}</>}
          action={
            synched && user && user.nickname === username &&

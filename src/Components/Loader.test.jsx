@@ -1,11 +1,12 @@
+import { describe, it, expect } from 'bun:test'
 import React from 'react'
-import {render} from '@testing-library/react'
+import { render } from '@testing-library/react'
 import Loader from './Loader'
 
 
 describe('Loader', () => {
   it('renders', () => {
-    const {container} = render(<Loader/>)
+    const { container } = render(<Loader/>)
     expect(container.firstChild).toHaveClass('progress-bar')
   })
 })

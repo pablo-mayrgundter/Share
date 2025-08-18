@@ -1,5 +1,5 @@
-import {assertDefined} from '../../utils/assert'
-import {getGitHub, postGitHub, deleteGitHub, patchGitHub} from './Http'
+import { assertDefined } from '../../utils/assert'
+import { getGitHub, postGitHub, deleteGitHub, patchGitHub } from './Http'
 
 
 /**
@@ -31,7 +31,7 @@ export async function createComment(repository, issueNumber, payload, accessToke
  */
 export async function getComment(repository, commentId, accessToken = '') {
   assertDefined(...arguments)
-  return await getGitHub(repository, 'issues/comments/{commentId}', {commentId}, accessToken)
+  return await getGitHub(repository, 'issues/comments/{commentId}', { commentId }, accessToken)
 }
 
 
@@ -55,7 +55,7 @@ export async function getComments(repository, accessToken = '') {
  */
 export async function deleteComment(repository, commentId, accessToken) {
   assertDefined(...arguments)
-  return await deleteGitHub(repository, `issues/comments/{commentId}`, {commentId}, accessToken)
+  return await deleteGitHub(repository, `issues/comments/{commentId}`, { commentId }, accessToken)
 }
 
 /**

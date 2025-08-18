@@ -1,16 +1,16 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import useStore from '../../store/useStore'
-import {BackButton} from '../Buttons'
+import { BackButton } from '../Buttons'
 import Panel from '../SideDrawer/Panel'
 import AppIFrame from './AppIFrame'
-import {removeHashParams} from './hashState'
+import { removeHashParams } from './hashState'
 
 
 /**
  * @property {object} itemJson App description json
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function AppPanel({itemJson}) {
+export default function AppPanel({ itemJson }) {
   const setIsAppsVisible = useStore((state) => state.setIsAppsVisible)
   const setSelectedApp = useStore((state) => state.setSelectedApp)
 

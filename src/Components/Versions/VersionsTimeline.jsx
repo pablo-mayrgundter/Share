@@ -1,4 +1,4 @@
-import React, {ReactElement, useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Timeline from '@mui/lab/Timeline'
 import TimelineConnector from '@mui/lab/TimelineConnector'
 import TimelineContent from '@mui/lab/TimelineContent'
@@ -9,8 +9,8 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import {useTheme} from '@mui/material/styles'
-import {styled} from '@mui/system'
+import { useTheme } from '@mui/material/styles'
+import { styled } from '@mui/system'
 import Loader from '../Loader'
 import NoContent from '../NoContent'
 import CommitIcon from '@mui/icons-material/Commit'
@@ -24,9 +24,9 @@ import CommitIcon from '@mui/icons-material/Commit'
  * @property {Array<object>} commits An array of commits
  * @property {string} currentRef To indicate as active in the UI
  * @property {Function} commitNavigateCb A callback function to navigate to a specific commit
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function VersionsTimeline({commits, currentRef, commitNavigateCb}) {
+export default function VersionsTimeline({ commits, currentRef, commitNavigateCb }) {
   const [showLoginMessage, setShowLoginMessage] = useState(false)
 
   const timeoutMillis = 4000
@@ -70,9 +70,9 @@ export default function VersionsTimeline({commits, currentRef, commitNavigateCb}
  *
  * @property {object} version The version data to be displayed
  * @property {boolean} active Indicates if the current item is active
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-function TimelineInfo({commit, active}) {
+function TimelineInfo({ commit, active }) {
   const theme = useTheme()
   const dotColor = active ?
       theme.palette.secondary.highlight :
@@ -81,13 +81,13 @@ function TimelineInfo({commit, active}) {
     <>
       <TimelineSeparator>
         <TimelineConnector/>
-        <TimelineDot sx={{bgcolor: dotColor}} data-testid='commit'>
-          <CommitIcon sx={{transform: active ? 'none' : 'rotate(90deg)'}}/>
+        <TimelineDot sx={{ bgcolor: dotColor }} data-testid='commit'>
+          <CommitIcon sx={{ transform: active ? 'none' : 'rotate(90deg)' }}/>
         </TimelineDot>
         <TimelineConnector/>
       </TimelineSeparator>
       <TimelineOppositeContent
-        sx={{padding: '10px 0px 10px 10px'}}
+        sx={{ padding: '10px 0px 10px 10px' }}
         color={active ? 'text.secondary' : 'inherit'}
       >
         <Paper
@@ -103,7 +103,7 @@ function TimelineInfo({commit, active}) {
             direction='column'
             justifyContent='flex-start'
             alignItems='flex-start'
-            sx={{padding: '6px 10px'}}
+            sx={{ padding: '6px 10px' }}
           >
             <Stack
               direction='column'
@@ -133,7 +133,7 @@ function TimelineInfo({commit, active}) {
           </Stack>
         </Paper>
       </TimelineOppositeContent>
-      <TimelineContent sx={{width: '40px', py: '12px', px: 2, lineHeight: '1em'}}/>
+      <TimelineContent sx={{ width: '40px', py: '12px', px: 2, lineHeight: '1em' }}/>
     </>
   )
 }
@@ -144,7 +144,7 @@ function TimelineInfo({commit, active}) {
  * with specific styles applied when the MuiTimelineItem-missingOppositeContent
  * class is present.
  */
-const CustomTimelineItem = styled(TimelineItem)(({theme}) => ({
+const CustomTimelineItem = styled(TimelineItem)(({ theme }) => ({
   '&.MuiTimelineItem-missingOppositeContent': {
     '&::before': {
       padding: 0,

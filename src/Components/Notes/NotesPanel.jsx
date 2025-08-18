@@ -1,13 +1,13 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import useStore from '../../store/useStore'
 import Panel from '../SideDrawer/Panel'
 import Notes from './Notes'
 import NotesNavBar from './NotesNavBar'
-import {removeHashParams} from './hashState'
-import {TITLE_NOTE, TITLE_NOTES, TITLE_NOTE_ADD} from './component'
+import { removeHashParams } from './hashState'
+import { TITLE_NOTE, TITLE_NOTES, TITLE_NOTE_ADD } from './component'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function NotesPanel() {
   const isCreateNoteVisible = useStore((state) => state.isCreateNoteVisible)
   const setIsNotesVisible = useStore((state) => state.setIsNotesVisible)

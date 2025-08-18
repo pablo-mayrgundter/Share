@@ -3,7 +3,7 @@ import AddCircle from '@mui/material/AddCircle'
 import ArrowBack from '@mui/material/ArrowBack'
 import ArrowForward from '@mui/material/ArrowForward'
 import Check from '@mui/material/Check'
-import {TooltipIconButton} from '../../Components/Buttons'
+import { TooltipIconButton } from '../../Components/Buttons'
 
 
 export default {

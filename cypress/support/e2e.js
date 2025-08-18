@@ -14,8 +14,8 @@
 // ***********************************************************
 
 import 'cypress-real-events/support'
-import {rest} from 'msw'
-import {initWorker} from '../../src/__mocks__/browser'
+import { rest } from 'msw'
+import { initWorker } from '../../src/__mocks__/browser'
 import './commands'
 
 // Global worker across before/after calls

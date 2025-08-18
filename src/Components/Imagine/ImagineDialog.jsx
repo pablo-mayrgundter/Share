@@ -1,6 +1,6 @@
 import axios from 'axios'
-import React, {ReactElement, useEffect, useState} from 'react'
-import {Helmet} from 'react-helmet-async'
+import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -20,7 +20,7 @@ import BotIcon from '../../assets/icons/Bot2.svg'
  *
  * @property {boolean} isDialogDisplayed Passed to dialog to be controlled
  * @property {Function} setIsDialogDisplayed Passed to dialog to be controlled
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function ImagineDialog({
   isDialogDisplayed,
@@ -71,14 +71,14 @@ export default function ImagineDialog({
 
   return (
     <Dialog
-      headerIcon={<BotIcon className='icon-share' style={{height: '50px'}}/>}
+      headerIcon={<BotIcon className='icon-share' style={{ height: '50px' }}/>}
       headerText={'Imagine'}
       isDialogDisplayed={isDialogDisplayed}
       setIsDialogDisplayed={setIsDialogDisplayed}
     >
       <Helmet><title>{finalPrompt ? `Imagine: ${finalPrompt}` : 'Imagine'}</title></Helmet>
       <Stack
-        sx={{minHeight: '390px'}}
+        sx={{ minHeight: '390px' }}
       >
         <Box
           sx={{

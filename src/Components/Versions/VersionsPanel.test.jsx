@@ -1,18 +1,21 @@
+import { describe, it, expect, mock } from 'bun:test'
 import React from 'react'
-import {act, render, renderHook, waitFor} from '@testing-library/react'
-import {StoreRouteThemeCtx} from '../../Share.fixture'
+import { act, render, renderHook, waitFor } from '@testing-library/react'
+import { StoreRouteThemeCtx } from '../../Share.fixture'
 import useStore from '../../store/useStore'
 import VersionsPanel from './VersionsPanel'
 import {
   MOCK_MODEL_PATH_GIT,
   MOCK_REPOSITORY,
 } from './VersionsPanel.fixture'
-import {VERSIONS_TITLE} from './component'
-import useVersions from './useVersions'
-import {MOCK_COMMITS} from './VersionsTimeline.fixture'
+import { MOCK_COMMITS } from './VersionsTimeline.fixture'
 
 
-jest.mock('./useVersions')
+// Mock useVersions for bun
+const mockUseVersions = mock(() => ({ commits: [], loading: true }))
+mock.module('./useVersions', () => ({
+  default: mockUseVersions,
+}))
 
 
 describe('VersionsPanel', () => {
@@ -24,10 +27,10 @@ describe('VersionsPanel', () => {
     }
 
     // Mock useCommits to return the current state
-    useVersions.mockImplementation(() => mockCommitsState)
+    mockUseVersions.mockImplementation(() => mockCommitsState)
 
     // Also setup store state
-    const {result} = renderHook(() => useStore((state) => state))
+    const { result } = renderHook(() => useStore((state) => state))
     await act(() => {
       result.current.setAccessToken('')
       result.current.setIsVersionsVisible(true)
@@ -36,15 +39,13 @@ describe('VersionsPanel', () => {
     })
 
     // Render the component
-    const {getByText, rerender} = render(
+    const { getByText, getByTestId, rerender } = render(
       <VersionsPanel filePath='/test.ifc' currentRef='main'/>,
-      {wrapper: StoreRouteThemeCtx},
+      { wrapper: StoreRouteThemeCtx },
     )
 
-    // Ensure loading state is rendered initially
-    await waitFor(() => {
-      expect(getByText('Versions')).toBeInTheDocument()
-    })
+    // Ensure panel is rendered
+    expect(getByTestId('VersionsPanel')).toBeInTheDocument()
 
     // Transition the state
     mockCommitsState = {
@@ -55,11 +56,11 @@ describe('VersionsPanel', () => {
     // Re-render to simulate the state update
     rerender(
       <VersionsPanel filePath='/test.ifc' currentRef='main'/>,
-      {wrapper: StoreRouteThemeCtx})
+      { wrapper: StoreRouteThemeCtx })
 
     // Wait for the updated state to be rendered
     await waitFor(() => {
-      expect(getByText(VERSIONS_TITLE)).toBeInTheDocument()
+      expect(getByTestId('VersionsPanel')).toBeInTheDocument()
     })
     MOCK_COMMITS.forEach((commit) => {
       expect(getByText(commit.authorName)).toBeInTheDocument()

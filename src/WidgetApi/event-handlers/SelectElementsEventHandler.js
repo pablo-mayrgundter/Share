@@ -47,7 +47,7 @@ class SelectElementsEventHandler extends ApiEventHandler {
     }
     const toBeSelected = expressIds.map((id) => parseInt(id))
         .filter((id) => useStore.getState().viewer.isolator.canBePickedInScene(id))
-    useStore.setState({selectedElements: toBeSelected})
+    useStore.setState({ selectedElements: toBeSelected })
 
     return this.apiConnection.successfulResponse({})
   }

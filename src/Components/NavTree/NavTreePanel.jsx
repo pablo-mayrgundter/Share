@@ -1,24 +1,24 @@
 import PropTypes from 'prop-types'
-import React, {ReactElement, useEffect, useState, useRef, useCallback} from 'react'
-import {VariableSizeList} from 'react-window'
-import {reifyName} from '@bldrs-ai/ifclib'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
+import { VariableSizeList } from 'react-window'
+import { reifyName } from '@bldrs-ai/ifclib'
 import AccountTreeIcon from '@mui/icons-material/AccountTree'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import Tooltip from '@mui/material/Tooltip'
-import {styled} from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import useStore from '../../store/useStore'
-import {assertDefined} from '../../utils/assert'
+import { assertDefined } from '../../utils/assert'
 import Panel from '../SideDrawer/Panel'
 import NavTreeNode from './NavTreeNode'
-import {removeHashParams} from './hashState'
+import { removeHashParams } from './hashState'
 import ListIcon from '@mui/icons-material/List'
 
 
 /**
  * Nav tree panel component
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function NavTreePanel({
   model,
@@ -49,7 +49,7 @@ export default function NavTreePanel({
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         // eslint-disable-next-line no-unused-vars
-        const {width, height} = entry.contentRect
+        const { width, height } = entry.contentRect
         setContainerWidth(width)
       }
     })
@@ -95,7 +95,7 @@ export default function NavTreePanel({
     const nodeId = selectedElements[0]
     if (nodeId) {
       const index = visibleNodes.findIndex(
-        ({node}) => node.expressID && node.expressID.toString() === nodeId,
+        ({ node }) => node.expressID && node.expressID.toString() === nodeId,
       )
       if (index >= 0 && listRef.current) {
         listRef.current.scrollToItem(index, 'center')
@@ -115,7 +115,7 @@ export default function NavTreePanel({
   // Function to set item size after measuring
   const setItemSize = (index, size) => {
     if (itemHeights.current[index] !== size) {
-      itemHeights.current = {...itemHeights.current, [index]: size}
+      itemHeights.current = { ...itemHeights.current, [index]: size }
       listRef.current.resetAfterIndex(index)
     }
   }
@@ -185,7 +185,7 @@ function getVisibleNodes(treeData, expandedNodeIds, isNavTree, model) {
    * traverse nodes
    */
   function traverse(node, depth) {
-    visibleNodes.push({node, depth})
+    visibleNodes.push({ node, depth })
 
     if (expandedNodeIds.includes(node.nodeId) && node.children) {
       for (const child of node.children) {
@@ -202,7 +202,7 @@ function getVisibleNodes(treeData, expandedNodeIds, isNavTree, model) {
   function mapSpatialNode(node) {
     return {
       nodeId: node.expressID.toString(),
-      label: reifyName({properties: model}, node),
+      label: reifyName({ properties: model }, node),
       expressID: node.expressID,
       hasChildren: node.children && node.children.length > 0,
       children: node.children ? node.children.map(mapSpatialNode) : [],
@@ -220,7 +220,7 @@ function getVisibleNodes(treeData, expandedNodeIds, isNavTree, model) {
       hasChildren: true,
       children: type.elements.map((elt) => ({
         nodeId: elt.expressID.toString(),
-        label: reifyName({properties: model}, elt),
+        label: reifyName({ properties: model }, elt),
         expressID: elt.expressID,
         hasChildren: false,
         children: [],
@@ -233,7 +233,7 @@ function getVisibleNodes(treeData, expandedNodeIds, isNavTree, model) {
 }
 
 // Row renderer for VariableSizeList
-const RenderRow = ({index, style, data}) => {
+const RenderRow = ({ index, style, data }) => {
   const {
     visibleNodes,
     expandedNodeIds,
@@ -246,7 +246,7 @@ const RenderRow = ({index, style, data}) => {
     isNavTree,
   } = data
 
-  const {node, depth} = visibleNodes[index]
+  const { node, depth } = visibleNodes[index]
   const nodeId = node.nodeId
   const isExpanded = expandedNodeIds.includes(nodeId)
   const hasChildren = node.hasChildren
@@ -308,7 +308,7 @@ const RenderRow = ({index, style, data}) => {
   }
 
   return (
-    <div ref={rowRef} style={{...style}}>
+    <div ref={rowRef} style={{ ...style }}>
       <NavTreeNode
         node={node}
         depth={depth}
@@ -329,9 +329,9 @@ const RenderRow = ({index, style, data}) => {
 /**
  * Actions component
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-function Actions({navigationMode, setNavigationMode}) {
+function Actions({ navigationMode, setNavigationMode }) {
   const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
     '& .MuiToggleButtonGroup-grouped': {
       'border': 0,

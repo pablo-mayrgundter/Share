@@ -1,16 +1,31 @@
+import { describe, it, expect, beforeEach, afterEach, mock } from 'bun:test'
 import React from 'react'
 import {
   render,
-  screen,
   fireEvent,
   waitFor,
 } from '@testing-library/react'
 import ManageProfile from './ManageProfile'
-import {ThemeCtx} from '../../theme/Theme.fixture'
-import {useAuth0} from '@auth0/auth0-react'
+import { ThemeCtx } from '../../theme/Theme.fixture'
 
 
-jest.mock('@auth0/auth0-react')
+// Mock Auth0 for bun - override global setup
+const mockUseAuth0 = mock()
+mock.module('@auth0/auth0-react', () => ({
+  useAuth0: mockUseAuth0,
+}))
+
+// Also override the Auth0Proxy to ensure we get our mock
+mock.module('../../Auth0/Auth0Proxy', () => ({
+  useAuth0: mockUseAuth0,
+}))
+
+// Mock environment to avoid useMock=true
+mock.module('process', () => ({
+  env: {
+    OAUTH2_CLIENT_ID: 'test-client-id', // Not 'cypresstestaudience'
+  },
+}))
 
 /* ─────────────────────────────────────────── helpers & mocks ── */
 const baseUser = {
@@ -21,8 +36,8 @@ const baseUser = {
   identities: [], // custom claim fallback
 }
 
-let getAccessTokenSilently
-let loginWithPopup
+let getAccessTokenSilently = mock()
+let loginWithPopup = mock()
 
 
 /* eslint-disable jsdoc/no-undefined-types */
@@ -35,9 +50,9 @@ let loginWithPopup
  * @param {Function} onClose - Callback for when the modal is closed.
  * @return {RenderResult} The result of the render.
  */
-function renderDlg(authOverrides = {}, open = true, onClose = jest.fn()) {
-  useAuth0.mockReturnValue({
-    user: {...baseUser, ...authOverrides.user},
+function renderDlg(authOverrides = {}, open = true, onClose = mock()) {
+  mockUseAuth0.mockReturnValue({
+    user: { ...baseUser, ...authOverrides.user },
     isAuthenticated: true,
     getAccessTokenSilently,
     loginWithPopup,
@@ -46,70 +61,73 @@ function renderDlg(authOverrides = {}, open = true, onClose = jest.fn()) {
 
   return render(
     <ManageProfile open={open} onClose={onClose}/>,
-    {wrapper: ThemeCtx},
+    { wrapper: ThemeCtx },
   )
 }
 
 /* eslint-enable jsdoc/no-undefined-types */
 
 beforeEach(() => {
-  loginWithPopup = jest.fn()
-  getAccessTokenSilently = jest
-    .fn()
-    .mockResolvedValue('primary.jwt')
-    // eslint-disable-next-line no-empty-function
-  jest.spyOn(window, 'open').mockImplementation(() => {})
+  loginWithPopup = mock()
+  getAccessTokenSilently = mock(() => Promise.resolve('primary.jwt'))
+  global.window.open = mock(() => {})
 })
 
 afterEach(() => {
-  jest.resetAllMocks()
+  loginWithPopup.mockClear()
+  getAccessTokenSilently.mockClear()
+  mockUseAuth0.mockClear()
 })
 
 /* ─────────────────────────────────────────── tests ──────────── */
 
 describe('ManageProfile modal', () => {
   it('shows spinner while loading', () => {
-    useAuth0.mockReturnValue({
-      user: baseUser,
-      isAuthenticated: false, // keeps loading=true
+    // Clear any previous mock calls first
+    mockUseAuth0.mockClear()
+    mockUseAuth0.mockReturnValue({
+      user: null,
+      isAuthenticated: false,
+      isLoading: false,
+      getAccessTokenSilently: mock(),
+      loginWithPopup: mock(),
     })
-    // eslint-disable-next-line no-empty-function
-    render(<ManageProfile open={true} onClose={() => {}}/>, {wrapper: ThemeCtx})
-    expect(screen.getByRole('progressbar')).toBeInTheDocument()
+    const { getByRole } = render(<ManageProfile open={true} onClose={() => {}}/>, { wrapper: ThemeCtx })
+    expect(getByRole('progressbar')).toBeInTheDocument()
   })
 
-  it('renders “Connected” chip for linked provider and “Authorize” button for missing one', async () => {
-    renderDlg({
+  it('renders "Connected" chip for linked provider and "Authorize" button for missing one', async () => {
+    const { queryByRole, getByText, getByRole } = renderDlg({
       user: {
-        identities: [{provider: 'google-oauth2', user_id: 'g-123'}],
+        identities: [{ provider: 'google-oauth2', user_id: 'g-123' }],
       },
     })
 
     await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).toBeNull(),
+      expect(queryByRole('progressbar')).toBeNull(),
     )
 
     // Google linked
-    expect(screen.getByText('Google')).toBeInTheDocument()
+    expect(getByText('Google')).toBeInTheDocument()
 
     // GitHub missing
-    const authBtn = screen.getByRole('button', {name: 'Authorize'})
+    const authBtn = getByRole('button', { name: 'Authorize' })
     expect(authBtn).toBeInTheDocument()
   })
 
-  it('opens popup with linkToken when “Authorize” clicked', async () => {
-    renderDlg({
+  it('opens popup with linkToken when "Authorize" clicked', async () => {
+    const { queryByRole, getByRole } = renderDlg({
       user: {
-        identities: [{provider: 'google-oauth2', user_id: 'g-123'}],
+        identities: [{ provider: 'google-oauth2', user_id: 'g-123' }],
       },
     })
 
     await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).toBeNull(),
+      expect(queryByRole('progressbar')).toBeNull(),
     )
 
-    // click GitHub Authorize
-    fireEvent.click(screen.getByRole('button', {name: 'Authorize'}))
+    // click GitHub Authorize button specifically
+    fireEvent.click(getByRole('button', { name: 'Authorize' }))
 
     // first getAccessTokenSilently (to produce linkToken)
     await waitFor(() => {
@@ -122,13 +140,13 @@ describe('ManageProfile modal', () => {
     )
   })
 
-  it('refreshes tokens when “linkStatus=linked” storage event fires', async () => {
+  it('refreshes tokens when "linkStatus=linked" storage event fires', async () => {
     renderDlg()
 
     // fake event
     fireEvent(
       window,
-      new StorageEvent('storage', {key: 'linkStatus', newValue: 'linked'}),
+      new StorageEvent('storage', { key: 'linkStatus', newValue: 'linked' }),
     )
 
     await waitFor(() => {
@@ -137,18 +155,18 @@ describe('ManageProfile modal', () => {
   })
 
   it('displays avatar, name and email', async () => {
-    renderDlg()
+    const { findByAltText, getByText } = renderDlg()
 
-    expect(await screen.findByAltText('Unit Tester')).toBeInTheDocument()
-    expect(screen.getByText('Unit Tester')).toBeInTheDocument()
-    expect(screen.getByText('tester@example.com')).toBeInTheDocument()
+    expect(await findByAltText('Unit Tester')).toBeInTheDocument()
+    expect(getByText('Unit Tester')).toBeInTheDocument()
+    expect(getByText('tester@example.com')).toBeInTheDocument()
   })
 
   it('invokes onClose when Close button clicked', () => {
-    const onClose = jest.fn()
-    renderDlg({}, true, onClose)
+    const onClose = mock()
+    const { getByRole } = renderDlg({}, true, onClose)
 
-    fireEvent.click(screen.getByRole('button', {name: 'Close'}))
+    fireEvent.click(getByRole('button', { name: 'Close' }))
     expect(onClose).toHaveBeenCalled()
   })
 })

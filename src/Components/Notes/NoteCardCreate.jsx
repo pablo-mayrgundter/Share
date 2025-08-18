@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import {useAuth0} from '@auth0/auth0-react'
+import React, { useEffect, useState } from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -8,13 +8,13 @@ import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import InputBase from '@mui/material/InputBase'
 import Stack from '@mui/material/Stack'
-import {useTheme} from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 import useStore from '../../store/useStore'
-import {createIssue, getIssueComments} from '../../net/github/Issues'
-import {createComment} from '../../net/github/Comments'
-import {assertStringNotEmpty} from '../../utils/assert'
-import {TooltipIconButton} from '../Buttons'
-import {PlacemarkHandlers as placemarkHandlers} from '../Markers/MarkerControl'
+import { createIssue, getIssueComments } from '../../net/github/Issues'
+import { createComment } from '../../net/github/Comments'
+import { assertStringNotEmpty } from '../../utils/assert'
+import { TooltipIconButton } from '../Buttons'
+import { PlacemarkHandlers as placemarkHandlers } from '../Markers/MarkerControl'
 import CheckIcon from '@mui/icons-material/Check'
 import AddLocationIcon from '@mui/icons-material/AddLocationOutlined'
 
@@ -32,7 +32,7 @@ export default function NoteCardCreate({
   isNote = true,
   noteNumber = '',
 }) {
-  const {user, isAuthenticated} = useAuth0()
+  const { user, isAuthenticated } = useAuth0()
   const accessToken = useStore((state) => state.accessToken)
   const repository = useStore((state) => state.repository)
   const comments = useStore((state) => state.comments)
@@ -44,7 +44,7 @@ export default function NoteCardCreate({
   const [title, setTitle] = useState('')
   const body = useStore((state) => state.body)
   const setBody = useStore((state) => state.setBody)
-  const {togglePlaceMarkActive} = placemarkHandlers()
+  const { togglePlaceMarkActive } = placemarkHandlers()
   const isPlaceMarkActivated = useStore((state) => state.isPlaceMarkActivated)
   const theme = useTheme()
   const tempId = -1
@@ -129,7 +129,7 @@ export default function NoteCardCreate({
   const incrementCommentNumber = () => {
     const updatedNotes = notes.map((note) => {
       if (note.id === selectedNoteId) {
-        return {...note, numberOfComments: note.numberOfComments + 1}
+        return { ...note, numberOfComments: note.numberOfComments + 1 }
       }
       return note
     })
@@ -150,7 +150,7 @@ export default function NoteCardCreate({
               fullWidth
               multiline
               placeholder={'Note Title'}
-              inputProps={{maxLength: 256}}
+              inputProps={{ maxLength: 256 }}
             />}
           avatar={
           isAuthenticated ?
@@ -183,7 +183,7 @@ export default function NoteCardCreate({
           justifyContent='flex-end'
           alignContent='flex-end'
           direction='row'
-          sx={{width: '100%'}}
+          sx={{ width: '100%' }}
         >
           {isNote ? (
             <TooltipIconButton

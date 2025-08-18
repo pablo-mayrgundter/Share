@@ -1,7 +1,7 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
-import {useIsMobile} from '../Components/Hooks'
+import { useIsMobile } from '../Components/Hooks'
 import AppsSideDrawer from './AppsSideDrawer'
 import NotesAndProperties from './NotesAndProperties'
 import OperationsGroup from './OperationsGroup'
@@ -9,9 +9,9 @@ import OperationsGroup from './OperationsGroup'
 
 /**
  * @property {Function} deselectItems deselects currently selected element
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function OperationsGroupAndDrawer({deselectItems}) {
+export default function OperationsGroupAndDrawer({ deselectItems }) {
   const isMobile = useIsMobile()
   return (
     isMobile ? (
@@ -39,9 +39,9 @@ export default function OperationsGroupAndDrawer({deselectItems}) {
         </Box>
       </>
     ) : (
-      <Stack direction='row' sx={{pointerEvents: 'none'}}>
+      <Stack direction='row' sx={{ pointerEvents: 'none' }}>
         <OperationsGroup deselectItems={deselectItems}/>
-        <Stack direction='row' style={{pointerEvents: 'auto'}}>
+        <Stack direction='row' style={{ pointerEvents: 'auto' }}>
           <NotesAndProperties/>
           <AppsSideDrawer/>
         </Stack>

@@ -1,4 +1,4 @@
-import {excludedNodeModules} from './common.js'
+import { excludedNodeModules } from './common.js'
 
 
 global.TextEncoder = global.TextEncoder || require('util').TextEncoder

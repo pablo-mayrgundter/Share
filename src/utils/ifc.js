@@ -1,4 +1,4 @@
-import {toTitleCase} from './strings'
+import { toTitleCase } from './strings'
 
 /**
  * Gets pretty type name
@@ -56,14 +56,14 @@ export function groupElementsByTypes(element, elementTypes) {
   if (lookup.length === 0) {
     elementTypes.push({
       name: type,
-      elements: [{expressID: element.expressID,
+      elements: [{ expressID: element.expressID,
         Name: element.Name,
-        LongName: element.LongName}],
+        LongName: element.LongName }],
     })
   } else {
-    lookup[0].elements.push({expressID: element.expressID,
+    lookup[0].elements.push({ expressID: element.expressID,
       Name: element.Name,
-      LongName: element.LongName})
+      LongName: element.LongName })
   }
   if (element.children.length > 0) {
     element.children.forEach((e) => {

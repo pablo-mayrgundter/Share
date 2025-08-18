@@ -1,11 +1,11 @@
-import React, {ReactElement, useEffect} from 'react'
-import {useLocation} from 'react-router'
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router'
 import useStore from '../../store/useStore'
 import NoContent from '../NoContent'
 import Panel from '../SideDrawer/Panel'
 import Properties from './Properties'
-import {getHashParams, removeHashParams} from './hashState'
-import {TITLE} from './component'
+import { getHashParams, removeHashParams } from './hashState'
+import { TITLE } from './component'
 
 
 /**
@@ -13,7 +13,7 @@ import {TITLE} from './component'
  * contains the title with additional controls, and the item
  * properties styled container
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function PropertiesPanel() {
   const selectedElement = useStore((state) => state.selectedElement)

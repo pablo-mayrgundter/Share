@@ -8,6 +8,6 @@
 export default function createShareSlice(set, get) {
   return {
     appPrefix: null,
-    setAppPrefix: (prefix) => set(() => ({appPrefix: prefix})),
+    setAppPrefix: (prefix) => set(() => ({ appPrefix: prefix })),
   }
 }

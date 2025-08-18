@@ -1,5 +1,5 @@
-import {WidgetApi as MatrixWidgetApi} from 'matrix-widget-api/lib/WidgetApi'
-import {MatrixCapabilities} from 'matrix-widget-api/lib/interfaces/Capabilities'
+import { WidgetApi as MatrixWidgetApi } from 'matrix-widget-api/lib/WidgetApi'
+import { MatrixCapabilities } from 'matrix-widget-api/lib/interfaces/Capabilities'
 import debug from '../utils/debug'
 import AbstractApiConnection from './ApiConnection'
 

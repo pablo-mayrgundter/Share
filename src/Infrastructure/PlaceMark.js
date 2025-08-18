@@ -8,8 +8,8 @@ import {
   Raycaster,
   Matrix3,
 } from 'three'
-import {isDevMode} from '../utils/common'
-import {floatStrTrim} from '../utils/strings'
+import { isDevMode } from '../utils/common'
+import { floatStrTrim } from '../utils/strings'
 
 
 /**
@@ -25,7 +25,7 @@ export default class PlaceMark extends EventDispatcher {
    *     element, camera, and scene.
    * @param {object} options.postProcessor - Post-processing effects applied to the scene.
    */
-  constructor({context, postProcessor}) {
+  constructor({ context, postProcessor }) {
     super()
     const _domElement = context.getDomElement()
     const _camera = context.getCamera()
@@ -88,9 +88,9 @@ export default class PlaceMark extends EventDispatcher {
               new Matrix3().getNormalMatrix(intersect.object.matrixWorld))
             const offset = normal.clone().multiplyScalar(PLACE_MARK_DISTANCE)
             const point = intersectPoint.add(offset)
-            const promiseGroup = this.putDown({point, normal, active: false})
+            const promiseGroup = this.putDown({ point, normal, active: false })
 
-            res = {point, normal, promiseGroup}
+            res = { point, normal, promiseGroup }
           }
         }
       }
@@ -127,7 +127,7 @@ export default class PlaceMark extends EventDispatcher {
       return res
     }
 
-    this.putDown = ({point, normal, fillColor = 0xA9A9A9/* 0xff0000*/, active}) => {
+    this.putDown = ({ point, normal, fillColor = 0xA9A9A9/* 0xff0000*/, active }) => {
       return new Promise((resolve, reject) => {
         if (!normal) {
           reject(new Error('Normal vector is not defined.'))
@@ -190,7 +190,7 @@ export default class PlaceMark extends EventDispatcher {
         _raycaster.setFromCamera(_pointer, _camera)
         _raycaster.intersectObjects(_placeMarks, true, _intersections)
         if (_intersections.length) {
-          res = {marker: _intersections[0].object}
+          res = { marker: _intersections[0].object }
         }
       }
 
@@ -239,7 +239,7 @@ export default class PlaceMark extends EventDispatcher {
       canvas.height = height
       const ctx = canvas.getContext('2d')
       const img = new Image()
-      const svgBlob = new Blob([icon], {type: 'image/svg+xml'})
+      const svgBlob = new Blob([icon], { type: 'image/svg+xml' })
       const url = URL.createObjectURL(svgBlob)
       return new Promise((resolve) => {
         img.onload = () => {

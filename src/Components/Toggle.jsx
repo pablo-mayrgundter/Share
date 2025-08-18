@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import Switch from '@mui/material/Switch'
 
 
@@ -7,9 +7,9 @@ import Switch from '@mui/material/Switch'
  *
  * @property {Function} onChange callback
  * @property {boolean} checked react state
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function Toggle({onChange, checked, ...props}) {
+export default function Toggle({ onChange, checked, ...props }) {
   return (
     <Switch
       checked={checked}

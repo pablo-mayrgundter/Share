@@ -1,5 +1,5 @@
 import '@percy/cypress'
-import {LABEL_GITHUB} from '../../../../src/Components/Open/component'
+import { LABEL_GITHUB } from '../../../../src/Components/Open/component'
 import {
   auth0Login,
   homepageSetup,
@@ -52,11 +52,11 @@ describe('Open 100: Open model dialog', () => {
     it('Choose the path to the model on GitHub -> model is loaded into the scene', () => {
       cy.get('[data-testid="tab-github"]').click()
       cy.findByText(LABEL_GITHUB).click()
-      cy.findByLabelText('Organization', {timeout: 5000}).click()
+      cy.findByLabelText('Organization', { timeout: 5000 }).click()
       cy.contains('@cypresstester').click()
-      cy.findByLabelText('Repository', {timeout: 5000}).eq(0).click()
+      cy.findByLabelText('Repository', { timeout: 5000 }).eq(0).click()
       cy.contains('test-repo').click()
-      cy.findByLabelText('File', {timeout: 5000}).eq(0).click()
+      cy.findByLabelText('File', { timeout: 5000 }).eq(0).click()
       cy.contains('window.ifc').click()
       cy.get('[data-testid="button-openfromgithub"]').click()
       waitForModelReady(interceptTag)

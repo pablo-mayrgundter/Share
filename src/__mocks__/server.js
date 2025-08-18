@@ -1,5 +1,5 @@
-import {setupServer} from 'msw/node'
-import {initHandlers} from './api-handlers'
+import { setupServer } from 'msw/node'
+import { initHandlers } from './api-handlers'
 
 
 /**

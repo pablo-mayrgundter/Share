@@ -1,5 +1,5 @@
-import React, {ReactElement, useEffect} from 'react'
-import {useLocation} from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import useStore from '../../store/useStore'
 import debug from '../../utils/debug'
 import {
@@ -7,8 +7,8 @@ import {
   addHashParams,
   getHashParams,
 } from '../../utils/location'
-import {roundCoord} from '../../utils/math'
-import {floatStrTrim} from '../../utils/strings'
+import { roundCoord } from '../../utils/math'
+import { floatStrTrim } from '../../utils/strings'
 import {
   HASH_PREFIX_CAMERA,
   removeCameraUrlParams,
@@ -21,7 +21,7 @@ import {
  * URL hash and sets the camera position, as well as adds a hash
  * listener to do the same whenever the hash changes.
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function CameraControl() {
   const setCameraControls = useStore((state) => state.setCameraControls)
@@ -37,7 +37,7 @@ export default function CameraControl() {
     onLoad(location, cameraControls, viewer)
   }, [location, cameraControls, setCameraControls, viewer])
 
-  return <div style={{display: 'none'}}>Camera</div>
+  return <div style={{ display: 'none' }}>Camera</div>
 }
 
 

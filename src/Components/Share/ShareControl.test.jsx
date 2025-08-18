@@ -1,6 +1,6 @@
 import React from 'react'
-import {fireEvent, render, renderHook, waitFor} from '@testing-library/react'
-import {HelmetStoreRouteThemeCtx} from '../../Share.fixture'
+import { act, fireEvent, render, renderHook, waitFor } from '@testing-library/react'
+import { HelmetStoreRouteThemeCtx } from '../../Share.fixture'
 import useStore from '../../store/useStore'
 import ShareControl from './ShareControl'
 
@@ -9,10 +9,9 @@ describe('ShareControl', () => {
   let controlButton
   let findByTestId
 
-
   context('no cutplanes active', () => {
     beforeEach(async () => {
-      const {findByTestId: fbti} = render(<ShareControl/>, {wrapper: HelmetStoreRouteThemeCtx})
+      const { findByTestId: fbti } = render(<ShareControl/>, { wrapper: HelmetStoreRouteThemeCtx })
       findByTestId = fbti
       controlButton = await findByTestId('control-button-share')
     })
@@ -34,9 +33,11 @@ describe('ShareControl', () => {
 
   context('Cutplanes active', () => {
     beforeEach(async () => {
-      const {result} = renderHook(() => useStore((state) => state.setIsCutPlaneActive))
-      result.current(true)
-      const {findByTestId: fbti} = render(<ShareControl/>, {wrapper: HelmetStoreRouteThemeCtx})
+      const { result } = renderHook(() => useStore((state) => state))
+      await act(() => {
+        result.current.setIsCutPlaneActive(true)
+      })
+      const { findByTestId: fbti } = render(<ShareControl/>, { wrapper: HelmetStoreRouteThemeCtx })
       findByTestId = fbti
       controlButton = await findByTestId('control-button-share')
       fireEvent.click(controlButton)

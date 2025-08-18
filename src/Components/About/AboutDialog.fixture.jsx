@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
-import {AboutDialog} from './AboutControl'
-import {HelmetStoreRouteThemeCtx} from '../../Share.fixture'
+import React, { useState } from 'react'
+import { AboutDialog } from './AboutControl'
+import { HelmetStoreRouteThemeCtx } from '../../Share.fixture'
 
 
 /** @return {React.Component} */

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import useStore from './useStore'
 
 
@@ -8,7 +8,7 @@ import useStore from './useStore'
  * @property {Array.<React.Component>} children Component under test
  * @return {React.Component}
  */
-export function StoreCtx({children}) {
+export function StoreCtx({ children }) {
   const setRepository = useStore((state) => state.setRepository)
   useEffect(() => {
     setRepository('pablo-mayrgundter', 'Share')

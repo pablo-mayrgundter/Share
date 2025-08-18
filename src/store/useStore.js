@@ -34,6 +34,39 @@ const useStore = create((set, get) => ({
   ...createUIEnabledSlice(set, get),
   ...createUISlice(set, get),
   ...createVersionsSlice(set, get),
+  
+  // Test helper to reset all state to initial values
+  resetStore: () => {
+    // Create fresh slices to get initial values, then extract only data properties
+    const freshState = {
+      ...createAppsSlice(() => {}, () => {}),
+      ...createBrowserSlice(() => {}, () => {}),
+      ...createCutPlanesSlice(() => {}, () => {}),
+      ...createIFCSlice(() => {}, () => {}),
+      ...createIsolatorSlice(() => {}, () => {}),
+      ...createNavTreeSlice(() => {}, () => {}),
+      ...createNotesSlice(() => {}, () => {}),
+      ...createOpenSlice(() => {}, () => {}),
+      ...createPropertiesSlice(() => {}, () => {}),
+      ...createRepositorySlice(() => {}, () => {}),
+      ...createShareSlice(() => {}, () => {}),
+      ...createSearchSlice(() => {}, () => {}),
+      ...createSideDrawerSlice(() => {}, () => {}),
+      ...createUIEnabledSlice(() => {}, () => {}),
+      ...createUISlice(() => {}, () => {}),
+      ...createVersionsSlice(() => {}, () => {}),
+    }
+    
+    // Only reset data properties, not functions
+    const resetData = {}
+    Object.keys(freshState).forEach(key => {
+      if (typeof freshState[key] !== 'function') {
+        resetData[key] = freshState[key]
+      }
+    })
+    
+    set(resetData, false) // Merge to keep existing functions
+  },
 }))
 
 export default useStore

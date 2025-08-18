@@ -1,11 +1,11 @@
-import React, {ReactElement} from 'react'
+import React, {} from 'react'
 import useStore from '../../store/useStore'
 import Panel from '../SideDrawer/Panel'
 import AppsListing from './AppsListing'
-import {removeHashParams} from './hashState'
+import { removeHashParams } from './hashState'
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 export default function AppsPanel() {
   const setIsAppsVisible = useStore((state) => state.setIsAppsVisible)
 

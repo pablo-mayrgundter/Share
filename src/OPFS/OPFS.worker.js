@@ -15,55 +15,55 @@ importScripts('./Cache.js')
 self.addEventListener('message', async (event) => {
   try {
     if (event.data.command === 'initializeWorker') {
-      const {GITHUB_BASE_URL_AUTHED, GITHUB_BASE_URL_UNAUTHED} =
+      const { GITHUB_BASE_URL_AUTHED, GITHUB_BASE_URL_UNAUTHED } =
       assertValues(event.data, ['GITHUB_BASE_URL_AUTHED', 'GITHUB_BASE_URL_UNAUTHED'])
 
       GITHUB_BASE_URL_AUTHENTICATED = GITHUB_BASE_URL_AUTHED
       GITHUB_BASE_URL_UNAUTHENTICATED = GITHUB_BASE_URL_UNAUTHED
     } else if (event.data.command === 'writeObjectURLToFile') {
-      const {objectUrl, fileName} =
+      const { objectUrl, fileName } =
       assertValues(event.data, ['objectUrl', 'fileName'])
       await writeFileToOPFS(objectUrl, fileName)
     } else if (event.data.command === 'readObjectFromStorage') {
-      const {fileName} = assertValues(event.data, ['fileName'])
+      const { fileName } = assertValues(event.data, ['fileName'])
       await readFileFromOPFS(fileName)
     } else if (event.data.command === 'writeObjectModel') {
-      const {objectUrl, objectKey, originalFileName} =
+      const { objectUrl, objectKey, originalFileName } =
           assertValues(event.data,
               ['objectUrl', 'objectKey', 'originalFileName'])
 
       writeModelToOPFS(objectUrl, objectKey, originalFileName)
     } else if (event.data.command === 'writeObjectModelFileHandle') {
-      const {file, objectKey, originalFilePath, owner, repo, branch} =
+      const { file, objectKey, originalFilePath, owner, repo, branch } =
           assertValues(event.data,
               ['file', 'objectKey', 'originalFilePath', 'owner', 'repo', 'branch'])
       writeModelToOPFSFromFile(file, objectKey, originalFilePath, owner, repo, branch)
     } else if (event.data.command === 'readModelFromStorage') {
-      const {modelKey} = assertValues(event.data, ['modelKey'])
+      const { modelKey } = assertValues(event.data, ['modelKey'])
       await readModelFromOPFS(modelKey)
     } else if (event.data.command === 'downloadToOPFS') {
-      const {objectUrl, commitHash, owner, repo, branch, onProgress, originalFilePath} =
+      const { objectUrl, commitHash, owner, repo, branch, onProgress, originalFilePath } =
           assertValues(event.data,
               ['objectUrl', 'commitHash', 'owner', 'repo', 'branch', 'onProgress', 'originalFilePath'])
       await downloadModelToOPFS(objectUrl, commitHash, originalFilePath, owner, repo, branch, onProgress)
     } else if (event.data.command === 'downloadModel') {
-      const {objectUrl, shaHash, originalFilePath, owner, repo, branch, accessToken, onProgress} =
+      const { objectUrl, shaHash, originalFilePath, owner, repo, branch, accessToken, onProgress } =
       assertValues(event.data,
         ['objectUrl', 'shaHash', 'originalFilePath', 'owner', 'repo', 'branch', 'accessToken', 'onProgress'])
       await downloadModel(objectUrl, shaHash, originalFilePath, owner, repo, branch, accessToken, onProgress)
     } else if (event.data.command === 'writeBase64Model') {
-      const {content, shaHash, originalFilePath, owner, repo, branch, accessToken} =
+      const { content, shaHash, originalFilePath, owner, repo, branch, accessToken } =
       assertValues(event.data, ['content', 'shaHash', 'originalFilePath', 'owner', 'repo', 'branch', 'accessToken'])
 
     await writeBase64Model(content, shaHash, originalFilePath, owner, repo, branch, accessToken)
     } else if (event.data.command === 'doesFileExist') {
-      const {commitHash, originalFilePath, owner, repo, branch} =
+      const { commitHash, originalFilePath, owner, repo, branch } =
           assertValues(event.data,
               ['commitHash', 'originalFilePath', 'owner', 'repo', 'branch'])
 
       await doesFileExistInOPFS(commitHash, originalFilePath, owner, repo, branch)
     } else if (event.data.command === 'deleteModel') {
-      const {commitHash, originalFilePath, owner, repo, branch} =
+      const { commitHash, originalFilePath, owner, repo, branch } =
           assertValues(event.data,
               ['commitHash', 'originalFilePath', 'owner', 'repo', 'branch'])
 
@@ -74,7 +74,7 @@ self.addEventListener('message', async (event) => {
       await snapshotCache()
     }
   } catch (error) {
-    self.postMessage({error: error.message})
+    self.postMessage({ error: error.message })
   }
 })
 
@@ -88,7 +88,7 @@ async function snapshotCache() {
   const directoryStructure = await traverseDirectory(opfsRoot)
 
   // Send the directory structure as a message to the main thread
-  self.postMessage({completed: true, event: 'snapshot', directoryStructure: directoryStructure})
+  self.postMessage({ completed: true, event: 'snapshot', directoryStructure: directoryStructure })
 }
 
 
@@ -121,7 +121,7 @@ async function clearCache() {
   await deleteAllEntries(opfsRoot)
 
   // Send the directory structure as a message to the main thread
-  self.postMessage({completed: true, event: 'clear'})
+  self.postMessage({ completed: true, event: 'clear' })
 }
 
 
@@ -135,7 +135,7 @@ async function deleteAllEntries(dirHandle) {
   for await (const [name, handle] of dirHandle.entries()) {
     if (handle.kind === 'directory') {
       await deleteAllEntries(handle)
-      await dirHandle.removeEntry(name, {recursive: true})
+      await dirHandle.removeEntry(name, { recursive: true })
     } else if (handle.kind === 'file') {
       await dirHandle.removeEntry(name)
     }
@@ -156,9 +156,9 @@ async function deleteAllEntries(dirHandle) {
  */
 async function fetchLatestCommitHash(baseURL, owner, repo, filePath, accessToken, branch) {
   const url = `${baseURL}/repos/${owner}/${repo}/commits?sha=${branch}&path=${filePath}`
-  const headers = accessToken ? {Authorization: `Bearer ${accessToken}`} : {}
+  const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
 
-  const response = await fetch(url, {headers})
+  const response = await fetch(url, { headers })
 
   if (!response.ok) {
     throw new Error(`Failed to fetch commits: ${response.statusText}`)
@@ -211,7 +211,7 @@ async function fetchAndHeadRequest(jsonUrl, etag_ = null) {
   try {
     const STATUS_NOT_MODIFIED = 304
     // Step 1: Fetch the JSON response with ETag header if provided
-    const fetchOptions = etag_ ? {headers: {ETag: etag_}} : {}
+    const fetchOptions = etag_ ? { headers: { ETag: etag_ } } : {}
     const proxyResponse = await fetch(jsonUrl, fetchOptions)
 
     if (proxyResponse.status === STATUS_NOT_MODIFIED) {
@@ -228,7 +228,7 @@ async function fetchAndHeadRequest(jsonUrl, etag_ = null) {
 
     const json = await clonedResponse.json()
 
-    const {etag, finalURL} = json
+    const { etag, finalURL } = json
 
     // Step 3: fetch model
     const modelResponse = await fetch(finalURL)
@@ -237,7 +237,7 @@ async function fetchAndHeadRequest(jsonUrl, etag_ = null) {
       throw new Error('Failed to make model request')
     }
 
-    return {proxyResponse, modelResponse, etag}
+    return { proxyResponse, modelResponse, etag }
   } catch (error) {
     console.error('Error:', error)
   }
@@ -260,7 +260,7 @@ async function computeGitBlobSha1FromHandle(modelBlobFileHandle) {
 
       // Read the entire file into an ArrayBuffer
       const fileArrayBuffer = new ArrayBuffer(fileSize)
-      await blobAccessHandle.read(fileArrayBuffer, {at: 0})
+      await blobAccessHandle.read(fileArrayBuffer, { at: 0 })
 
       // Create the Git blob header
       const header = `blob ${fileSize}\u0000`
@@ -348,7 +348,7 @@ async function writeTemporaryFileToOPFS(response, originalFilePath, _etag, onPro
     if (modelBlobFileHandle !== undefined) {
       const blobFile = await modelBlobFileHandle.getFile()
 
-      self.postMessage({completed: true, event: 'download', file: blobFile})
+      self.postMessage({ completed: true, event: 'download', file: blobFile })
       return [modelDirectoryHandle, modelBlobFileHandle]
     }
   } catch (error) {
@@ -362,7 +362,7 @@ async function writeTemporaryFileToOPFS(response, originalFilePath, _etag, onPro
     blobAccessHandle = await modelBlobFileHandle.createSyncAccessHandle()
   } catch (error) {
     const workerMessage = `Error getting file handle for ${originalFilePath}: ${error}`
-    self.postMessage({error: workerMessage})
+    self.postMessage({ error: workerMessage })
     return
   }
 
@@ -379,7 +379,7 @@ async function writeTemporaryFileToOPFS(response, originalFilePath, _etag, onPro
 
   try {
     while (!isDone) {
-      const {done, value} = await reader.read()
+      const { done, value } = await reader.read()
 
       if (done) {
         isDone = true
@@ -390,13 +390,13 @@ async function writeTemporaryFileToOPFS(response, originalFilePath, _etag, onPro
         if (value !== undefined) {
           // Write buffer
           // eslint-disable-next-line no-unused-vars
-          const blobWriteSize = await blobAccessHandle.write(value, {at: receivedLength})
+          const blobWriteSize = await blobAccessHandle.write(value, { at: receivedLength })
         }
       } catch (error) {
         const workerMessage = `Error writing to ${response.headers.etag}: ${error}.`
         // Close the access handle when done
         await blobAccessHandle.close()
-        self.postMessage({error: workerMessage})
+        self.postMessage({ error: workerMessage })
         return
       }
 
@@ -419,18 +419,18 @@ async function writeTemporaryFileToOPFS(response, originalFilePath, _etag, onPro
       try {
         const blobFile = await modelBlobFileHandle.getFile()
 
-        self.postMessage({completed: true, event: 'download', file: blobFile})
+        self.postMessage({ completed: true, event: 'download', file: blobFile })
 
         return [modelDirectoryHandle, modelBlobFileHandle]
       } catch (error) {
         const workerMessage = `Error Getting file handle: ${error}.`
-        self.postMessage({error: workerMessage})
+        self.postMessage({ error: workerMessage })
         return
       }
     }
   } catch (error) {
     reader.cancel()
-    self.postMessage({error: error})
+    self.postMessage({ error: error })
   }
 }
 
@@ -456,7 +456,7 @@ async function writeTemporaryBase64BlobFileToOPFS(blob, originalFilePath, _etag)
     if (modelBlobFileHandle !== null) {
       const blobFile = await modelBlobFileHandle.getFile()
 
-      self.postMessage({completed: true, event: 'download', file: blobFile})
+      self.postMessage({ completed: true, event: 'download', file: blobFile })
       return [modelDirectoryHandle, modelBlobFileHandle]
     }
   } catch (error) {
@@ -470,11 +470,11 @@ async function writeTemporaryBase64BlobFileToOPFS(blob, originalFilePath, _etag)
     blobAccessHandle = await modelBlobFileHandle.createSyncAccessHandle()
     // Write buffer
     const arrayBuffer = await blob.arrayBuffer()
-    await blobAccessHandle.write(arrayBuffer, {at: 0})
+    await blobAccessHandle.write(arrayBuffer, { at: 0 })
 
     const blobFile = await modelBlobFileHandle.getFile()
 
-    self.postMessage({completed: true, event: 'download', file: blobFile})
+    self.postMessage({ completed: true, event: 'download', file: blobFile })
 
     return [modelDirectoryHandle, modelBlobFileHandle]
   } catch (error) {
@@ -483,7 +483,7 @@ async function writeTemporaryBase64BlobFileToOPFS(blob, originalFilePath, _etag)
     if (blobAccessHandle) {
       await blobAccessHandle.close()
     }
-    self.postMessage({error: workerMessage})
+    self.postMessage({ error: workerMessage })
   }
 }
 
@@ -533,7 +533,7 @@ function base64ToBlob(base64, mimeType = 'application/octet-stream') {
       bytes[i] = binaryString.charCodeAt(i)
   }
 
-  return new Blob([bytes], {type: mimeType})
+  return new Blob([bytes], { type: mimeType })
 }
 
 
@@ -563,7 +563,7 @@ async function writeBase64Model(content, shaHash, originalFilePath, owner, repo,
   if (cacheExist) {
     const clonedCached = cached.clone()
     // eslint-disable-next-line no-unused-vars
-    const {_, etag, finalURL} = await clonedCached.json()
+    const { _, etag, finalURL } = await clonedCached.json()
     _etag = etag
 
       // Remove any enclosing quotes from the ETag value
@@ -591,7 +591,7 @@ async function writeBase64Model(content, shaHash, originalFilePath, owner, repo,
         // Display model
         const blobFile = await modelBlobFileHandle.getFile()
 
-        self.postMessage({completed: true, event: (commitHash === null ) ? 'download' : 'exists', file: blobFile})
+        self.postMessage({ completed: true, event: (commitHash === null ) ? 'download' : 'exists', file: blobFile })
 
         if (commitHash !== null) {
           return
@@ -611,7 +611,7 @@ async function writeBase64Model(content, shaHash, originalFilePath, owner, repo,
             await CacheModule.updateCacheRaw(cacheKey, mockResponse, _commitHash)
             const updatedBlobFile = await newResult.getFile()
 
-            self.postMessage({completed: true, event: 'renamed', file: updatedBlobFile})
+            self.postMessage({ completed: true, event: 'renamed', file: updatedBlobFile })
           }
         }
       } else {
@@ -640,14 +640,14 @@ async function writeBase64Model(content, shaHash, originalFilePath, owner, repo,
               await CacheModule.updateCacheRaw(cacheKey, clonedResponse, _commitHash)
               const updatedBlobFile = await newResult.getFile()
 
-              self.postMessage({completed: true, event: 'renamed', file: updatedBlobFile})
+              self.postMessage({ completed: true, event: 'renamed', file: updatedBlobFile })
             }
           }
         }
       }
     } catch (error) {
       const workerMessage = `Error writing base64 model for ${cacheKey}: ${error}`
-      self.postMessage({error: workerMessage})
+      self.postMessage({ error: workerMessage })
     }
   }
 }
@@ -683,7 +683,7 @@ async function downloadModel(objectUrl, shaHash, originalFilePath, owner, repo, 
   if (cacheExist) {
     const clonedCached = cached.clone()
     // eslint-disable-next-line no-unused-vars
-    const {_, etag, finalURL} = await clonedCached.json()
+    const { _, etag, finalURL } = await clonedCached.json()
     _etag = etag
 
       // Remove any enclosing quotes from the ETag value
@@ -718,7 +718,7 @@ async function downloadModel(objectUrl, shaHash, originalFilePath, owner, repo, 
         // Display model
         const blobFile = await modelBlobFileHandle.getFile()
 
-        self.postMessage({completed: true, event: (commitHash === null ) ? 'download' : 'exists', file: blobFile})
+        self.postMessage({ completed: true, event: (commitHash === null ) ? 'download' : 'exists', file: blobFile })
 
         if (commitHash !== null) {
           return
@@ -738,7 +738,7 @@ async function downloadModel(objectUrl, shaHash, originalFilePath, owner, repo, 
             await CacheModule.updateCacheRaw(cacheKey, mockResponse, _commitHash)
             const updatedBlobFile = await newResult.getFile()
 
-            self.postMessage({completed: true, event: 'renamed', file: updatedBlobFile})
+            self.postMessage({ completed: true, event: 'renamed', file: updatedBlobFile })
           }
         }
       } else {
@@ -767,7 +767,7 @@ async function downloadModel(objectUrl, shaHash, originalFilePath, owner, repo, 
               await CacheModule.updateCacheRaw(cacheKey, clonedResponse, _commitHash)
               const updatedBlobFile = await newResult.getFile()
 
-              self.postMessage({completed: true, event: 'renamed', file: updatedBlobFile})
+              self.postMessage({ completed: true, event: 'renamed', file: updatedBlobFile })
               return
             }
           }
@@ -793,7 +793,7 @@ async function downloadModel(objectUrl, shaHash, originalFilePath, owner, repo, 
         // Display model
         const blobFile = await modelBlobFileHandle.getFile()
 
-        self.postMessage({completed: true, event: (commitHash === null ) ? 'download' : 'exists', file: blobFile})
+        self.postMessage({ completed: true, event: (commitHash === null ) ? 'download' : 'exists', file: blobFile })
 
         if (commitHash !== null) {
           return
@@ -812,7 +812,7 @@ async function downloadModel(objectUrl, shaHash, originalFilePath, owner, repo, 
             await CacheModule.updateCacheRaw(cacheKey, proxyResponse, _commitHash)
             const updatedBlobFile = await newResult.getFile()
 
-            self.postMessage({completed: true, event: 'renamed', file: updatedBlobFile})
+            self.postMessage({ completed: true, event: 'renamed', file: updatedBlobFile })
           }
         }
       } else {
@@ -827,7 +827,7 @@ async function downloadModel(objectUrl, shaHash, originalFilePath, owner, repo, 
               // Display model and get commitHash
               const blobFile = await modelBlobFileHandle.getFile()
 
-              self.postMessage({completed: true, event: 'download', file: blobFile})
+              self.postMessage({ completed: true, event: 'download', file: blobFile })
 
               // TODO: get commit hash here
               const _commitHash = await fetchLatestCommitHash(
@@ -849,7 +849,7 @@ async function downloadModel(objectUrl, shaHash, originalFilePath, owner, repo, 
                   await CacheModule.updateCacheRaw(cacheKey, proxyResponse, _commitHash)
                   const updatedBlobFile = await newResult.getFile()
 
-                  self.postMessage({completed: true, event: 'renamed', file: updatedBlobFile})
+                  self.postMessage({ completed: true, event: 'renamed', file: updatedBlobFile })
                 }
               }
             }
@@ -874,7 +874,7 @@ async function downloadModel(objectUrl, shaHash, originalFilePath, owner, repo, 
   }
 
   // not cached, download model
-  const {proxyResponse, modelResponse, etag} = result
+  const { proxyResponse, modelResponse, etag } = result
 
    // Remove any enclosing quotes from the ETag value
    cleanEtag = etag.replace(/"/g, '');
@@ -923,7 +923,7 @@ async function downloadModel(objectUrl, shaHash, originalFilePath, owner, repo, 
       await CacheModule.updateCacheRaw(cacheKey, proxyResponse, _commitHash)
       const updatedBlobFile = await newResult.getFile()
 
-      self.postMessage({completed: true, event: 'renamed', file: updatedBlobFile})
+      self.postMessage({ completed: true, event: 'renamed', file: updatedBlobFile })
     }
   }
 }
@@ -946,51 +946,51 @@ async function downloadModelToOPFS(objectUrl, commitHash, originalFilePath, owne
   let branchFolderHandle = null
   // See if owner folder handle exists
   try {
-    ownerFolderHandle = await opfsRoot.getDirectoryHandle(owner, {create: false})
+    ownerFolderHandle = await opfsRoot.getDirectoryHandle(owner, { create: false })
   } catch (error) {
     // Expected: folder does not exist
   }
 
   if (ownerFolderHandle === null) {
     try {
-      ownerFolderHandle = await opfsRoot.getDirectoryHandle(owner, {create: true})
+      ownerFolderHandle = await opfsRoot.getDirectoryHandle(owner, { create: true })
     } catch (error) {
       const workerMessage = `Error getting folder handle for ${owner}: ${error}`
-      self.postMessage({error: workerMessage})
+      self.postMessage({ error: workerMessage })
       return
     }
   }
 
   // See if repo folder handle exists
   try {
-    repoFolderHandle = await ownerFolderHandle.getDirectoryHandle(repo, {create: false})
+    repoFolderHandle = await ownerFolderHandle.getDirectoryHandle(repo, { create: false })
   } catch (error) {
     // Expected: folder does not exist
   }
 
   if (repoFolderHandle === null) {
     try {
-      repoFolderHandle = await ownerFolderHandle.getDirectoryHandle(repo, {create: true})
+      repoFolderHandle = await ownerFolderHandle.getDirectoryHandle(repo, { create: true })
     } catch (error) {
       const workerMessage = `Error getting folder handle for ${repo}: ${error}`
-      self.postMessage({error: workerMessage})
+      self.postMessage({ error: workerMessage })
       return
     }
   }
 
   // See if branch folder handle exists
   try {
-    branchFolderHandle = await repoFolderHandle.getDirectoryHandle(branch, {create: false})
+    branchFolderHandle = await repoFolderHandle.getDirectoryHandle(branch, { create: false })
   } catch (error) {
     // Expected: folder does not exist
   }
 
   if (branchFolderHandle === null) {
     try {
-      branchFolderHandle = await repoFolderHandle.getDirectoryHandle(branch, {create: true})
+      branchFolderHandle = await repoFolderHandle.getDirectoryHandle(branch, { create: true })
     } catch (error) {
       const workerMessage = `Error getting folder handle for ${branch}: ${error}`
-      self.postMessage({error: workerMessage})
+      self.postMessage({ error: workerMessage })
       return
     }
   }
@@ -1024,7 +1024,7 @@ async function downloadModelToOPFS(objectUrl, commitHash, originalFilePath, owne
     if (fileIsCached) {
       const blobFile = await modelBlobFileHandle.getFile()
 
-      self.postMessage({completed: true, event: 'exists', file: blobFile})
+      self.postMessage({ completed: true, event: 'exists', file: blobFile })
       return
     } else {
       await modelBlobFileHandle.remove()
@@ -1037,7 +1037,7 @@ async function downloadModelToOPFS(objectUrl, commitHash, originalFilePath, owne
     blobAccessHandle = await modelBlobFileHandle.createSyncAccessHandle()
   } catch (error) {
     const workerMessage = `Error getting file handle for ${originalFilePath}: ${error}`
-    self.postMessage({error: workerMessage})
+    self.postMessage({ error: workerMessage })
     return
   }
   // Fetch the file from the object URL
@@ -1056,7 +1056,7 @@ async function downloadModelToOPFS(objectUrl, commitHash, originalFilePath, owne
 
   try {
     while (!isDone) {
-      const {done, value} = await reader.read()
+      const { done, value } = await reader.read()
 
       if (done) {
         isDone = true
@@ -1067,13 +1067,13 @@ async function downloadModelToOPFS(objectUrl, commitHash, originalFilePath, owne
         if (value !== undefined) {
           // Write buffer
           // eslint-disable-next-line no-unused-vars
-          const blobWriteSize = await blobAccessHandle.write(value, {at: receivedLength})
+          const blobWriteSize = await blobAccessHandle.write(value, { at: receivedLength })
         }
       } catch (error) {
         const workerMessage = `Error writing to ${commitHash}: ${error}.`
         // Close the access handle when done
         await blobAccessHandle.close()
-        self.postMessage({error: workerMessage})
+        self.postMessage({ error: workerMessage })
         return
       }
 
@@ -1100,16 +1100,16 @@ async function downloadModelToOPFS(objectUrl, commitHash, originalFilePath, owne
       try {
         const blobFile = await modelBlobFileHandle.getFile()
 
-        self.postMessage({completed: true, event: 'download', file: blobFile})
+        self.postMessage({ completed: true, event: 'download', file: blobFile })
       } catch (error) {
         const workerMessage = `Error Getting file handle: ${error}.`
-        self.postMessage({error: workerMessage})
+        self.postMessage({ error: workerMessage })
         return
       }
     }
   } catch (error) {
     reader.cancel()
-    self.postMessage({error: error})
+    self.postMessage({ error: error })
   }
 }
 
@@ -1133,10 +1133,10 @@ async function writeFileToPath(rootHandle, filePath, etag, commitHash = null) {
     if (!isLastSegment) {
       // Try to get the directory handle; if it doesn't exist, create it
       try {
-        currentHandle = await currentHandle.getDirectoryHandle(segment, {create: true})
+        currentHandle = await currentHandle.getDirectoryHandle(segment, { create: true })
       } catch (error) {
         const workerMessage = `Error getting/creating directory handle for segment(${segment}): ${error}.`
-        self.postMessage({error: workerMessage})
+        self.postMessage({ error: workerMessage })
         return null
       }
     } else {
@@ -1145,11 +1145,11 @@ async function writeFileToPath(rootHandle, filePath, etag, commitHash = null) {
         // Create or get the file handle
         const fileHandle = await
         currentHandle.getFileHandle(`${segment }.${etag}.${ commitHash === null ? 'temporary' : commitHash}`,
-           {create: true})
+           { create: true })
         return [currentHandle, fileHandle] // Return the file handle for further processing
       } catch (error) {
         const workerMessage = `Error getting/creating file handle for file(${segment}): ${error}.`
-        self.postMessage({error: workerMessage})
+        self.postMessage({ error: workerMessage })
         return null
       }
     }
@@ -1177,24 +1177,24 @@ async function retrieveFileWithPath(rootHandle, filePath, commitHash, shouldCrea
     if (!isLastSegment) {
       // Try to get the directory handle; if it doesn't exist, create it
       try {
-        currentHandle = await currentHandle.getDirectoryHandle(segment, {create: true})
+        currentHandle = await currentHandle.getDirectoryHandle(segment, { create: true })
       } catch (error) {
         const workerMessage = `Error getting/creating directory handle for segment(${segment}): ${error}.`
-        self.postMessage({error: workerMessage})
+        self.postMessage({ error: workerMessage })
         return null
       }
     } else {
       // Last segment, treat it as a file
       try {
         // Create or get the file handle
-        const fileHandle = await currentHandle.getFileHandle(`${segment }.${ commitHash}`, {create: shouldCreate})
+        const fileHandle = await currentHandle.getFileHandle(`${segment }.${ commitHash}`, { create: shouldCreate })
         return [currentHandle, fileHandle] // Return the file handle for further processing
       } catch (error) {
         if (!shouldCreate) {
           return null
         }
         const workerMessage = `Error getting/creating file handle for file(${segment}): ${error}.`
-        self.postMessage({error: workerMessage})
+        self.postMessage({ error: workerMessage })
         return null
       }
     }
@@ -1222,10 +1222,10 @@ async function retrieveFileWithPathNew(rootHandle, filePath, etag, commitHash, c
     if (!isLastSegment) {
       // Try to get the directory handle; if it doesn't exist, create it
       try {
-        currentHandle = await currentHandle.getDirectoryHandle(segment, {create: true})
+        currentHandle = await currentHandle.getDirectoryHandle(segment, { create: true })
       } catch (error) {
         const workerMessage = `Error getting/creating directory handle for segment(${segment}): ${error}.`
-        self.postMessage({error: workerMessage})
+        self.postMessage({ error: workerMessage })
         return [null, null]
       }
     } else {
@@ -1235,7 +1235,7 @@ async function retrieveFileWithPathNew(rootHandle, filePath, etag, commitHash, c
           // If no matching file is found, create a new file handle
           const fileHandle = await currentHandle.getFileHandle(
             `${segment}.${etag}.${commitHash === null ? 'temporary' : commitHash}`,
-            {create: create},
+            { create: create },
           )
           return [currentHandle, fileHandle] // Return the new file handle
         }
@@ -1280,7 +1280,7 @@ async function writeFileToHandle(blobAccessHandle, modelFile) {
     return true
   } catch (error) {
     const workerMessage = `Error writing file to handle: ${error}`
-      self.postMessage({error: workerMessage})
+      self.postMessage({ error: workerMessage })
       return false
   }
 }
@@ -1321,11 +1321,11 @@ async function writeModelToOPFSFromFile(modelFile, objectKey, originalFilePath, 
       // Update cache with new data
       const mockResponse = generateMockResponse(computedShaHash)
       await CacheModule.updateCacheRaw(cacheKey, mockResponse, objectKey)
-      self.postMessage({completed: true, event: 'write'})
+      self.postMessage({ completed: true, event: 'write' })
     }
   } catch (error) {
     const workerMessage = `Error getting file handle for ${originalFilePath}: ${error}`
-    self.postMessage({error: workerMessage})
+    self.postMessage({ error: workerMessage })
   }
 }
 
@@ -1339,7 +1339,7 @@ async function writeModelToOPFSFromFile(modelFile, objectKey, originalFilePath, 
  * @return {Promise<FileSystemFileHandle>} The new file handle.
  */
 async function renameFileInOPFS(parentDirectory, fileHandle, newFileName) {
-  const newFileHandle = await parentDirectory.getFileHandle(newFileName, {create: true})
+  const newFileHandle = await parentDirectory.getFileHandle(newFileName, { create: true })
 
   // Copy the contents of the old file to the new file
   const oldFile = await fileHandle.getFile()
@@ -1378,9 +1378,9 @@ async function doesFileExistInOPFS(commitHash, originalFilePath, owner, repo, br
   )
 
   if (modelBlobFileHandle !== null ) {
-    self.postMessage({completed: true, event: 'exist', commitHash: commitHash})
+    self.postMessage({ completed: true, event: 'exist', commitHash: commitHash })
   } else {
-    self.postMessage({completed: true, event: 'notexist', commitHash: commitHash})
+    self.postMessage({ completed: true, event: 'notexist', commitHash: commitHash })
   }
 }
 
@@ -1404,37 +1404,37 @@ async function deleteModelFromOPFS(commitHash, originalFilePath, owner, repo, br
   let branchFolderHandle = null
   // See if owner folder handle exists
   try {
-    ownerFolderHandle = await opfsRoot.getDirectoryHandle(owner, {create: false})
+    ownerFolderHandle = await opfsRoot.getDirectoryHandle(owner, { create: false })
   } catch (error) {
     // Expected: folder does not exist
   }
 
   if (ownerFolderHandle === null) {
-    self.postMessage({completed: true, event: 'notexist', commitHash: commitHash})
+    self.postMessage({ completed: true, event: 'notexist', commitHash: commitHash })
     return
   }
 
   // See if repo folder handle exists
   try {
-    repoFolderHandle = await ownerFolderHandle.getDirectoryHandle(repo, {create: false})
+    repoFolderHandle = await ownerFolderHandle.getDirectoryHandle(repo, { create: false })
   } catch (error) {
     // Expected: folder does not exist
   }
 
   if (repoFolderHandle === null) {
-    self.postMessage({completed: true, event: 'notexist', commitHash: commitHash})
+    self.postMessage({ completed: true, event: 'notexist', commitHash: commitHash })
     return
   }
 
   // See if branch folder handle exists
   try {
-    branchFolderHandle = await repoFolderHandle.getDirectoryHandle(branch, {create: false})
+    branchFolderHandle = await repoFolderHandle.getDirectoryHandle(branch, { create: false })
   } catch (error) {
     // Expected: folder does not exist
   }
 
   if (branchFolderHandle === null) {
-    self.postMessage({completed: true, event: 'notexist', commitHash: commitHash})
+    self.postMessage({ completed: true, event: 'notexist', commitHash: commitHash })
     return
   }
 
@@ -1464,7 +1464,7 @@ async function deleteModelFromOPFS(commitHash, originalFilePath, owner, repo, br
     modelBlobFileHandle.remove()
   }
 
-  self.postMessage({completed: true, event: 'deleted', commitHash: commitHash})
+  self.postMessage({ completed: true, event: 'deleted', commitHash: commitHash })
 }
 
 
@@ -1484,10 +1484,10 @@ async function writeModelToOPFS(objectUrl, objectKey, originalFileName) {
 
     // Get folder handle
     try {
-      newFolderHandle = await opfsRoot.getDirectoryHandle(objectKey, {create: true})
+      newFolderHandle = await opfsRoot.getDirectoryHandle(objectKey, { create: true })
     } catch (error) {
       const workerMessage = `Error getting folder handle for ${objectKey}: ${error}`
-      self.postMessage({error: workerMessage})
+      self.postMessage({ error: workerMessage })
       return
     }
 
@@ -1496,10 +1496,10 @@ async function writeModelToOPFS(objectUrl, objectKey, originalFileName) {
 
     // Get file handle for file blob
     try {
-      modelBlobFileHandle = await newFolderHandle.getFileHandle(objectKey, {create: true})
+      modelBlobFileHandle = await newFolderHandle.getFileHandle(objectKey, { create: true })
     } catch (error) {
       const workerMessage = `Error getting file handle for ${objectKey}: ${error}`
-      self.postMessage({error: workerMessage})
+      self.postMessage({ error: workerMessage })
       return
     }
 
@@ -1514,19 +1514,19 @@ async function writeModelToOPFS(objectUrl, objectKey, originalFileName) {
       const blobAccessHandle = await modelBlobFileHandle.createSyncAccessHandle()
 
       // Write buffer at the beginning of the file
-      await blobAccessHandle.write(fileArrayBuffer, {at: 0})
+      await blobAccessHandle.write(fileArrayBuffer, { at: 0 })
       // Close the access handle when done
       await blobAccessHandle.close()
 
-      self.postMessage({completed: true, event: 'write', fileName: objectKey})
+      self.postMessage({ completed: true, event: 'write', fileName: objectKey })
     } catch (error) {
       const workerMessage = `Error writing to ${objectKey}: ${error}.`
-      self.postMessage({error: workerMessage})
+      self.postMessage({ error: workerMessage })
       return
     }
   } catch (error) {
     const workerMessage = `Error writing object URL to file: ${error}`
-    self.postMessage({error: workerMessage})
+    self.postMessage({ error: workerMessage })
   }
 }
 
@@ -1547,7 +1547,7 @@ async function readModelFromOPFS(objectKey) {
       modelFolderHandle = await opfsRoot.getDirectoryHandle(objectKey)
     } catch (error) {
       const errorMessage = `Folder ${objectKey} not found: ${error}`
-      self.postMessage({error: errorMessage})
+      self.postMessage({ error: errorMessage })
       return // Exit if the file is not found
     }
 
@@ -1557,15 +1557,15 @@ async function readModelFromOPFS(objectKey) {
 
       const blobFile = await blobFileHandle.getFile()
 
-      self.postMessage({completed: true, event: 'read', file: blobFile})
+      self.postMessage({ completed: true, event: 'read', file: blobFile })
     } catch (error) {
       const errorMessage = `Error retrieving File from ${objectKey}: ${error}.`
-      self.postMessage({error: errorMessage})
+      self.postMessage({ error: errorMessage })
       return
     }
   } catch (error) {
     const errorMessage = `Error retrieving File: ${error}.`
-    self.postMessage({error: errorMessage})
+    self.postMessage({ error: errorMessage })
   }
 }
 
@@ -1586,10 +1586,10 @@ async function writeFileToOPFS(objectUrl, fileName) {
 
     // Get file handle
     try {
-      newFileHandle = await opfsRoot.getFileHandle(fileName, {create: true})
+      newFileHandle = await opfsRoot.getFileHandle(fileName, { create: true })
     } catch (error) {
       const workerMessage = `Error getting file handle for ${fileName}: ${error}`
-      self.postMessage({error: workerMessage})
+      self.postMessage({ error: workerMessage })
       return
     }
 
@@ -1604,24 +1604,24 @@ async function writeFileToOPFS(objectUrl, fileName) {
       const accessHandle = await newFileHandle.createSyncAccessHandle()
 
       // Write buffer at the beginning of the file
-      const writeSize = await accessHandle.write(fileArrayBuffer, {at: 0})
+      const writeSize = await accessHandle.write(fileArrayBuffer, { at: 0 })
       // Close the access handle when done
       await accessHandle.close()
 
       if (writeSize > 0) {
-        self.postMessage({completed: true, event: 'write', fileName: fileName})
+        self.postMessage({ completed: true, event: 'write', fileName: fileName })
       } else {
         const workerMessage = `Error writing to file: ${fileName}`
-        self.postMessage({error: workerMessage})
+        self.postMessage({ error: workerMessage })
       }
     } catch (error) {
       const workerMessage = `Error writing to ${fileName}: ${error}.`
-      self.postMessage({error: workerMessage})
+      self.postMessage({ error: workerMessage })
       return
     }
   } catch (error) {
     const workerMessage = `Error writing object URL to file: ${error}`
-    self.postMessage({error: workerMessage})
+    self.postMessage({ error: workerMessage })
   }
 }
 
@@ -1642,22 +1642,22 @@ async function readFileFromOPFS(fileName) {
       newFileHandle = await opfsRoot.getFileHandle(fileName)
     } catch (error) {
       const errorMessage = `File ${fileName} not found: ${error}`
-      self.postMessage({error: errorMessage})
+      self.postMessage({ error: errorMessage })
       return // Exit if the file is not found
     }
 
     try {
       const fileHandle = await newFileHandle.getFile()
 
-      self.postMessage({completed: true, event: 'read', file: fileHandle})
+      self.postMessage({ completed: true, event: 'read', file: fileHandle })
     } catch (error) {
       const errorMessage = `Error retrieving File from ${fileName}: ${error}.`
-      self.postMessage({error: errorMessage})
+      self.postMessage({ error: errorMessage })
       return
     }
   } catch (error) {
     const errorMessage = `Error retrieving File: ${error}.`
-    self.postMessage({error: errorMessage})
+    self.postMessage({ error: errorMessage })
   }
 }
 

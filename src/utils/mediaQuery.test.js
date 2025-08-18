@@ -1,7 +1,9 @@
-import {preprocessMediaQuery} from './mediaQuery'
+import { describe, it, expect } from 'bun:test'
+import { preprocessMediaQuery } from './mediaQuery'
 
 
-test('preprocessMediaQuery', () => {
+describe('mediaQuery', () => {
+  it('preprocessMediaQuery', () => {
   const mobileWidthPx = 100
   expect(preprocessMediaQuery(mobileWidthPx, {
     '@media (max-width: MOBILE_WIDTH)': {
@@ -17,5 +19,6 @@ test('preprocessMediaQuery', () => {
         foo: 'bar',
       },
     },
+  })
   })
 })

@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from 'react'
+import React, { useState } from 'react'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -14,9 +14,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
  *
  * @property {Function} onDeleteClick Callback for delete
  * @property {Function} onEditClick Callback for eddit
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function NoteMenu({onDeleteClick, onEditClick}) {
+export default function NoteMenu({ onDeleteClick, onEditClick }) {
   const [anchorEl, setAnchorEl] = useState(null)
   return (
     <>
@@ -36,8 +36,8 @@ export default function NoteMenu({onDeleteClick, onEditClick}) {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
-        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-        transformOrigin={{vertical: 'top', horizontal: 'center'}}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'center' }}
         PaperProps={{
           style: {
             left: '200px',
@@ -53,7 +53,7 @@ export default function NoteMenu({onDeleteClick, onEditClick}) {
           }}
         >
           <EditOutlinedIcon/>
-          <Typography variant='overline' sx={{marginLeft: '10px'}}>Edit</Typography>
+          <Typography variant='overline' sx={{ marginLeft: '10px' }}>Edit</Typography>
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -62,7 +62,7 @@ export default function NoteMenu({onDeleteClick, onEditClick}) {
           }}
         >
           <DeleteOutlineOutlinedIcon/>
-          <Typography variant='overline' sx={{marginLeft: '10px'}}>Delete</Typography>
+          <Typography variant='overline' sx={{ marginLeft: '10px' }}>Delete</Typography>
         </MenuItem>
       </Menu>
     </>

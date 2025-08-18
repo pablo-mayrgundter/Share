@@ -1,5 +1,5 @@
-import React, {ReactElement, useEffect, useState} from 'react'
-import {useTheme} from '@mui/material/styles'
+import React, { useEffect, useState } from 'react'
+import { useTheme } from '@mui/material/styles'
 import {
   Avatar,
   Menu,
@@ -12,10 +12,10 @@ import {
   Stack,
   Button,
 } from '@mui/material'
-import {useAuth0} from '../../Auth0/Auth0Proxy'
-import {useExistInFeature} from '../../hooks/useExistInFeature'
+import { useAuth0 } from '../../Auth0/Auth0Proxy'
+import { useExistInFeature } from '../../hooks/useExistInFeature'
 import useStore from '../../store/useStore'
-import {TooltipIconButton} from '../Buttons'
+import { TooltipIconButton } from '../Buttons'
 import ManageProfile from './ManageProfile'
 import {
   AccountBoxOutlined as AccountBoxOutlinedIcon,
@@ -38,16 +38,16 @@ const useMock = OAUTH_2_CLIENT_ID === 'cypresstestaudience'
 /**
  * Login dialog component with provider selection
  *
- * @return {ReactElement} Dialog component for login
+ * @return {React.ReactElement} Dialog component for login
  */
-function LoginDialog({open, onClose, onLogin, isGoogleEnabled}) {
+function LoginDialog({ open, onClose, onLogin, isGoogleEnabled }) {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth='xs'>
       <DialogTitle
         sx={{
           textAlign: 'center',
           fontWeight: 600,
-          fontSize: {xs: '1.25rem', sm: '1.5rem'},
+          fontSize: { xs: '1.25rem', sm: '1.5rem' },
           pb: 0,
         }}
       >
@@ -64,7 +64,7 @@ function LoginDialog({open, onClose, onLogin, isGoogleEnabled}) {
             sx={{
               'borderColor': 'divider',
               'color': 'text.primary',
-              '&:hover': {borderColor: 'text.primary'},
+              '&:hover': { borderColor: 'text.primary' },
             }}
           >
             GitHub
@@ -79,7 +79,7 @@ function LoginDialog({open, onClose, onLogin, isGoogleEnabled}) {
               sx={{
                 'borderColor': 'divider',
                 'color': 'text.primary',
-                '&:hover': {borderColor: 'text.primary'},
+                '&:hover': { borderColor: 'text.primary' },
               }}
             >
               Google
@@ -94,7 +94,7 @@ function LoginDialog({open, onClose, onLogin, isGoogleEnabled}) {
 /**
  * ProfileControl contains the option to log in/log out and theme control
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function ProfileControl() {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -102,9 +102,9 @@ export default function ProfileControl() {
   const isMenuVisible = Boolean(anchorEl)
 
   const theme = useTheme()
-  const {isAuthenticated, logout, user} = useAuth0()
+  const { isAuthenticated, logout, user } = useAuth0()
   const [isDay, setIsDay] = useState(theme.palette.mode === 'light')
-  const {getAccessTokenSilently, loginWithRedirect} = useAuth0()
+  const { getAccessTokenSilently, loginWithRedirect } = useAuth0()
   const appMetadata = useStore((state) => state.appMetadata)
   const userEmail = appMetadata?.userEmail || ''
   const stripeCustomerId = appMetadata?.stripeCustomerId || null
@@ -183,8 +183,8 @@ export default function ProfileControl() {
       try {
         const response = await fetch('/.netlify/functions/create-portal-session', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({stripeCustomerId}),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ stripeCustomerId }),
         })
         const data = await response.json()
         if (data.url) {
@@ -235,9 +235,9 @@ export default function ProfileControl() {
         anchorEl={anchorEl}
         open={isMenuVisible}
         onClose={onCloseMenu}
-        anchorOrigin={{vertical: 'top', horizontal: 'left'}}
-        transformOrigin={{vertical: 'top', horizontal: 'right'}}
-        sx={{transform: 'translateX(-1em)'}}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        sx={{ transform: 'translateX(-1em)' }}
       >
         {!isAuthenticated && (
           <MenuItem
@@ -248,7 +248,7 @@ export default function ProfileControl() {
             data-testid='menu-open-login-dialog'
           >
             <LoginOutlinedIcon/>
-            <Typography sx={{marginLeft: '10px'}} variant='overline'>
+            <Typography sx={{ marginLeft: '10px' }} variant='overline'>
               Log in
             </Typography>
           </MenuItem>
@@ -257,7 +257,7 @@ export default function ProfileControl() {
         {isAuthenticated && (
           <MenuItem onClick={onLogoutClick}>
             <LogoutOutlinedIcon/>
-            <Typography sx={{marginLeft: '10px'}} variant='overline'>
+            <Typography sx={{ marginLeft: '10px' }} variant='overline'>
               Log out
             </Typography>
           </MenuItem>
@@ -266,7 +266,7 @@ export default function ProfileControl() {
         {isAuthenticated && (
           <MenuItem onClick={handleManageProfileClick} data-testid='manage-profile'>
             <AccountCircleOutlined/>
-            <Typography sx={{marginLeft: '10px'}} variant='overline'>
+            <Typography sx={{ marginLeft: '10px' }} variant='overline'>
               Manage Profile
             </Typography>
           </MenuItem>
@@ -275,7 +275,7 @@ export default function ProfileControl() {
         {isAuthenticated && (
           <MenuItem onClick={handleSubscriptionClick} data-testid={stripeCustomerId ? 'manage-subscription' : 'upgrade-to-pro'}>
             <PaymentOutlined/>
-            <Typography sx={{marginLeft: '10px'}} variant='overline'>
+            <Typography sx={{ marginLeft: '10px' }} variant='overline'>
               {stripeCustomerId ? 'Manage Subscription' : 'Upgrade to Pro'}
             </Typography>
           </MenuItem>
@@ -285,20 +285,20 @@ export default function ProfileControl() {
 
         <MenuItem onClick={() => window.open('https://github.com/signup', '_blank')}>
           <GitHubIcon/>
-          <Typography sx={{marginLeft: '10px'}} variant='overline'>
+          <Typography sx={{ marginLeft: '10px' }} variant='overline'>
             Join GitHub
           </Typography>
         </MenuItem>
         <MenuItem onClick={() => window.open('https://github.com/bldrs-ai/Share/wiki', '_blank')}>
           <InfoOutlinedIcon/>
-          <Typography sx={{marginLeft: '10px'}} variant='overline'>
+          <Typography sx={{ marginLeft: '10px' }} variant='overline'>
             Bldrs Wiki
           </Typography>
         </MenuItem>
         <Divider/>
         <MenuItem onClick={handleThemeToggle} data-testid={isDay ? 'change-theme-to-night' : 'change-theme-to-day'}>
           {isDay ? <NightlightOutlinedIcon/> : <WbSunnyOutlinedIcon/>}
-          <Typography sx={{marginLeft: '10px'}} variant='overline'>
+          <Typography sx={{ marginLeft: '10px' }} variant='overline'>
             {isDay ? 'Night' : 'Day'} theme
           </Typography>
         </MenuItem>

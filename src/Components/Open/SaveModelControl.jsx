@@ -1,36 +1,36 @@
-import React, {ReactElement, useState, useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
-import {useAuth0} from '../../Auth0/Auth0Proxy'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth0 } from '../../Auth0/Auth0Proxy'
 import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import {writeSavedGithubModelOPFS} from '../../OPFS/utils'
-import {commitFile, getFilesAndFolders} from '../../net/github/Files'
-import {getOrganizations} from '../../net/github/Organizations'
-import {getRepositories, getUserRepositories} from '../../net/github/Repositories'
-import {getBranches} from '../../net/github/Branches'
+import { writeSavedGithubModelOPFS } from '../../OPFS/utils'
+import { commitFile, getFilesAndFolders } from '../../net/github/Files'
+import { getOrganizations } from '../../net/github/Organizations'
+import { getRepositories, getUserRepositories } from '../../net/github/Repositories'
+import { getBranches } from '../../net/github/Branches'
 import useStore from '../../store/useStore'
-import {ControlButton} from '../Buttons'
+import { ControlButton } from '../Buttons'
 import Dialog from '../Dialog'
 import PleaseLogin from './PleaseLogin'
 import Selector from './Selector'
 import SelectorSeparator from './SelectorSeparator'
 import ClearIcon from '@mui/icons-material/Clear'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
-import {navigateBaseOnModelPath} from '../../utils/location'
+import { navigateBaseOnModelPath } from '../../utils/location'
 
 
 /**
  * Displays model save dialog
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function SaveModelControl() {
   const isSaveModelVisible = useStore((state) => state.isSaveModelVisible)
   const setIsSaveModelVisible = useStore((state) => state.setIsSaveModelVisible)
 
-  const {user} = useAuth0()
+  const { user } = useAuth0()
   const navigate = useNavigate()
   const accessToken = useStore((state) => state.accessToken)
   const [orgNamesArr, setOrgNamesArray] = useState([''])
@@ -78,8 +78,8 @@ export default function SaveModelControl() {
  * @property {Array<string>} orgNamesArr The current user's GH orgs
  * @return {object} React component
  */
-function SaveModelDialog({isDialogDisplayed, setIsDialogDisplayed, navigate, orgNamesArr}) {
-  const {isAuthenticated, user} = useAuth0()
+function SaveModelDialog({ isDialogDisplayed, setIsDialogDisplayed, navigate, orgNamesArr }) {
+  const { isAuthenticated, user } = useAuth0()
   const [selectedOrgName, setSelectedOrgName] = useState('')
   const [selectedRepoName, setSelectedRepoName] = useState('')
 
@@ -134,13 +134,13 @@ function SaveModelDialog({isDialogDisplayed, setIsDialogDisplayed, navigate, org
           isOpfsAvailable,
           setSnackMessage,
           (pathname) => {
-            navigate({pathname: pathname})
+            navigate({ pathname: pathname })
           },
       )
       // Store the branch name for subsequent saves
       if (requestCreateBranch) {
         // If it was a new branch, add it to the branches array and select it
-        const newBranchesArr = [...branchesArr.slice(0, -2), branchName, {isSeparator: true}, MSG_CREATE_BRANCH]
+        const newBranchesArr = [...branchesArr.slice(0, -2), branchName, { isSeparator: true }, MSG_CREATE_BRANCH]
         setBranchesArr(newBranchesArr)
         setSelectedBranchName(newBranchesArr.indexOf(branchName))
       }
@@ -168,13 +168,13 @@ function SaveModelDialog({isDialogDisplayed, setIsDialogDisplayed, navigate, org
     setSelectedRepoName(repo)
     // setSelectedFolderName(0); // This will set it to '/'
     const owner = orgNamesArr[selectedOrgName]
-    const {files, directories} = await getFilesAndFolders(repoNamesArr[repo], owner, '/', accessToken)
-    const repository = {orgName: owner, name: repoNamesArr[repo]}
+    const { files, directories } = await getFilesAndFolders(repoNamesArr[repo], owner, '/', accessToken)
+    const repository = { orgName: owner, name: repoNamesArr[repo] }
     const branches = await getBranches(repository, accessToken)
     const branchNames = branches.map((branch) => branch.name)
     const branchesArrWithSeparator = [
       ...branchNames,
-      {isSeparator: true},
+      { isSeparator: true },
       MSG_CREATE_BRANCH,
     ]
     setBranchesArr(branchesArrWithSeparator)
@@ -188,7 +188,7 @@ function SaveModelDialog({isDialogDisplayed, setIsDialogDisplayed, navigate, org
     setFilesArr(fileNames)
     const foldersArrWithSeparator = [
       ...directoryNames, // All the folders
-      {isSeparator: true}, // Separator item
+      { isSeparator: true }, // Separator item
       MSG_CREATE_FOLDER,
     ]
 
@@ -224,7 +224,7 @@ function SaveModelDialog({isDialogDisplayed, setIsDialogDisplayed, navigate, org
 
     setCurrentPath(newPath)
 
-    const {files, directories} = await getFilesAndFolders(repoName, owner, newPath, accessToken)
+    const { files, directories } = await getFilesAndFolders(repoName, owner, newPath, accessToken)
     // eslint-disable-next-line no-shadow
     const fileNames = files.map((file) => file.name)
     const directoryNames = directories.map((directory) => directory.name)
@@ -235,7 +235,7 @@ function SaveModelDialog({isDialogDisplayed, setIsDialogDisplayed, navigate, org
     setFilesArr(fileNames)
     const foldersArrWithSeparator = [
       ...navigationOptions, // All the folders
-      {isSeparator: true}, // Separator item
+      { isSeparator: true }, // Separator item
       MSG_CREATE_FOLDER,
     ]
 
@@ -272,7 +272,7 @@ function SaveModelDialog({isDialogDisplayed, setIsDialogDisplayed, navigate, org
         ) : (
           file instanceof File && (
             <Stack>
-              <Typography variant='overline' sx={{marginBottom: '6px'}}>{MSG_PROJECTS}</Typography>
+              <Typography variant='overline' sx={{ marginBottom: '6px' }}>{MSG_PROJECTS}</Typography>
               <Selector
                 label={MSG_ORGANIZATION}
                 list={orgNamesArrWithAt}
@@ -295,14 +295,14 @@ function SaveModelDialog({isDialogDisplayed, setIsDialogDisplayed, navigate, org
                 data-testid='saveBranch'
               />
               {requestCreateBranch && (
-                <div style={{display: 'flex', alignItems: 'center', marginBottom: '.5em'}}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '.5em' }}>
                   <TextField
                     label={MSG_ENTER_BRANCH_NAME}
                     variant='outlined'
                     size='small'
                     onChange={(e) => setCreateBranchName(e.target.value)}
                     data-testid='CreateBranchId'
-                    sx={{flexGrow: 1}}
+                    sx={{ flexGrow: 1 }}
                     onKeyDown={(e) => {
                       e.stopPropagation()
                     }}
@@ -323,14 +323,14 @@ function SaveModelDialog({isDialogDisplayed, setIsDialogDisplayed, navigate, org
                 data-testid='saveFolder'
               />
               {requestCreateFolder && (
-                <div style={{display: 'flex', alignItems: 'center', marginBottom: '.5em'}}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '.5em' }}>
                   <TextField
                     label={MSG_ENTER_FOLDER_NAME}
                     variant='outlined'
                     size='small'
                     onChange={(e) => setCreateFolderName(e.target.value)}
                     data-testid='CreateFolderId'
-                    sx={{flexGrow: 1}}
+                    sx={{ flexGrow: 1 }}
                     onKeyDown={(e) => {
                       e.stopPropagation()
                     }}
@@ -349,7 +349,7 @@ function SaveModelDialog({isDialogDisplayed, setIsDialogDisplayed, navigate, org
                 size='small'
                 onChange={(e) => setSelectedFileName(e.target.value)}
                 onKeyDown={(e) => e.stopPropagation()}
-                sx={{marginBottom: '.5em'}}
+                sx={{ marginBottom: '.5em' }}
                 data-testid='CreateFileId'
               />
             </Stack>

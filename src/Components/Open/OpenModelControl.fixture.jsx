@@ -1,5 +1,5 @@
 import React from 'react'
-import {RouteThemeCtx} from '../../Share.fixture'
+import { RouteThemeCtx } from '../../Share.fixture'
 import OpenModelControl from './OpenModelControl'
 
 

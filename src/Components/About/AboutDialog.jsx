@@ -1,12 +1,12 @@
-import React, {ReactElement} from 'react'
-import {Helmet} from 'react-helmet-async'
+import React, {} from 'react'
+import { Helmet } from 'react-helmet-async'
 import Link from '@mui/material/Link'
 import Stack from '@mui/material/Stack'
 import SvgIcon from '@mui/material/SvgIcon'
 import Typography from '@mui/material/Typography'
 import Dialog from '../Dialog'
-import {LogoBWithDomain} from '../Logo/Logo'
-import {ABOUT_MISSION, ABOUT_PAGE_TITLE} from './component'
+import { LogoBWithDomain } from '../Logo/Logo'
+import { ABOUT_MISSION, ABOUT_PAGE_TITLE } from './component'
 // TODO(pablo): re-enable after prod freeze bug fixed
 // import PrivacyControl from './PrivacyControl'
 import GitHubIcon from '@mui/icons-material/GitHub'
@@ -18,9 +18,9 @@ import DiscordIcon from './Discord.svg'
  * @property {boolean} isDialogDisplayed Passed to Dialog to be controlled
  * @property {Function} setIsDialogDisplayed Passed to Dialog to be controlled
  * @property {Function} onClose Callback when closed
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
-export default function AboutDialog({isDialogDisplayed, setIsDialogDisplayed, onClose}) {
+export default function AboutDialog({ isDialogDisplayed, setIsDialogDisplayed, onClose }) {
   return (
     <Dialog
       headerIcon={null}
@@ -49,7 +49,7 @@ export default function AboutDialog({isDialogDisplayed, setIsDialogDisplayed, on
 }
 
 
-/** @return {ReactElement} */
+/** @return {React.ReactElement} */
 function AboutContent() {
   return (
     <>
@@ -62,7 +62,7 @@ function AboutContent() {
         justifyContent='center'
         alignItems='center'
       >
-        <Stack align='left' spacing={2} sx={{width: '100%'}}>
+        <Stack align='left' spacing={2} sx={{ width: '100%' }}>
           <Typography variant='body1'>
             Welcome to Bldrs - Share!
           </Typography>
@@ -83,14 +83,14 @@ function AboutContent() {
             Comments and suggestions welcome!
           </Typography>
           <Stack direction='row' justifyContent='center' alignItems='center' spacing={1}>
-            <Link href='https://discord.gg/9SxguBkFfQ' rel='noopener' sx={{display: 'flex', alignItems: 'center'}}>
-              <SvgIcon sx={{marginRight: '0.25em'}}><DiscordIcon className='icon-share'/></SvgIcon>Discord
+            <Link href='https://discord.gg/9SxguBkFfQ' rel='noopener' sx={{ display: 'flex', alignItems: 'center' }}>
+              <SvgIcon sx={{ marginRight: '0.25em' }}><DiscordIcon className='icon-share'/></SvgIcon>Discord
             </Link>
-            <Link href='https://github.com/bldrs-ai/Share' rel='noopener' sx={{display: 'flex', alignItems: 'center'}}>
-              <GitHubIcon className='icon-share' sx={{marginRight: '0.25em'}}/>GitHub
+            <Link href='https://github.com/bldrs-ai/Share' rel='noopener' sx={{ display: 'flex', alignItems: 'center' }}>
+              <GitHubIcon className='icon-share' sx={{ marginRight: '0.25em' }}/>GitHub
             </Link>
-            <Link href='mailto:info@bldrs.ai' sx={{display: 'flex', alignItems: 'center'}}>
-              <EmailIcon className='icon-share' sx={{marginRight: '0.25em'}}/>info@bldrs.ai
+            <Link href='mailto:info@bldrs.ai' sx={{ display: 'flex', alignItems: 'center' }}>
+              <EmailIcon className='icon-share' sx={{ marginRight: '0.25em' }}/>info@bldrs.ai
             </Link>
           </Stack>
         </Stack>

@@ -1,21 +1,21 @@
-import React, {ReactElement, useEffect, useState} from 'react'
-import {decodeIFCString} from '@bldrs-ai/ifclib'
+import React, { useEffect, useState } from 'react'
+import { decodeIFCString } from '@bldrs-ai/ifclib'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
-import {useTheme} from '@mui/material/styles'
-import {useIsMobile} from '../Hooks'
+import { useTheme } from '@mui/material/styles'
+import { useIsMobile } from '../Hooks'
 import Toggle from '../Toggle'
 import useStore from '../../store/useStore'
-import {hexToRgba} from '../../utils/color'
+import { hexToRgba } from '../../utils/color'
 import ExpansionPanel from './ExpansionPanel'
-import {createPropertyTable} from './itemProperties'
+import { createPropertyTable } from './itemProperties'
 
 
 /**
  * Properties displays IFC element properties and possibly PropertySets
  *
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function Properties() {
   const model = useStore((state) => state.model)
@@ -94,7 +94,7 @@ export default function Properties() {
  * @param {object} element IFC element
  * @param {object} classes Styles
  * @param {boolean} expandAll React state expansion toggle
- * @return {Array<ReactElement>} A list of property elts
+ * @return {Array<React.ReactElement>} A list of property elts
  */
 async function createPsetsList(model, element, expandAll) {
   const psets = await model.getPropertySets(element.expressID)

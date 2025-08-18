@@ -1,4 +1,4 @@
-import {getHashParamsFromHashStr} from './location'
+import { getHashParamsFromHashStr } from './location'
 
 
 /**

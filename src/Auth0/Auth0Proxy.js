@@ -1,5 +1,5 @@
-import React, {useContext} from 'react'
-import {useAuth0 as useAuth0Original} from '@auth0/auth0-react'
+import React, { useContext } from 'react'
+import { useAuth0 as useAuth0Original } from '@auth0/auth0-react'
 
 
 const OAUTH_2_CLIENT_ID = process.env.OAUTH2_CLIENT_ID
@@ -60,8 +60,8 @@ export const mockGitHubUser = {
   'sid': 'cypresssession-abcdef',
   'nonce': 'testnonce',
   /* NEW — default identity + custom claim so ManageProfile boots */
-  'identities': [{provider: 'github', user_id: '11111111'}],
-  'https://bldrs.ai/identities': [{provider: 'github', user_id: '11111111'}],
+  'identities': [{ provider: 'github', user_id: '11111111' }],
+  'https://bldrs.ai/identities': [{ provider: 'github', user_id: '11111111' }],
 }
 
 export const mockGoogleUser = {
@@ -81,8 +81,8 @@ export const mockGoogleUser = {
   'sub': 'google-oauth2|11111111',
   'sid': 'cypresssession-abcdef',
   'nonce': 'testnonce',
-  'identities': [{provider: 'google-oauth2', user_id: '11111111'}],
-  'https://bldrs.ai/identities': [{provider: 'google-oauth2', user_id: '11111111'}],
+  'identities': [{ provider: 'google-oauth2', user_id: '11111111' }],
+  'https://bldrs.ai/identities': [{ provider: 'google-oauth2', user_id: '11111111' }],
 }
 
 export const mockLinkedUser = {
@@ -102,9 +102,9 @@ export const mockLinkedUser = {
   'sub': 'google-oauth2|11111111',
   'sid': 'cypresssession-abcdef',
   'nonce': 'testnonce',
-  'identities': [{provider: 'github', user_id: '11111111'}, {provider: 'google-oauth2', user_id: '11111111'}],
+  'identities': [{ provider: 'github', user_id: '11111111' }, { provider: 'google-oauth2', user_id: '11111111' }],
   'https://bldrs.ai/identities':
-  [{provider: 'github', user_id: '11111111'}, {provider: 'google-oauth2', user_id: '11111111'}],
+  [{ provider: 'github', user_id: '11111111' }, { provider: 'google-oauth2', user_id: '11111111' }],
 }
 
 
@@ -161,11 +161,11 @@ export const MockAuth0Context = React.createContext({
   user: mockGitHubUser,
   getAccessTokenSilently: mockGetAccessTokenSilently,
   getAccessTokenWithPopup: () => 'mock_access_token',
-  getIdTokenClaims: () => ({__raw: 'mock_id_token'}),
+  getIdTokenClaims: () => ({ __raw: 'mock_id_token' }),
   loginWithRedirect: mockLoginWithRedirect,
   loginWithPopup: mockLoginWithPopup,
   logout: mockLogout,
-  handleRedirectCallback: () => ({appState: {}}),
+  handleRedirectCallback: () => ({ appState: {} }),
 })
 
 /**

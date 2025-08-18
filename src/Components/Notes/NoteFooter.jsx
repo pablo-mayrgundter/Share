@@ -1,13 +1,13 @@
-import React, {ReactElement, useState} from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import CardActions from '@mui/material/CardActions'
 import Stack from '@mui/material/Stack'
-import {useTheme} from '@mui/material/styles'
-import {useAuth0} from '../../Auth0/Auth0Proxy'
-import {TooltipIconButton} from '../Buttons'
-import {PlacemarkHandlers as placemarkHandlers} from '../Markers/MarkerControl'
-import {MARKER_COLOR_ACTIVE_CSS, MARKER_COLOR_INACTIVE_CSS} from '../Markers/component'
-import {useExistInFeature} from '../../hooks/useExistInFeature'
+import { useTheme } from '@mui/material/styles'
+import { useAuth0 } from '../../Auth0/Auth0Proxy'
+import { TooltipIconButton } from '../Buttons'
+import { PlacemarkHandlers as placemarkHandlers } from '../Markers/MarkerControl'
+import { MARKER_COLOR_ACTIVE_CSS, MARKER_COLOR_INACTIVE_CSS } from '../Markers/component'
+import { useExistInFeature } from '../../hooks/useExistInFeature'
 import useStore from '../../store/useStore'
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined'
 import AddLocationIcon from '@mui/icons-material/AddLocationOutlined'
@@ -22,7 +22,7 @@ import PlaceIcon from '@mui/icons-material/Place'
 
 /**
  * @property {Array<number>} noteNumber Array of expressIDs
- * @return {ReactElement}
+ * @return {React.ReactElement}
  */
 export default function NoteFooter({
   accessToken,
@@ -54,13 +54,13 @@ export default function NoteFooter({
   const placeMarkId = useStore((state) => state.placeMarkId)
   const placeMarkActivated = useStore((state) => state.placeMarkActivated)
   const markers = useStore((state) => state.markers)
-  const {togglePlaceMarkActive} = placemarkHandlers()
+  const { togglePlaceMarkActive } = placemarkHandlers()
   const selectedPlaceMarkId = useStore((state) => state.selectedPlaceMarkId)
 
   const [shareIssue, setShareIssue] = useState(false)
   const [screenshotUri, setScreenshotUri] = useState(null)
 
-  const {user} = useAuth0()
+  const { user } = useAuth0()
   const theme = useTheme()
 
   const hasCameras = embeddedCameras.length > 0
@@ -101,7 +101,7 @@ export default function NoteFooter({
 
   return (
     <CardActions>
-      <Stack direction='row' justifyContent='space-between' sx={{width: '100%'}}>
+      <Stack direction='row' justifyContent='space-between' sx={{ width: '100%' }}>
         <Stack direction='row'>
           {marker &&
            <Box
@@ -206,7 +206,7 @@ export default function NoteFooter({
           }
 
           {numberOfComments > 0 && !editMode &&
-           <Box sx={{marginLeft: 'auto', padding: '0 0.5em'}}>
+           <Box sx={{ marginLeft: 'auto', padding: '0 0.5em' }}>
              {!selected &&
               <TooltipIconButton
                 title='Discussion'
