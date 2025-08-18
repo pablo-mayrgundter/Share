@@ -8,7 +8,72 @@ import { beforeAll, afterAll, afterEach, describe, mock } from 'bun:test'
 import { disableDebug } from '../../src/utils/debug'
 import { getAndExportEnvVars } from '../jest/vars.jest'
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
-import * as THREE from 'three'
+
+function createThreeMock() {
+  class Vector3 {
+    constructor(x = 0, y = 0, z = 0) {
+      this.x = x
+      this.y = y
+      this.z = z
+    }
+    set(x, y, z) {
+      this.x = x
+      this.y = y
+      this.z = z
+      return this
+    }
+    copy(v) {
+      this.x = v.x
+      this.y = v.y
+      this.z = v.z
+      return this
+    }
+    clone() {
+      return new Vector3(this.x, this.y, this.z)
+    }
+  }
+
+  class Object3D {
+    constructor() {
+      this.children = []
+      this.position = new Vector3()
+      this.rotation = { x: 0, y: 0, z: 0 }
+      this.scale = new Vector3(1, 1, 1)
+    }
+    add(...objs) {
+      this.children.push(...objs)
+    }
+  }
+
+  class Scene extends Object3D {}
+
+  class BufferGeometry {}
+
+  class Material {}
+
+  class MeshBasicMaterial extends Material {}
+
+  class Mesh extends Object3D {
+    constructor(geometry = new BufferGeometry(), material = new Material()) {
+      super()
+      this.geometry = geometry
+      this.material = material
+    }
+  }
+
+  return {
+    Vector3,
+    Object3D,
+    Scene,
+    BufferGeometry,
+    Material,
+    MeshBasicMaterial,
+    Mesh,
+  }
+}
+
+let THREE = createThreeMock()
+mock.module('three', () => THREE)
 
 
 GlobalRegistrator.register()
@@ -249,13 +314,11 @@ afterEach(() => {
   cleanup()
   cookieStore = {} // Reset cookies between tests
 
-  // Note: Three.js has global ID counters that increment across tests:
-  // - BufferGeometry: let _id = 0 (node_modules/three/src/core/BufferGeometry.js:13)
-  // - Object3D: let _object3DId = 0 (node_modules/three/src/core/Object3D.js:10)
-  // - Material: let materialId = 0 (node_modules/three/src/materials/Material.js:5)
-  // - Texture: let textureId = 0 (node_modules/three/src/textures/Texture.js:18)
-  // These cannot be reset without breaking Three.js exports, so snapshots
-  // must account for test execution order dependencies
+  // Reset Three.js mock so each test gets a fresh instance
+  THREE = createThreeMock()
+  mock.module('three', () => THREE)
+  global.THREE = THREE
+  global.three = THREE
 
   // Reset zustand store state between tests to prevent state leakage
   try {
