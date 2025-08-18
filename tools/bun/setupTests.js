@@ -1,4 +1,4 @@
-/* eslint-disable no-empty-function */
+/* eslint-disable no-empty-function, require-jsdoc, jsdoc/require-jsdoc, max-len */
 // Bun test setup - provides Jest-compatible globals and setup
 import React from 'react'
 import '@testing-library/jest-dom'
@@ -32,52 +32,57 @@ mock.module('three-mesh-bvh', () => ({
   GenerateMeshBVHWorker: class MockGenerateMeshBVHWorker {},
 }))
 
-// Mock web-ifc-viewer globally to prevent IfcViewerAPI import issues
-const mockViewer = {
-  IFC: {
-    setWasmPath: mock(),
-    context: {
-      ifcCamera: {
-        cameraControls: {
-          addEventListener: mock(),
-          setPosition: mock(),
-          getPosition: mock(() => [0, 0, 0]),
-          setTarget: mock(),
-          getTarget: mock(() => [0, 0, 0]),
+// Factory to create a fresh mock viewer instance
+function createMockViewer() {
+  return {
+    IFC: {
+      setWasmPath: mock(),
+      context: {
+        ifcCamera: {
+          cameraControls: {
+            addEventListener: mock(),
+            setPosition: mock(),
+            getPosition: mock(() => [0, 0, 0]),
+            setTarget: mock(),
+            getTarget: mock(() => [0, 0, 0]),
+          },
         },
       },
     },
-  },
-  _loadedModel: {
-    ifcManager: {
-      getSpatialStructure: mock(() => ({})),
+    _loadedModel: {
+      ifcManager: {
+        getSpatialStructure: mock(() => ({})),
+      },
+      getPropertySets: mock(() => Promise.resolve([])),
     },
-    getPropertySets: mock(() => Promise.resolve([])),
-  },
-  context: {
-    getDomElement: mock(() => document.createElement('div')),
-  },
-  clipper: {
-    planes: [],
-    createFromNormalAndCoplanarPoint: mock(),
-    deleteAllPlanes: mock(),
-  },
-  isolator: {
-    hideSelectedElements: mock(),
-    hideElementsById: mock(),
-    unHideAllElements: mock(),
-    toggleIsolationMode: mock(),
-    setModel: mock(),
-  },
-  setSelection: mock(),
-  setCustomViewSettings: mock(),
-  getSelectedIds: mock(() => []),
-  preselectElementsByIds: mock(),
-  highlightIfcItem: mock(),
-  setHighlighted: mock(),
-  getProperties: mock(),
-  pickIfcItemsByID: mock(),
+    context: {
+      getDomElement: mock(() => document.createElement('div')),
+    },
+    clipper: {
+      planes: [],
+      createFromNormalAndCoplanarPoint: mock(),
+      deleteAllPlanes: mock(),
+    },
+    isolator: {
+      hideSelectedElements: mock(),
+      hideElementsById: mock(),
+      unHideAllElements: mock(),
+      toggleIsolationMode: mock(),
+      setModel: mock(),
+    },
+    setSelection: mock(),
+    setCustomViewSettings: mock(),
+    getSelectedIds: mock(() => []),
+    preselectElementsByIds: mock(),
+    highlightIfcItem: mock(),
+    setHighlighted: mock(),
+    getProperties: mock(),
+    pickIfcItemsByID: mock(),
+  }
 }
+
+// Mock web-ifc-viewer globally to prevent IfcViewerAPI import issues
+let mockViewer = createMockViewer()
 
 mock.module('web-ifc-viewer', () => ({
   IfcViewerAPI: class MockIfcViewerAPI {},
@@ -238,18 +243,20 @@ mock.module('../../src/assets/icons/Bot2.svg', () => ({
 // so they don't affect other tests.
 // Also cleanup DOM elements from testing-library and reset cookies
 afterEach(() => {
+  mockViewer = createMockViewer()
+  global.mockViewer = mockViewer
   server.resetHandlers()
   cleanup()
   cookieStore = {} // Reset cookies between tests
-  
+
   // Note: Three.js has global ID counters that increment across tests:
   // - BufferGeometry: let _id = 0 (node_modules/three/src/core/BufferGeometry.js:13)
   // - Object3D: let _object3DId = 0 (node_modules/three/src/core/Object3D.js:10)
   // - Material: let materialId = 0 (node_modules/three/src/materials/Material.js:5)
   // - Texture: let textureId = 0 (node_modules/three/src/textures/Texture.js:18)
-  // These cannot be reset without breaking Three.js exports, so snapshots 
+  // These cannot be reset without breaking Three.js exports, so snapshots
   // must account for test execution order dependencies
-  
+
   // Reset zustand store state between tests to prevent state leakage
   try {
     const useStore = require('../../src/store/useStore').default
